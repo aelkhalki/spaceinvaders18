@@ -24,8 +24,8 @@ public class GUI extends Application {
     private static final Integer FPS = 24;
     private static final Integer WINDOW_WIDTH = 1680;
     private static final Integer WINDOW_HEIGHT = 1050;
-    private static final Integer ENEMY_ROWS = 1;
-    private static final Integer ENEMY_COLUMNS = 1;
+    private static final Integer ENEMY_ROWS = 5;
+    private static final Integer ENEMY_COLUMNS = 12;
     private static final Double SHIP_MARGIN_FROM_LEFT = 5 / 100.0;
     private static final Double SHIP_MARGIN_FROM_BOTTOM = 10 / 100.0;
     private static final String WINDOW_TITLE = "Space Invaders";
@@ -85,7 +85,7 @@ public class GUI extends Application {
         Image mediumEnemyImage = new Image(MEDIUM_ENEMY_FILENAME);
         for (int row = 0; row < ENEMY_ROWS; row++) {
             for (int column = 0; column < ENEMY_COLUMNS; column++) {
-                Enemy mediumEnemyActor = new MediumEnemy(500, 400, 0, WINDOW_WIDTH);
+                Enemy mediumEnemyActor = new MediumEnemy(10 + 75 * column, 40 * row, 0, WINDOW_WIDTH);
                 Sprite mediumEnemy = new Sprite(mediumEnemyActor, mediumEnemyImage);
                 sprites.add(mediumEnemy);
                 enemies.add(mediumEnemy);
