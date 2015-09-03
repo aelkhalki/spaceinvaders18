@@ -27,15 +27,19 @@ public abstract class Enemy extends Actor implements AutomaticMovable {
         this.movingDirection = movingDirection;
     }
 
-    public void updatePosition() {
-        if (getPositionX() <= westBoundary || getPositionX() >= eastBoundary) {
-            moveDown();
-        }
+    public void updatePosition() throws BoundaryReachedException {
         if (movingDirection == Direction.EAST) {
             setPositionX(getPositionX() + MOVING_SPEED);
         } else if (movingDirection == Direction.WEST) {
             setPositionX(getPositionX() - MOVING_SPEED);
         }
+        if (reachedBoundary()) {
+            throw new BoundaryReachedException();
+        }
+    }
+
+    public boolean reachedBoundary() {
+        return getPositionX() <= westBoundary || getPositionX() >= eastBoundary;
     }
 
     public void moveDown() {

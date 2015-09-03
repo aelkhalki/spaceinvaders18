@@ -15,6 +15,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import spaceinvaders.core.AutomaticMovable;
+import spaceinvaders.core.BoundaryReachedException;
 import spaceinvaders.core.Bullet;
 import spaceinvaders.core.Enemy;
 import spaceinvaders.core.MediumEnemy;
@@ -107,8 +108,21 @@ public class GUI extends Application {
                     previousNanoTime = currentNanoTime;
                 }
 
+                boolean moveDown = false;
+
                 for (AutomaticMovable npc : npcs) {
-                    npc.updatePosition();
+                    try {
+                        npc.updatePosition();
+                    } catch (BoundaryReachedException e) {
+                        moveDown = true;
+                    }
+                }
+
+                if (moveDown) {
+                    for (Sprite enemySprite : enemies) {
+                        Enemy enemy = (Enemy) enemySprite.getEntity();
+                        enemy.moveDown();
+                    }
                 }
 
                 Iterator<Sprite> bulletIterator = bullets.iterator();

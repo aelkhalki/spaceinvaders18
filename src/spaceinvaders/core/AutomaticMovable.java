@@ -1,5 +1,5 @@
 package spaceinvaders.core;
 
 public interface AutomaticMovable {
-    public void updatePosition();
+    public void updatePosition() throws BoundaryReachedException;
 }
