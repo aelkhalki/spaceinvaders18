@@ -1,10 +1,10 @@
 package spaceinvaders.core;
 
 public abstract class Actor {
-    private static final Integer moveSpeed = 2;
+    protected static final Integer MOVING_SPEED = 2;
     private Integer positionX;
     private Integer positionY;
-    
+
     public Actor(Integer positionX, Integer positionY) {
         this.positionX = positionX;
         this.positionY = positionY;
@@ -14,15 +14,23 @@ public abstract class Actor {
         return positionX;
     }
 
+    public void setPositionX(Integer newPosition) {
+        positionX = newPosition;
+    }
+
     public Integer getPositionY() {
         return positionY;
     }
 
-    public void moveLeft() {
-        positionX -= moveSpeed;
+    public void setPositionY(Integer newPosition) {
+        positionY = newPosition;
     }
-    
+
+    public void moveLeft() {
+        positionX -= MOVING_SPEED;
+    }
+
     public void moveRight() {
-        positionX += moveSpeed;
+        positionX += MOVING_SPEED;
     }
 }

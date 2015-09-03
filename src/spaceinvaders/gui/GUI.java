@@ -1,6 +1,7 @@
 package spaceinvaders.gui;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -12,18 +13,24 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import spaceinvaders.core.Actor;
+import spaceinvaders.core.Enemy;
+import spaceinvaders.core.MediumEnemy;
 import spaceinvaders.core.Ship;
 
 public class GUI extends Application {
     private static final Integer FPS = 24;
-    private static final Integer WINDOW_WIDTH = 1024;
-    private static final Integer WINDOW_HEIGHT = 768;
+    private static final Integer WINDOW_WIDTH = 1680;
+    private static final Integer WINDOW_HEIGHT = 1050;
+    private static final Integer ENEMY_ROWS = 5;
+    private static final Integer ENEMY_COLUMNS = 12;
     private static final Double SHIP_MARGIN_FROM_LEFT = 5 / 100.0;
     private static final Double SHIP_MARGIN_FROM_BOTTOM = 10 / 100.0;
     private static final String WINDOW_TITLE = "Space Invaders";
     private static final String SHIP_FILENAME = "spaceinvaders/gui/resources/ship.png";
+    private static final String MEDIUM_ENEMY_FILENAME = "spaceinvaders/gui/resources/medium_enemy.png";
 
-    private ArrayList<Sprite> sprites = new ArrayList<Sprite>();
+    private Collection<Sprite> sprites = new ArrayList<Sprite>();
+    private Collection<Enemy> enemies = new ArrayList<Enemy>();
 
     public static void main(String[] args) {
         launch(args);
@@ -69,6 +76,16 @@ public class GUI extends Application {
         Sprite ship = new Sprite(shipActor, shipImage);
         sprites.add(ship);
 
+        Image mediumEnemyImage = new Image(MEDIUM_ENEMY_FILENAME);
+        for (int row = 0; row < ENEMY_ROWS; row++) {
+            for (int column = 0; column < ENEMY_COLUMNS; column++) {
+                Enemy mediumEnemyActor = new MediumEnemy(500, 400);
+                Sprite mediumEnemy = new Sprite(mediumEnemyActor, mediumEnemyImage);
+                sprites.add(mediumEnemy);
+                enemies.add(mediumEnemyActor);
+            }
+        }
+
         new AnimationTimer() {
             private Long previousNanoTime = System.nanoTime();
 
@@ -79,7 +96,14 @@ public class GUI extends Application {
                 } else {
                     previousNanoTime = currentNanoTime;
                 }
-                // render
+
+                for (Enemy enemy : enemies) {
+                    if (enemy.getPositionX().equals(WINDOW_WIDTH) || enemy.getPositionX().equals(0)) {
+                        enemy.moveDown();
+                    }
+                    enemy.updatePosition();
+                }
+
                 if (input.contains("LEFT")) {
                     shipActor.moveLeft();
                 } else if (input.contains("RIGHT")) {
