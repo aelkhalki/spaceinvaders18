@@ -1,17 +1,22 @@
 package spaceinvaders.core;
 
-public abstract class Enemy extends Actor {
+public abstract class Enemy extends Actor implements AutomaticMovable {
     protected static final Integer MOVING_SPEED = 5;
 
     private Direction movingDirection;
+    private Integer westBoundary;
+    private Integer eastBoundary;
 
-    public Enemy(Integer positionX, Integer positionY, Direction movingDirection) {
+    public Enemy(Integer positionX, Integer positionY, Integer westBoundary, Integer eastBoundary,
+            Direction movingDirection) {
         super(positionX, positionY);
         this.setMovingDirection(movingDirection);
+        this.westBoundary = westBoundary;
+        this.eastBoundary = eastBoundary;
     }
 
-    public Enemy(Integer positionX, Integer positionY) {
-        this(positionX, positionY, Direction.EAST);
+    public Enemy(Integer positionX, Integer positionY, Integer westBoundary, Integer eastBoundary) {
+        this(positionX, positionY, westBoundary, eastBoundary, Direction.EAST);
     }
 
     public Direction getMovingDirection() {
@@ -23,6 +28,9 @@ public abstract class Enemy extends Actor {
     }
 
     public void updatePosition() {
+        if (getPositionX() <= westBoundary || getPositionX() >= eastBoundary) {
+            moveDown();
+        }
         if (movingDirection == Direction.EAST) {
             setPositionX(getPositionX() + MOVING_SPEED);
         } else if (movingDirection == Direction.WEST) {
