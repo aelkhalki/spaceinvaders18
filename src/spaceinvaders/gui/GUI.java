@@ -135,7 +135,7 @@ public class GUI extends Application {
                     shipActor.moveRight();
                 }
                 if (input.contains("SPACE")) {
-                    if (currentNanoTime - previousBulletFireTime > 1000000000.0) {
+                    if (currentNanoTime - previousBulletFireTime > 1000000.0) {
                         previousBulletFireTime = currentNanoTime;
                         Bullet bullet = shipActor.shoot();
                         Sprite bulletSprite = new Sprite(bullet, bulletImage);
