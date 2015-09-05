@@ -1,7 +1,7 @@
 package spaceinvaders.core;
 
 public abstract class Actor extends Entity {
-    protected static final Integer MOVING_SPEED = 10;
+    protected static final Integer MOVING_SPEED = 5;
 
     public Actor(Integer positionX, Integer positionY) {
         super(positionX, positionY);
