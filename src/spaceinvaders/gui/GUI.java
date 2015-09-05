@@ -23,21 +23,27 @@ import spaceinvaders.core.BoundaryReachedException;
 import spaceinvaders.core.Bullet;
 import spaceinvaders.core.Enemy;
 import spaceinvaders.core.Entity;
+import spaceinvaders.core.LargeEnemy;
 import spaceinvaders.core.MediumEnemy;
 import spaceinvaders.core.Ship;
+import spaceinvaders.core.SmallEnemy;
 
 public class GUI extends Application {
     private static final Integer FPS = 24;
     private static final Integer WINDOW_WIDTH = 1680;
     private static final Integer WINDOW_HEIGHT = 1050;
-    private static final Integer ENEMY_ROWS = 5;
+    private static final Integer SMALL_ENEMY_ROWS = 1;
+    private static final Integer MEDIUM_ENEMY_ROWS = 2;
+    private static final Integer LARGE_ENEMY_ROWS = 2;
     private static final Integer ENEMY_COLUMNS = 12;
     private static final Double SHIP_MARGIN_FROM_LEFT = 5 / 100.0;
     private static final Double SHIP_MARGIN_FROM_BOTTOM = 10 / 100.0;
     private static final String WINDOW_TITLE = "Space Invaders";
     private static final String SHIP_FILENAME = "spaceinvaders/gui/resources/ship.png";
     private static final String BULLET_FILENAME = "spaceinvaders/gui/resources/medium_enemy.png";
+    private static final String SMALL_ENEMY_FILENAME = "spaceinvaders/gui/resources/ship.png";
     private static final String MEDIUM_ENEMY_FILENAME = "spaceinvaders/gui/resources/medium_enemy.png";
+    private static final String LARGE_ENEMY_FILENAME = "spaceinvaders/gui/resources/ship.png";
 
     private Collection<Sprite> sprites = new ArrayList<Sprite>();
     private List<Sprite> enemies = new ArrayList<Sprite>();
@@ -89,14 +95,32 @@ public class GUI extends Application {
         Sprite ship = new Sprite(shipActor, shipImage);
         sprites.add(ship);
 
+        Image smallEnemyImage = new Image(SMALL_ENEMY_FILENAME);
         Image mediumEnemyImage = new Image(MEDIUM_ENEMY_FILENAME);
-        for (int row = 0; row < ENEMY_ROWS; row++) {
-            for (int column = 0; column < ENEMY_COLUMNS; column++) {
+        Image largeEnemyImage = new Image(LARGE_ENEMY_FILENAME);
+        for (int column = 0; column < ENEMY_COLUMNS; column++) {
+            for (int smallEnemyRow = 0; smallEnemyRow < SMALL_ENEMY_ROWS; smallEnemyRow++) {
+                Enemy smallEnemyActor = new SmallEnemy(10 + 75 * column, 40 * smallEnemyRow, 0, WINDOW_WIDTH);
+                Sprite smallEnemy = new Sprite(smallEnemyActor, smallEnemyImage);
+                sprites.add(smallEnemy);
+                enemies.add(smallEnemy);
+                npcs.add(smallEnemyActor);
+            }
+            for (int mediumEnemyRow = 0; mediumEnemyRow < MEDIUM_ENEMY_ROWS; mediumEnemyRow++) {
+                int row = SMALL_ENEMY_ROWS + mediumEnemyRow;
                 Enemy mediumEnemyActor = new MediumEnemy(10 + 75 * column, 40 * row, 0, WINDOW_WIDTH);
                 Sprite mediumEnemy = new Sprite(mediumEnemyActor, mediumEnemyImage);
                 sprites.add(mediumEnemy);
                 enemies.add(mediumEnemy);
                 npcs.add(mediumEnemyActor);
+            }
+            for (int largeEnemyRow = 0; largeEnemyRow < LARGE_ENEMY_ROWS; largeEnemyRow++) {
+                int row = SMALL_ENEMY_ROWS + MEDIUM_ENEMY_ROWS + largeEnemyRow;
+                Enemy largeEnemyActor = new LargeEnemy(10 + 75 * column, 40 * row, 0, WINDOW_WIDTH);
+                Sprite largeEnemy = new Sprite(largeEnemyActor, largeEnemyImage);
+                sprites.add(largeEnemy);
+                enemies.add(largeEnemy);
+                npcs.add(largeEnemyActor);
             }
         }
 
@@ -113,6 +137,7 @@ public class GUI extends Application {
             private Long previousBulletFireTime = System.nanoTime();
             private Random random = new Random();
             private Integer lives = 3;
+            private Integer points = 0;
 
             public void handle(long currentNanoTime) {
                 double elapsedTime = (currentNanoTime - previousNanoTime) / 1000000000.0;
@@ -167,12 +192,14 @@ public class GUI extends Application {
                     while (enemyIterator.hasNext()) {
                         Sprite enemySprite = enemyIterator.next();
                         if (bullet.intersects(enemySprite)) {
+                            Enemy enemy = (Enemy) enemySprite.getEntity();
                             bulletIterator.remove();
                             enemyIterator.remove();
-                            npcs.remove(enemySprite.getEntity());
+                            npcs.remove(enemy);
                             npcs.remove(bullet.getEntity());
                             sprites.remove(enemySprite);
                             sprites.remove(bullet);
+                            points += enemy.getPoints();
                         }
                     }
                 }
@@ -200,6 +227,7 @@ public class GUI extends Application {
                     sprite.render(gc);
                 }
                 gc.fillText(String.format("Lives: %d", lives), 60, 50);
+                gc.fillText(String.format("Points: %d", points), 900, 50);
 
                 if (lives <= 0 || enemies.isEmpty()) {
                     gc.fillText("GAME OVER!", 600, 500);
