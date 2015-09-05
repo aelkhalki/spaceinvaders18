@@ -49,9 +49,7 @@ public abstract class Enemy extends Actor implements AutomaticMovable {
     }
 
     public boolean reachedBottom() {
-        System.out.println(getPositionY());
-        System.out.println(southBoundary);
-        return getPositionY() >= southBoundary;
+        return getPositionY() + 200 >= southBoundary;
     }
 
     public void moveDown() {
