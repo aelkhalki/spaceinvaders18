@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -13,11 +14,15 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import spaceinvaders.core.AutomaticMovable;
 import spaceinvaders.core.BoundaryReachedException;
 import spaceinvaders.core.Bullet;
 import spaceinvaders.core.Enemy;
+import spaceinvaders.core.Entity;
 import spaceinvaders.core.MediumEnemy;
 import spaceinvaders.core.Ship;
 
@@ -38,6 +43,7 @@ public class GUI extends Application {
     private List<Sprite> enemies = new ArrayList<Sprite>();
     private Collection<AutomaticMovable> npcs = new ArrayList<AutomaticMovable>();
     private Collection<Sprite> bullets = new ArrayList<Sprite>();
+    private Collection<Sprite> enemyBullets = new ArrayList<Sprite>();
 
     public static void main(String[] args) {
         launch(args);
@@ -96,9 +102,17 @@ public class GUI extends Application {
 
         Image bulletImage = new Image(BULLET_FILENAME);
 
+        gc.setFill(Color.RED);
+        gc.setStroke(Color.BLACK);
+        gc.setLineWidth(2);
+        Font font = Font.font("Arial", FontWeight.BOLD, 48);
+        gc.setFont(font);
+
         new AnimationTimer() {
             private Long previousNanoTime = System.nanoTime();
             private Long previousBulletFireTime = System.nanoTime();
+            private Random random = new Random();
+            private Integer lives = 3;
 
             public void handle(long currentNanoTime) {
                 double elapsedTime = (currentNanoTime - previousNanoTime) / 1000000000.0;
@@ -125,18 +139,39 @@ public class GUI extends Application {
                     }
                 }
 
+                for (Sprite enemySprite : enemies) {
+                    if (random.nextDouble() < 0.0005) {
+                        Entity enemy = enemySprite.getEntity();
+                        Bullet enemyBullet = new Bullet(enemy.getPositionX(), enemy.getPositionY(),
+                                spaceinvaders.core.Direction.SOUTH);
+                        Sprite enemyBulletSprite = new Sprite(enemyBullet, bulletImage);
+                        sprites.add(enemyBulletSprite);
+                        enemyBullets.add(enemyBulletSprite);
+                        npcs.add(enemyBullet);
+                    }
+                }
+                Iterator<Sprite> enemyBulletIterator = enemyBullets.iterator();
+                while (enemyBulletIterator.hasNext()) {
+                    Sprite bullet = enemyBulletIterator.next();
+                    if (bullet.intersects(ship)) {
+                        enemyBulletIterator.remove();
+                        sprites.remove(bullet);
+                        npcs.remove(bullet);
+                        lives--;
+                    }
+                }
                 Iterator<Sprite> bulletIterator = bullets.iterator();
                 while (bulletIterator.hasNext()) {
                     Sprite bullet = bulletIterator.next();
                     Iterator<Sprite> enemyIterator = enemies.iterator();
                     while (enemyIterator.hasNext()) {
-                        Sprite enemy = enemyIterator.next();
-                        if (bullet.intersects(enemy)) {
+                        Sprite enemySprite = enemyIterator.next();
+                        if (bullet.intersects(enemySprite)) {
                             bulletIterator.remove();
                             enemyIterator.remove();
-                            npcs.remove(enemy.getEntity());
+                            npcs.remove(enemySprite.getEntity());
                             npcs.remove(bullet.getEntity());
-                            sprites.remove(enemy);
+                            sprites.remove(enemySprite);
                             sprites.remove(bullet);
                         }
                     }
@@ -158,10 +193,18 @@ public class GUI extends Application {
                         bullets.add(bulletSprite);
                     }
                 }
+
                 gc.clearRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 
                 for (Sprite sprite : sprites) {
                     sprite.render(gc);
+                }
+                gc.fillText(String.format("Lives: %d", lives), 60, 50);
+
+                if (lives <= 0 || enemies.isEmpty()) {
+                    gc.fillText("GAME OVER!", 600, 500);
+                    gc.strokeText("GAME OVER!", 600, 500);
+                    stop();
                 }
             }
         }.start();
