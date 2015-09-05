@@ -8,12 +8,14 @@ import java.util.Random;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.event.EventHandler;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -132,6 +134,22 @@ public class GUI extends Application {
         Font font = Font.font("Arial", FontWeight.BOLD, 48);
         gc.setFont(font);
 
+        Rectangle2D startGame = new Rectangle2D(0, 0, 500, 100);
+        Rectangle2D quitGame = new Rectangle2D(0, 400, 500, 100);
+
+        boolean[] started = { false };
+
+        scene.setOnMouseClicked(
+                new EventHandler<MouseEvent>() {
+                    public void handle(MouseEvent e) {
+                        if (startGame.contains(e.getX(), e.getY())) {
+                            started[0] = true;
+                        } else if (quitGame.contains(e.getX(), e.getY())) {
+                            System.exit(0);
+                        }
+                    }
+                });
+
         new AnimationTimer() {
             private Long previousNanoTime = System.nanoTime();
             private Long previousBulletFireTime = System.nanoTime();
@@ -140,6 +158,11 @@ public class GUI extends Application {
             private Integer points = 0;
 
             public void handle(long currentNanoTime) {
+                if (!started[0]) {
+                    gc.fillText("START GAME", 100, 100);
+                    gc.fillText("QUIT GAME", 100, 500);
+                    return;
+                }
                 double elapsedTime = (currentNanoTime - previousNanoTime) / 1000000000.0;
                 if (elapsedTime < 1 / FPS) {
                     return;
