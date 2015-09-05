@@ -165,7 +165,7 @@ public class GUI extends Application {
                 }
 
                 for (Sprite enemySprite : enemies) {
-                    if (random.nextDouble() < 0.0005) {
+                    if (random.nextDouble() < 0.00005) {
                         Entity enemy = enemySprite.getEntity();
                         Bullet enemyBullet = new Bullet(enemy.getPositionX(), enemy.getPositionY(),
                                 spaceinvaders.core.Direction.SOUTH);

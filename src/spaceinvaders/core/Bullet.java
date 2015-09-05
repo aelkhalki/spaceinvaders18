@@ -1,7 +1,7 @@
 package spaceinvaders.core;
 
 public class Bullet extends Entity implements AutomaticMovable {
-    private static final Integer MOVING_SPEED = 5;
+    private static final Integer MOVING_SPEED = 15;
     private Direction direction;
 
     public Bullet(Integer positionX, Integer positionY, Direction direction) {

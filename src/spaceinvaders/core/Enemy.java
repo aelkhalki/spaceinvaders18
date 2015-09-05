@@ -1,7 +1,8 @@
 package spaceinvaders.core;
 
 public abstract class Enemy extends Actor implements AutomaticMovable {
-    protected static final Integer MOVING_SPEED = 5;
+    protected static final Integer MOVING_SPEED = 3;
+    protected static final Integer MOVE_DOWN_SPEED = 20;
 
     private Direction movingDirection;
     private Integer westBoundary;
@@ -43,7 +44,7 @@ public abstract class Enemy extends Actor implements AutomaticMovable {
     }
 
     public void moveDown() {
-        setPositionY(getPositionY() + MOVING_SPEED);
+        setPositionY(getPositionY() + MOVE_DOWN_SPEED);
         if (movingDirection == Direction.EAST) {
             movingDirection = Direction.WEST;
         } else if (movingDirection == Direction.WEST) {
