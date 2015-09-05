@@ -7,17 +7,20 @@ public abstract class Enemy extends Actor implements AutomaticMovable {
     private Direction movingDirection;
     private Integer westBoundary;
     private Integer eastBoundary;
+    private Integer southBoundary;
 
     public Enemy(Integer positionX, Integer positionY, Integer westBoundary, Integer eastBoundary,
-            Direction movingDirection) {
+            Integer southBoundary, Direction movingDirection) {
         super(positionX, positionY);
         this.setMovingDirection(movingDirection);
         this.westBoundary = westBoundary;
         this.eastBoundary = eastBoundary;
+        this.southBoundary = southBoundary;
     }
 
-    public Enemy(Integer positionX, Integer positionY, Integer westBoundary, Integer eastBoundary) {
-        this(positionX, positionY, westBoundary, eastBoundary, Direction.EAST);
+    public Enemy(Integer positionX, Integer positionY, Integer westBoundary, Integer eastBoundary,
+            Integer southBoundary) {
+        this(positionX, positionY, westBoundary, eastBoundary, southBoundary, Direction.EAST);
     }
 
     public Direction getMovingDirection() {
@@ -28,7 +31,7 @@ public abstract class Enemy extends Actor implements AutomaticMovable {
         this.movingDirection = movingDirection;
     }
 
-    public void updatePosition() throws BoundaryReachedException {
+    public void updatePosition() throws BoundaryReachedException, EnemyReachedBottomException {
         if (movingDirection == Direction.EAST) {
             setPositionX(getPositionX() + MOVING_SPEED);
         } else if (movingDirection == Direction.WEST) {
@@ -36,11 +39,19 @@ public abstract class Enemy extends Actor implements AutomaticMovable {
         }
         if (reachedBoundary()) {
             throw new BoundaryReachedException();
+        } else if (reachedBottom()) {
+            throw new EnemyReachedBottomException();
         }
     }
 
     public boolean reachedBoundary() {
         return getPositionX() <= westBoundary || getPositionX() >= eastBoundary;
+    }
+
+    public boolean reachedBottom() {
+        System.out.println(getPositionY());
+        System.out.println(southBoundary);
+        return getPositionY() >= southBoundary;
     }
 
     public void moveDown() {

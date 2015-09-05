@@ -29,6 +29,7 @@ import spaceinvaders.core.LargeEnemy;
 import spaceinvaders.core.MediumEnemy;
 import spaceinvaders.core.Ship;
 import spaceinvaders.core.SmallEnemy;
+import spaceinvaders.core.EnemyReachedBottomException;
 
 public class GUI extends Application {
     private static final Integer FPS = 24;
@@ -102,7 +103,8 @@ public class GUI extends Application {
         Image largeEnemyImage = new Image(LARGE_ENEMY_FILENAME);
         for (int column = 0; column < ENEMY_COLUMNS; column++) {
             for (int smallEnemyRow = 0; smallEnemyRow < SMALL_ENEMY_ROWS; smallEnemyRow++) {
-                Enemy smallEnemyActor = new SmallEnemy(10 + 75 * column, 40 * smallEnemyRow, 0, WINDOW_WIDTH);
+                Enemy smallEnemyActor = new SmallEnemy(10 + 75 * column, 40 * smallEnemyRow, 0, WINDOW_WIDTH,
+                        WINDOW_HEIGHT);
                 Sprite smallEnemy = new Sprite(smallEnemyActor, smallEnemyImage);
                 sprites.add(smallEnemy);
                 enemies.add(smallEnemy);
@@ -110,7 +112,7 @@ public class GUI extends Application {
             }
             for (int mediumEnemyRow = 0; mediumEnemyRow < MEDIUM_ENEMY_ROWS; mediumEnemyRow++) {
                 int row = SMALL_ENEMY_ROWS + mediumEnemyRow;
-                Enemy mediumEnemyActor = new MediumEnemy(10 + 75 * column, 40 * row, 0, WINDOW_WIDTH);
+                Enemy mediumEnemyActor = new MediumEnemy(10 + 75 * column, 40 * row, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
                 Sprite mediumEnemy = new Sprite(mediumEnemyActor, mediumEnemyImage);
                 sprites.add(mediumEnemy);
                 enemies.add(mediumEnemy);
@@ -118,7 +120,7 @@ public class GUI extends Application {
             }
             for (int largeEnemyRow = 0; largeEnemyRow < LARGE_ENEMY_ROWS; largeEnemyRow++) {
                 int row = SMALL_ENEMY_ROWS + MEDIUM_ENEMY_ROWS + largeEnemyRow;
-                Enemy largeEnemyActor = new LargeEnemy(10 + 75 * column, 40 * row, 0, WINDOW_WIDTH);
+                Enemy largeEnemyActor = new LargeEnemy(10 + 75 * column, 40 * row, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
                 Sprite largeEnemy = new Sprite(largeEnemyActor, largeEnemyImage);
                 sprites.add(largeEnemy);
                 enemies.add(largeEnemy);
@@ -171,12 +173,15 @@ public class GUI extends Application {
                 }
 
                 boolean moveDown = false;
+                boolean endGame = false;
 
                 for (AutomaticMovable npc : npcs) {
                     try {
                         npc.updatePosition();
                     } catch (BoundaryReachedException e) {
                         moveDown = true;
+                    } catch (EnemyReachedBottomException e) {
+                        endGame = true;
                     }
                 }
 
@@ -252,7 +257,7 @@ public class GUI extends Application {
                 gc.fillText(String.format("Lives: %d", lives), 60, 50);
                 gc.fillText(String.format("Points: %d", points), 900, 50);
 
-                if (lives <= 0 || enemies.isEmpty()) {
+                if (lives <= 0 || enemies.isEmpty() || endGame) {
                     gc.fillText("GAME OVER!", 600, 500);
                     gc.strokeText("GAME OVER!", 600, 500);
                     stop();
