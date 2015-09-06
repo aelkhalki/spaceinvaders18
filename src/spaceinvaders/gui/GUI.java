@@ -43,10 +43,10 @@ public class GUI extends Application {
     private static final Double SHIP_MARGIN_FROM_BOTTOM = 10 / 100.0;
     private static final String WINDOW_TITLE = "Space Invaders";
     private static final String SHIP_FILENAME = "spaceinvaders/gui/resources/ship.png";
-    private static final String BULLET_FILENAME = "spaceinvaders/gui/resources/medium_enemy.png";
-    private static final String SMALL_ENEMY_FILENAME = "spaceinvaders/gui/resources/ship.png";
+    private static final String BULLET_FILENAME = "spaceinvaders/gui/resources/ufo.png";
+    private static final String SMALL_ENEMY_FILENAME = "spaceinvaders/gui/resources/small_enemy.png";
     private static final String MEDIUM_ENEMY_FILENAME = "spaceinvaders/gui/resources/medium_enemy.png";
-    private static final String LARGE_ENEMY_FILENAME = "spaceinvaders/gui/resources/ship.png";
+    private static final String LARGE_ENEMY_FILENAME = "spaceinvaders/gui/resources/large_enemy.png";
 
     private Collection<Sprite> sprites = new ArrayList<Sprite>();
     private List<Sprite> enemies = new ArrayList<Sprite>();
@@ -103,7 +103,8 @@ public class GUI extends Application {
         Image largeEnemyImage = new Image(LARGE_ENEMY_FILENAME);
         for (int column = 0; column < ENEMY_COLUMNS; column++) {
             for (int smallEnemyRow = 0; smallEnemyRow < SMALL_ENEMY_ROWS; smallEnemyRow++) {
-                Enemy smallEnemyActor = new SmallEnemy(10 + 75 * column, 40 * smallEnemyRow, 0, WINDOW_WIDTH,
+                int row = smallEnemyRow;
+                Enemy smallEnemyActor = new SmallEnemy(10 + 100 * column, 90 * row, 0, WINDOW_WIDTH,
                         WINDOW_HEIGHT);
                 Sprite smallEnemy = new Sprite(smallEnemyActor, smallEnemyImage);
                 sprites.add(smallEnemy);
@@ -112,7 +113,7 @@ public class GUI extends Application {
             }
             for (int mediumEnemyRow = 0; mediumEnemyRow < MEDIUM_ENEMY_ROWS; mediumEnemyRow++) {
                 int row = SMALL_ENEMY_ROWS + mediumEnemyRow;
-                Enemy mediumEnemyActor = new MediumEnemy(10 + 75 * column, 40 * row, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+                Enemy mediumEnemyActor = new MediumEnemy(10 + 100 * column, 90 * row, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
                 Sprite mediumEnemy = new Sprite(mediumEnemyActor, mediumEnemyImage);
                 sprites.add(mediumEnemy);
                 enemies.add(mediumEnemy);
@@ -120,7 +121,7 @@ public class GUI extends Application {
             }
             for (int largeEnemyRow = 0; largeEnemyRow < LARGE_ENEMY_ROWS; largeEnemyRow++) {
                 int row = SMALL_ENEMY_ROWS + MEDIUM_ENEMY_ROWS + largeEnemyRow;
-                Enemy largeEnemyActor = new LargeEnemy(10 + 75 * column, 40 * row, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+                Enemy largeEnemyActor = new LargeEnemy(10 + 100 * column, 90 * row, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
                 Sprite largeEnemy = new Sprite(largeEnemyActor, largeEnemyImage);
                 sprites.add(largeEnemy);
                 enemies.add(largeEnemy);
@@ -249,8 +250,9 @@ public class GUI extends Application {
                     }
                 }
 
-                gc.clearRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
-
+                gc.setFill(Color.BLACK);
+                gc.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+                gc.setFill(Color.RED);
                 for (Sprite sprite : sprites) {
                     sprite.render(gc);
                 }
