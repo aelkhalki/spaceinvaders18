@@ -1,28 +1,17 @@
 package nl.delftelectronics.spaceinvaders.core;
 
-public abstract class Actor {
-    private static final Integer moveSpeed = 2;
-    private Integer positionX;
-    private Integer positionY;
-    
+public abstract class Actor extends Entity {
+    protected static final Integer MOVING_SPEED = 5;
+
     public Actor(Integer positionX, Integer positionY) {
-        this.positionX = positionX;
-        this.positionY = positionY;
-    }
-
-    public Integer getPositionX() {
-        return positionX;
-    }
-
-    public Integer getPositionY() {
-        return positionY;
+        super(positionX, positionY);
     }
 
     public void moveLeft() {
-        positionX -= moveSpeed;
+        setPositionX(getPositionX() - MOVING_SPEED);
     }
-    
+
     public void moveRight() {
-        positionX += moveSpeed;
+        setPositionX(getPositionX() + MOVING_SPEED);
     }
 }
