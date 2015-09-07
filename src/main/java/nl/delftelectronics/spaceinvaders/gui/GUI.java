@@ -46,11 +46,11 @@ public class GUI extends Application {
     private static final Double SHIP_MARGIN_FROM_BOTTOM = 10 / 100.0;
     private static final String WINDOW_TITLE = "Space Invaders";
 
-    private static final String SHIP_FILENAME = "/resources/ship.png";
-    private static final String BULLET_FILENAME = "/resources/ufo.png";
-    private static final String SMALL_ENEMY_FILENAME = "/resources/small_enemy.png";
-    private static final String MEDIUM_ENEMY_FILENAME = "/resources/medium_enemy.png";
-    private static final String LARGE_ENEMY_FILENAME = "/resources/large_enemy.png";
+    private static final String SHIP_FILENAME = "/ship.png";
+    private static final String BULLET_FILENAME = "/ufo.png";
+    private static final String SMALL_ENEMY_FILENAME = "/small_enemy.png";
+    private static final String MEDIUM_ENEMY_FILENAME = "/medium_enemy.png";
+    private static final String LARGE_ENEMY_FILENAME = "/large_enemy.png";
 
     private Collection<Sprite> sprites = new ArrayList<Sprite>();
     private List<Sprite> enemies = new ArrayList<Sprite>();
@@ -109,7 +109,8 @@ public class GUI extends Application {
 
         Image smallEnemyImage = new Image(SMALL_ENEMY_FILENAME);
         Image mediumEnemyImage = new Image(MEDIUM_ENEMY_FILENAME);
-         Image largeEnemyImage = new Image(LARGE_ENEMY_FILENAME);
+        Image largeEnemyImage = new Image(LARGE_ENEMY_FILENAME);
+        
         for (int column = 0; column < ENEMY_COLUMNS; column++) {
             for (int smallEnemyRow = 0; smallEnemyRow < SMALL_ENEMY_ROWS; smallEnemyRow++) {
                 int row = smallEnemyRow;
@@ -230,7 +231,7 @@ public class GUI extends Application {
                     while (enemyIterator.hasNext()) {
                         Sprite enemySprite = enemyIterator.next();
                         if (bullet.intersects(enemySprite)) {
-                            Enemy enemy = (Enemy) enemySprite.getEntity();
+                             Enemy enemy = (Enemy) enemySprite.getEntity();
                             bulletIterator.remove();
                             enemyIterator.remove();
                             npcs.remove(enemy);
