@@ -1,4 +1,4 @@
-package spaceinvaders.core;
+package nl.delftelectronics.spaceinvaders.core;
 
 public abstract class Actor {
     private static final Integer moveSpeed = 2;

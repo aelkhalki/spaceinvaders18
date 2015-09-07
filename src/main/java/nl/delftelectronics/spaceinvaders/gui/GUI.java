@@ -1,4 +1,4 @@
-package spaceinvaders.gui;
+package nl.delftelectronics.spaceinvaders.gui;
 
 import java.util.ArrayList;
 import javafx.animation.AnimationTimer;
@@ -11,8 +11,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-import spaceinvaders.core.Actor;
-import spaceinvaders.core.Ship;
+import nl.delftelectronics.spaceinvaders.core.Actor;
+import nl.delftelectronics.spaceinvaders.core.Ship;
 
 public class GUI extends Application {
     private static final Integer FPS = 24;
@@ -21,10 +21,14 @@ public class GUI extends Application {
     private static final Double SHIP_MARGIN_FROM_LEFT = 5 / 100.0;
     private static final Double SHIP_MARGIN_FROM_BOTTOM = 10 / 100.0;
     private static final String WINDOW_TITLE = "Space Invaders";
-    private static final String SHIP_FILENAME = "spaceinvaders/gui/resources/ship.png";
+    private static final String SHIP_FILENAME = "resources/ship.png";
 
     private ArrayList<Sprite> sprites = new ArrayList<Sprite>();
 
+    private GraphicsContext gc;
+    private ArrayList<String> input;
+    private Actor shipActor;
+    
     public static void main(String[] args) {
         launch(args);
     }
@@ -40,7 +44,7 @@ public class GUI extends Application {
         Canvas canvas = new Canvas(WINDOW_WIDTH, WINDOW_HEIGHT);
         root.getChildren().add(canvas);
 
-        ArrayList<String> input = new ArrayList<String>();
+        input = new ArrayList<String>();
 
         scene.setOnKeyPressed(
                 new EventHandler<KeyEvent>() {
@@ -59,13 +63,13 @@ public class GUI extends Application {
                     }
                 });
 
-        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc = canvas.getGraphicsContext2D();
 
         Integer shipPositionX = (int) (WINDOW_WIDTH * SHIP_MARGIN_FROM_LEFT);
         Integer shipPositionY = (int) (WINDOW_HEIGHT * (1 - SHIP_MARGIN_FROM_BOTTOM));
 
-        Image shipImage = new Image(SHIP_FILENAME);
-        Actor shipActor = new Ship(shipPositionX, shipPositionY);
+        Image shipImage = new Image(getClass().getClassLoader().getResourceAsStream(SHIP_FILENAME));
+        shipActor = new Ship(shipPositionX, shipPositionY);
         Sprite ship = new Sprite(shipActor, shipImage);
         sprites.add(ship);
 

@@ -1,4 +1,4 @@
-package spaceinvaders.core;
+package nl.delftelectronics.spaceinvaders.core;
 
 public class Ship extends Actor {
     public Ship(Integer positionX, Integer positionY) {
