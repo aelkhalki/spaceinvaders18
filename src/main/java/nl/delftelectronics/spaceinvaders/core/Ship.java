@@ -1,7 +1,7 @@
-package spaceinvaders.core;
+package nl.delftelectronics.spaceinvaders.core;
 
 public class Ship extends Actor {
-    private static final String FILENAME = "spaceinvaders/gui/resources/ship.png";
+    private static final String FILENAME = "/ship.png";
 
     public Ship(Integer positionX, Integer positionY, Integer width, Integer height) {
         super(positionX, positionY, width, height);

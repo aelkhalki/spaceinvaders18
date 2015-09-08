@@ -1,9 +1,9 @@
-package spaceinvaders.gui;
+package nl.delftelectronics.spaceinvaders.gui;
 
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import spaceinvaders.core.Entity;
+import nl.delftelectronics.spaceinvaders.core.Entity;
 
 public class Sprite {
     private Entity entity;

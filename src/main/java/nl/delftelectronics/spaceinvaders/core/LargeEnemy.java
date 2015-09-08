@@ -1,15 +1,15 @@
-package spaceinvaders.core;
+package nl.delftelectronics.spaceinvaders.core;
 
-public class SmallEnemy extends Enemy {
-    private static final String FILENAME = "spaceinvaders/gui/resources/small_enemy.png";
-    private static final Integer points = 40;
+public class LargeEnemy extends Enemy {
+    private static final String FILENAME = "/large_enemy.png";
+    private static final Integer points = 10;
 
-    public SmallEnemy(Integer positionX, Integer positionY, Integer width, Integer height, Integer westBoundary,
+    public LargeEnemy(Integer positionX, Integer positionY, Integer width, Integer height, Integer westBoundary,
             Integer eastBoundary, Integer southBoundary, Direction movingDirection) {
         super(positionX, positionY, width, height, westBoundary, eastBoundary, southBoundary, movingDirection);
     }
 
-    public SmallEnemy(Integer positionX, Integer positionY, Integer width, Integer height, Integer westBoundary,
+    public LargeEnemy(Integer positionX, Integer positionY, Integer width, Integer height, Integer westBoundary,
             Integer eastBoundary, Integer southBoundary) {
         super(positionX, positionY, width, height, westBoundary, eastBoundary, southBoundary);
     }

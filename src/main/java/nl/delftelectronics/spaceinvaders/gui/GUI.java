@@ -1,4 +1,4 @@
-package spaceinvaders.gui;
+package nl.delftelectronics.spaceinvaders.gui;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,8 +18,21 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
-import spaceinvaders.core.Engine;
-import spaceinvaders.core.Entity;
+
+import nl.delftelectronics.spaceinvaders.core.Engine;
+import nl.delftelectronics.spaceinvaders.core.Entity;
+import nl.delftelectronics.spaceinvaders.core.Actor;
+import nl.delftelectronics.spaceinvaders.core.AutomaticMovable;
+import nl.delftelectronics.spaceinvaders.core.BoundaryReachedException;
+import nl.delftelectronics.spaceinvaders.core.Bullet;
+import nl.delftelectronics.spaceinvaders.core.Direction;
+import nl.delftelectronics.spaceinvaders.core.Enemy;
+import nl.delftelectronics.spaceinvaders.core.Entity;
+import nl.delftelectronics.spaceinvaders.core.LargeEnemy;
+import nl.delftelectronics.spaceinvaders.core.MediumEnemy;
+import nl.delftelectronics.spaceinvaders.core.Ship;
+import nl.delftelectronics.spaceinvaders.core.SmallEnemy;
+import nl.delftelectronics.spaceinvaders.core.EnemyReachedBottomException;
 
 public class GUI extends Application {
     private static final Integer FPS = 24;
@@ -27,10 +40,20 @@ public class GUI extends Application {
     private static final Integer WINDOW_HEIGHT = 1050;
     private static final String WINDOW_TITLE = "Space Invaders";
 
+    private static final String SHIP_FILENAME = "/ship.png";
+    private static final String BULLET_FILENAME = "/ufo.png";
+    private static final String SMALL_ENEMY_FILENAME = "/small_enemy.png";
+    private static final String MEDIUM_ENEMY_FILENAME = "/medium_enemy.png";
+    private static final String LARGE_ENEMY_FILENAME = "/large_enemy.png";
+
     private Scene scene;
     private ArrayList<String> inputs = new ArrayList<String>();
     private HashMap<Entity, Sprite> sprites = new HashMap<Entity, Sprite>();
 
+    private GraphicsContext gc;
+    private ArrayList<String> input;
+    private Actor shipActor;
+    
     public static void main(String[] args) {
         launch(args);
     }
@@ -38,9 +61,9 @@ public class GUI extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         setWindowTitle(primaryStage, WINDOW_TITLE);
-        GraphicsContext gc = initializeScene(primaryStage, WINDOW_WIDTH, WINDOW_HEIGHT);
+        final GraphicsContext gc = initializeScene(primaryStage, WINDOW_WIDTH, WINDOW_HEIGHT);
 
-        Engine engine = new Engine(WINDOW_WIDTH, WINDOW_HEIGHT);
+        final Engine engine = new Engine(WINDOW_WIDTH, WINDOW_HEIGHT);
 
         gc.setFill(Color.RED);
         gc.setStroke(Color.BLACK);
@@ -48,12 +71,13 @@ public class GUI extends Application {
         Font font = Font.font("Arial", FontWeight.BOLD, 48);
         gc.setFont(font);
 
+
         gc.fillText("START GAME", 100, 100);
         gc.fillText("QUIT GAME", 100, 500);
-        Rectangle startGameArea = new Rectangle(0, 0, 500, 100);
-        Rectangle quitGameArea = new Rectangle(0, 400, 500, 100);
+        final Rectangle startGameArea = new Rectangle(0, 0, 500, 100);
+        final Rectangle quitGameArea = new Rectangle(0, 400, 500, 100);
 
-        boolean[] started = { false };
+        final boolean[] started = { false };
 
         scene.setOnMouseClicked(
                 new EventHandler<MouseEvent>() {
@@ -87,12 +111,14 @@ public class GUI extends Application {
 
                 engine.update();
 
+
                 if (inputs.contains("LEFT")) {
                     engine.playerMoveLeft();
                 }
                 if (inputs.contains("RIGHT")) {
                     engine.playerMoveRight();
                 }
+
                 if (inputs.contains("SPACE")) {
                     engine.playerShootBullet();
                 }
@@ -122,7 +148,7 @@ public class GUI extends Application {
         primaryStage.show();
     }
 
-    public void listenToKeyInput(Scene scene, Collection<String> input) {
+    public void listenToKeyInput(Scene scene, final Collection<String> input) {
         scene.setOnKeyPressed(
                 new EventHandler<KeyEvent>() {
                     public void handle(KeyEvent e) {

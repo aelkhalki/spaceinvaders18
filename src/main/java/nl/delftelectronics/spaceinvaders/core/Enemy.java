@@ -1,4 +1,4 @@
-package spaceinvaders.core;
+package nl.delftelectronics.spaceinvaders.core;
 
 public abstract class Enemy extends Actor implements AutomaticMovable {
     protected static final Integer MOVING_SPEED = 3;
