@@ -113,7 +113,7 @@ public class Engine {
             try {
                 enemy.updatePosition();
                 if (random.nextDouble() < 0.0001) {
-                    Bullet enemyBullet = new Bullet(enemy.getPositionX(), enemy.getPositionY(), 30, 30,
+                    Bullet enemyBullet = new Bullet(enemy.getPositionX(), enemy.getPositionY(), 3, 10,
                             Direction.SOUTH);
                     enemyBullets.add(enemyBullet);
                     addedEntities.add(enemyBullet);

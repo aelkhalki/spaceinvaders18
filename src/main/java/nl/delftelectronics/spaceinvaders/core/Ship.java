@@ -8,7 +8,7 @@ public class Ship extends Actor {
     }
 
     public Bullet shoot() {
-        return new Bullet(getPositionX(), getPositionY(), getWidth(), getHeight(), Direction.NORTH);
+        return new Bullet(getPositionX(), getPositionY(), 3, 10, Direction.NORTH);
     }
 
     public String getSpriteFilename() {
