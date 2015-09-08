@@ -45,7 +45,7 @@ public abstract class Enemy extends Actor implements AutomaticMovable {
     }
 
     public boolean reachedBoundary() {
-        return getPositionX() <= westBoundary || getPositionX() >= eastBoundary;
+        return getPositionX() <= westBoundary || getPositionX() >= eastBoundary - getWidth()/2;
     }
 
     public boolean reachedBottom() {

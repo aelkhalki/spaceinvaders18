@@ -12,6 +12,10 @@ public class Engine {
     private static final int ENEMY_COLUMNS = 12;
     private static final double SHIP_MARGIN_FROM_LEFT = 5 / 100.0;
     private static final double SHIP_MARGIN_FROM_BOTTOM = 10 / 100.0;
+    private static final int BULLET_SIZE = 30;
+    private static final int COLL_OFFSET = 10;
+    private static final int COLLUMN_SIZE = 90;
+    private static final int ROW_SIZE = 50;
 
     private int fieldWidth;
     private int fieldHeight;
@@ -21,6 +25,7 @@ public class Engine {
     private int lives = 3;
     private int points = 0;
     private boolean reachedBottom = false;
+    
 
     private Ship ship;
     private ArrayList<Enemy> enemies;
@@ -54,7 +59,7 @@ public class Engine {
         int shipPositionX = (int) (fieldWidth * SHIP_MARGIN_FROM_LEFT);
         int shipPositionY = (int) (fieldHeight * (1 - SHIP_MARGIN_FROM_BOTTOM));
 
-        this.ship = new Ship(shipPositionX, shipPositionY, shipWidth, shipHeight);
+        this.ship = new Ship(shipPositionX, shipPositionY, shipWidth, shipHeight, 0 , fieldWidth);
         addedEntities.add(ship);
         this.enemies = createEnemies(enemyWidth, enemyHeight);
     }
@@ -64,21 +69,21 @@ public class Engine {
         for (int column = 0; column < ENEMY_COLUMNS; column++) {
             int currentRow = 0;
             for (int smallEnemyRow = 0; smallEnemyRow < SMALL_ENEMY_ROWS; smallEnemyRow++) {
-                Enemy smallEnemy = new SmallEnemy(10 + 100 * column, 90 * currentRow, enemyWidth, enemyHeight, 0,
+                Enemy smallEnemy = new SmallEnemy(COLL_OFFSET + COLLUMN_SIZE * column, ROW_SIZE * currentRow, enemyWidth, enemyHeight, 0,
                         fieldWidth, fieldHeight);
                 enemies.add(smallEnemy);
                 currentRow++;
                 addedEntities.add(smallEnemy);
             }
             for (int mediumEnemyRow = 0; mediumEnemyRow < MEDIUM_ENEMY_ROWS; mediumEnemyRow++) {
-                Enemy mediumEnemy = new MediumEnemy(10 + 100 * column, 90 * currentRow, enemyWidth, enemyHeight, 0,
+                Enemy mediumEnemy = new MediumEnemy(COLL_OFFSET + COLLUMN_SIZE * column, ROW_SIZE * currentRow, enemyWidth, enemyHeight, 0,
                         fieldWidth, fieldHeight);
                 enemies.add(mediumEnemy);
                 currentRow++;
                 addedEntities.add(mediumEnemy);
             }
             for (int largeEnemyRow = 0; largeEnemyRow < LARGE_ENEMY_ROWS; largeEnemyRow++) {
-                Enemy largeEnemy = new LargeEnemy(10 + 100 * column, 90 * currentRow, enemyWidth, enemyHeight, 0,
+                Enemy largeEnemy = new LargeEnemy(COLL_OFFSET + COLLUMN_SIZE * column, ROW_SIZE * currentRow, enemyWidth, enemyHeight, 0,
                         fieldWidth, fieldHeight);
                 enemies.add(largeEnemy);
                 currentRow++;
@@ -113,7 +118,7 @@ public class Engine {
             try {
                 enemy.updatePosition();
                 if (random.nextDouble() < 0.0001) {
-                    Bullet enemyBullet = new Bullet(enemy.getPositionX(), enemy.getPositionY(), 30, 30,
+                    Bullet enemyBullet = new Bullet(enemy.getPositionX(), enemy.getPositionY(), BULLET_SIZE, BULLET_SIZE,
                             Direction.SOUTH);
                     enemyBullets.add(enemyBullet);
                     addedEntities.add(enemyBullet);

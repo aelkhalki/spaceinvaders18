@@ -21,7 +21,7 @@ public class Sprite {
     public void render(GraphicsContext gc) {
         Integer positionX = entity.getPositionX();
         Integer positionY = entity.getPositionY();
-        gc.drawImage(image, positionX, positionY);
+        gc.drawImage(image, positionX, positionY,50,50);
     }
 
     public Rectangle2D getBoundingBox() {
