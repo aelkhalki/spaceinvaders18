@@ -1,4 +1,4 @@
-package spaceinvaders.gui;
+package nl.delftelectronics.spaceinvaders.gui;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -20,16 +20,19 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
-import spaceinvaders.core.AutomaticMovable;
-import spaceinvaders.core.BoundaryReachedException;
-import spaceinvaders.core.Bullet;
-import spaceinvaders.core.Enemy;
-import spaceinvaders.core.Entity;
-import spaceinvaders.core.LargeEnemy;
-import spaceinvaders.core.MediumEnemy;
-import spaceinvaders.core.Ship;
-import spaceinvaders.core.SmallEnemy;
-import spaceinvaders.core.EnemyReachedBottomException;
+
+import nl.delftelectronics.spaceinvaders.core.Actor;
+import nl.delftelectronics.spaceinvaders.core.AutomaticMovable;
+import nl.delftelectronics.spaceinvaders.core.BoundaryReachedException;
+import nl.delftelectronics.spaceinvaders.core.Bullet;
+import nl.delftelectronics.spaceinvaders.core.Direction;
+import nl.delftelectronics.spaceinvaders.core.Enemy;
+import nl.delftelectronics.spaceinvaders.core.Entity;
+import nl.delftelectronics.spaceinvaders.core.LargeEnemy;
+import nl.delftelectronics.spaceinvaders.core.MediumEnemy;
+import nl.delftelectronics.spaceinvaders.core.Ship;
+import nl.delftelectronics.spaceinvaders.core.SmallEnemy;
+import nl.delftelectronics.spaceinvaders.core.EnemyReachedBottomException;
 
 public class GUI extends Application {
     private static final Integer FPS = 24;
@@ -42,11 +45,12 @@ public class GUI extends Application {
     private static final Double SHIP_MARGIN_FROM_LEFT = 5 / 100.0;
     private static final Double SHIP_MARGIN_FROM_BOTTOM = 10 / 100.0;
     private static final String WINDOW_TITLE = "Space Invaders";
-    private static final String SHIP_FILENAME = "spaceinvaders/gui/resources/ship.png";
-    private static final String BULLET_FILENAME = "spaceinvaders/gui/resources/ufo.png";
-    private static final String SMALL_ENEMY_FILENAME = "spaceinvaders/gui/resources/small_enemy.png";
-    private static final String MEDIUM_ENEMY_FILENAME = "spaceinvaders/gui/resources/medium_enemy.png";
-    private static final String LARGE_ENEMY_FILENAME = "spaceinvaders/gui/resources/large_enemy.png";
+
+    private static final String SHIP_FILENAME = "/ship.png";
+    private static final String BULLET_FILENAME = "/ufo.png";
+    private static final String SMALL_ENEMY_FILENAME = "/small_enemy.png";
+    private static final String MEDIUM_ENEMY_FILENAME = "/medium_enemy.png";
+    private static final String LARGE_ENEMY_FILENAME = "/large_enemy.png";
 
     private Collection<Sprite> sprites = new ArrayList<Sprite>();
     private List<Sprite> enemies = new ArrayList<Sprite>();
@@ -54,6 +58,10 @@ public class GUI extends Application {
     private Collection<Sprite> bullets = new ArrayList<Sprite>();
     private Collection<Sprite> enemyBullets = new ArrayList<Sprite>();
 
+    private GraphicsContext gc;
+    private ArrayList<String> input;
+    private Actor shipActor;
+    
     public static void main(String[] args) {
         launch(args);
     }
@@ -69,7 +77,7 @@ public class GUI extends Application {
         Canvas canvas = new Canvas(WINDOW_WIDTH, WINDOW_HEIGHT);
         root.getChildren().add(canvas);
 
-        ArrayList<String> input = new ArrayList<String>();
+        input = new ArrayList<String>();
 
         scene.setOnKeyPressed(
                 new EventHandler<KeyEvent>() {
@@ -88,19 +96,21 @@ public class GUI extends Application {
                     }
                 });
 
-        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc = canvas.getGraphicsContext2D();
 
         Integer shipPositionX = (int) (WINDOW_WIDTH * SHIP_MARGIN_FROM_LEFT);
         Integer shipPositionY = (int) (WINDOW_HEIGHT * (1 - SHIP_MARGIN_FROM_BOTTOM));
 
         Image shipImage = new Image(SHIP_FILENAME);
-        Ship shipActor = new Ship(shipPositionX, shipPositionY);
-        Sprite ship = new Sprite(shipActor, shipImage);
+        final Ship shipActor = new Ship(shipPositionX, shipPositionY);
+
+        final Sprite ship = new Sprite(shipActor, shipImage);
         sprites.add(ship);
 
         Image smallEnemyImage = new Image(SMALL_ENEMY_FILENAME);
         Image mediumEnemyImage = new Image(MEDIUM_ENEMY_FILENAME);
         Image largeEnemyImage = new Image(LARGE_ENEMY_FILENAME);
+        
         for (int column = 0; column < ENEMY_COLUMNS; column++) {
             for (int smallEnemyRow = 0; smallEnemyRow < SMALL_ENEMY_ROWS; smallEnemyRow++) {
                 int row = smallEnemyRow;
@@ -129,7 +139,7 @@ public class GUI extends Application {
             }
         }
 
-        Image bulletImage = new Image(BULLET_FILENAME);
+        final Image bulletImage = new Image(BULLET_FILENAME);
 
         gc.setFill(Color.RED);
         gc.setStroke(Color.BLACK);
@@ -137,10 +147,10 @@ public class GUI extends Application {
         Font font = Font.font("Arial", FontWeight.BOLD, 48);
         gc.setFont(font);
 
-        Rectangle2D startGame = new Rectangle2D(0, 0, 500, 100);
-        Rectangle2D quitGame = new Rectangle2D(0, 400, 500, 100);
+        final Rectangle2D startGame = new Rectangle2D(0, 0, 500, 100);
+        final Rectangle2D quitGame = new Rectangle2D(0, 400, 500, 100);
 
-        boolean[] started = { false };
+        final boolean[] started = { false };
 
         scene.setOnMouseClicked(
                 new EventHandler<MouseEvent>() {
@@ -197,7 +207,7 @@ public class GUI extends Application {
                     if (random.nextDouble() < 0.00005) {
                         Entity enemy = enemySprite.getEntity();
                         Bullet enemyBullet = new Bullet(enemy.getPositionX(), enemy.getPositionY(),
-                                spaceinvaders.core.Direction.SOUTH);
+                        		Direction.SOUTH);
                         Sprite enemyBulletSprite = new Sprite(enemyBullet, bulletImage);
                         sprites.add(enemyBulletSprite);
                         enemyBullets.add(enemyBulletSprite);
@@ -221,7 +231,7 @@ public class GUI extends Application {
                     while (enemyIterator.hasNext()) {
                         Sprite enemySprite = enemyIterator.next();
                         if (bullet.intersects(enemySprite)) {
-                            Enemy enemy = (Enemy) enemySprite.getEntity();
+                             Enemy enemy = (Enemy) enemySprite.getEntity();
                             bulletIterator.remove();
                             enemyIterator.remove();
                             npcs.remove(enemy);

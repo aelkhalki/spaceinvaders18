@@ -1,4 +1,4 @@
-package spaceinvaders.core;
+package nl.delftelectronics.spaceinvaders.core;
 
 public class Bullet extends Entity implements AutomaticMovable {
     private static final Integer MOVING_SPEED = 15;

@@ -1,4 +1,4 @@
-package spaceinvaders.core;
+package nl.delftelectronics.spaceinvaders.core;
 
 public class SmallEnemy extends Enemy {
     private static final Integer points = 40;

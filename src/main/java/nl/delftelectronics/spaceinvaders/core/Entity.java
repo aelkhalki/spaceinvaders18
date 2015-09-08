@@ -1,4 +1,4 @@
-package spaceinvaders.core;
+package nl.delftelectronics.spaceinvaders.core;
 
 public abstract class Entity {
     private Integer positionX;
