@@ -3,8 +3,8 @@ package nl.delftelectronics.spaceinvaders.core;
 public abstract class Actor extends Entity {
     protected static final Integer MOVING_SPEED = 5;
 
-    public Actor(Integer positionX, Integer positionY) {
-        super(positionX, positionY);
+    public Actor(Integer positionX, Integer positionY, Integer width, Integer height) {
+        super(positionX, positionY, width, height);
     }
 
     public void moveLeft() {

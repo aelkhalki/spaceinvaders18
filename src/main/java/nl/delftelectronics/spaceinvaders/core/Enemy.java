@@ -9,18 +9,18 @@ public abstract class Enemy extends Actor implements AutomaticMovable {
     private Integer eastBoundary;
     private Integer southBoundary;
 
-    public Enemy(Integer positionX, Integer positionY, Integer westBoundary, Integer eastBoundary,
-            Integer southBoundary, Direction movingDirection) {
-        super(positionX, positionY);
+    public Enemy(Integer positionX, Integer positionY, Integer width, Integer height, Integer westBoundary,
+            Integer eastBoundary, Integer southBoundary, Direction movingDirection) {
+        super(positionX, positionY, width, height);
         this.setMovingDirection(movingDirection);
         this.westBoundary = westBoundary;
         this.eastBoundary = eastBoundary;
         this.southBoundary = southBoundary;
     }
 
-    public Enemy(Integer positionX, Integer positionY, Integer westBoundary, Integer eastBoundary,
-            Integer southBoundary) {
-        this(positionX, positionY, westBoundary, eastBoundary, southBoundary, Direction.EAST);
+    public Enemy(Integer positionX, Integer positionY, Integer width, Integer height, Integer westBoundary,
+            Integer eastBoundary, Integer southBoundary) {
+        this(positionX, positionY, width, height, westBoundary, eastBoundary, southBoundary, Direction.EAST);
     }
 
     public Direction getMovingDirection() {
