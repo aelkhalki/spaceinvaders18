@@ -36,8 +36,8 @@ import nl.delftelectronics.spaceinvaders.core.EnemyReachedBottomException;
 
 public class GUI extends Application {
     private static final Integer FPS = 24;
-    private static final Integer WINDOW_WIDTH = 1680;
-    private static final Integer WINDOW_HEIGHT = 1050;
+    private static final Integer WINDOW_WIDTH = 1366;
+    private static final Integer WINDOW_HEIGHT = 768;
     private static final String WINDOW_TITLE = "Space Invaders";
 
     private static final String SHIP_FILENAME = "/ship.png";
@@ -50,7 +50,11 @@ public class GUI extends Application {
     private ArrayList<String> inputs = new ArrayList<String>();
     private HashMap<Entity, Sprite> sprites = new HashMap<Entity, Sprite>();
 
-    private GraphicsContext gc;
+    public static Integer getWindowWidth() {
+		return WINDOW_WIDTH;
+	}
+
+	private GraphicsContext gc;
     private ArrayList<String> input;
     private Actor shipActor;
     
