@@ -40,11 +40,6 @@ public class GUI extends Application {
     private static final Integer WINDOW_HEIGHT = 1050;
     private static final String WINDOW_TITLE = "Space Invaders";
 
-    private static final String SHIP_FILENAME = "/ship.png";
-    private static final String BULLET_FILENAME = "/ufo.png";
-    private static final String SMALL_ENEMY_FILENAME = "/small_enemy.png";
-    private static final String MEDIUM_ENEMY_FILENAME = "/medium_enemy.png";
-    private static final String LARGE_ENEMY_FILENAME = "/large_enemy.png";
 
     private Scene scene;
     private ArrayList<String> inputs = new ArrayList<String>();
