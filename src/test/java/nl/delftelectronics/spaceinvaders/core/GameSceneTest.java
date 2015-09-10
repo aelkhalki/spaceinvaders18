@@ -8,14 +8,11 @@ import junit.framework.Assert;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 import org.joda.time.Interval;
 
 import javafx.scene.Scene;
-import javafx.stage.Stage;
 import javafx.scene.canvas.GraphicsContext;
 
 /**
@@ -47,7 +44,7 @@ public class GameSceneTest extends TestCase {
 		scene.addEntity(e2);
 		GraphicsContext c = null; // Unable to mock final class GraphicsContext
 		scene.draw(c);
-		verify(e2).Draw(any(Interval.class), eq(c));
+		verify(e2).draw(any(Interval.class), eq(c));
 	}
 
 	/**
@@ -78,7 +75,12 @@ public class GameSceneTest extends TestCase {
 		verify(e).initialize(scene);
 	}
 	
-	class DestroyEntity extends Entity {
+	/**
+	 * Class used to test entities that remove themselves
+	 * @author Max
+	 *
+	 */
+	static class DestroyEntity extends Entity {
 		public int updateCount = 0;
 
 		@Override

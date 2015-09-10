@@ -11,5 +11,5 @@ import java.util.EventListener;
  *
  */
 public interface EntityDestroyedListener extends EventListener {
-	public void entityDestroyed(Entity entity);
+	void entityDestroyed(Entity entity);
 }

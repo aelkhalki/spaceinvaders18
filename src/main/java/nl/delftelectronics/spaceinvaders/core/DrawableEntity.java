@@ -1,13 +1,12 @@
 package nl.delftelectronics.spaceinvaders.core;
 
 import java.awt.Rectangle;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
-import javax.swing.event.EventListenerList;
-
 import org.joda.time.Interval;
 
+/**
+ * Represents an entity that can draw itself
+ */
 public class DrawableEntity extends Entity {
 	private Integer positionX;
 	private Integer positionY;
@@ -23,7 +22,12 @@ public class DrawableEntity extends Entity {
 		this.rectangle = new Rectangle(positionX, positionY, width, height);
 	}
 	
-	public void Draw(Interval timeStep, GraphicsContext gc) {
+	/**
+	 * Called when the entity should draw itself
+	 * @param timeStep The interval since the last draw
+	 * @param gc The context to draw in
+	 */
+	public void draw(Interval timeStep, GraphicsContext gc) {
 		
 	}
 

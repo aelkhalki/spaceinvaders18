@@ -37,7 +37,7 @@ public abstract class SpriteEntity extends DrawableEntity {
 	}
 
 	@Override
-	public void Draw(Interval timeStep, GraphicsContext gc) {
+	public void draw(Interval timeStep, GraphicsContext gc) {
 		gc.drawImage(image, getPositionX(), getPositionY(), getWidth(), getHeight());
 	}
 }

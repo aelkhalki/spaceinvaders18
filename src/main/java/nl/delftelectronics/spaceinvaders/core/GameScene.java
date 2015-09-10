@@ -9,7 +9,6 @@ import java.util.List;
 import org.joda.time.Instant;
 import org.joda.time.Interval;
 
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 
@@ -27,9 +26,7 @@ public class GameScene implements EntityDestroyedListener {
 	
 	/**
 	 * Creates a new GameScene with a given width and height
-	 * @param root The root to attach to
-	 * @param width The width of the scene
-	 * @param height The height of the scene
+	 * @param scene The scene to attach to
 	 */
 	public GameScene(Scene scene) {
 		this.scene = scene;
@@ -40,18 +37,21 @@ public class GameScene implements EntityDestroyedListener {
 	 * Afterwards the entities that fired a destroy event are removed from the scene
 	 */
 	public void update() {
-		if (lastUpdate == null)
+		if (lastUpdate == null) {
 			lastUpdate = new Instant();
+		}
 		
 		Instant now = new Instant();
 		Interval delta = new Interval(lastUpdate, now);
 		lastUpdate = now;
 		
-		for(Entity e : entities)
+		for (Entity e : entities) {
 			e.update(delta);
+		}
 		
-		for(Entity e : deletes)
+		for (Entity e : deletes) {
 			entities.remove(e);
+		}
 		deletes.clear();
 	}
 	
@@ -60,18 +60,21 @@ public class GameScene implements EntityDestroyedListener {
 	 * @param gc The graphicsContext to draw in
 	 */
 	public void draw(GraphicsContext gc) {
-		if (lastDraw == null)
+		if (lastDraw == null) {
 			lastDraw = new Instant();
+		}
 		
 		Instant now = new Instant();
 		Interval delta = new Interval(lastDraw, now);
 		lastDraw = now;
 		
-		for(Entity e : entities)
-			if(e instanceof DrawableEntity)
-				((DrawableEntity)e).Draw(delta, gc);
+		for (Entity e : entities) {
+			if (e instanceof DrawableEntity) {
+				((DrawableEntity) e).draw(delta, gc);
+			}
+		}
 		
-		for(Entity e : deletes) {
+		for (Entity e : deletes) {
 			entities.remove(e);
 			deletes.remove(e);
 		}
@@ -79,7 +82,7 @@ public class GameScene implements EntityDestroyedListener {
 	
 	/**
 	 * Adds an entity to the scene
-	 * @param entity
+	 * @param entity The entity to add
 	 */
 	public void addEntity(Entity entity) {
 		entities.add(entity);
@@ -90,6 +93,7 @@ public class GameScene implements EntityDestroyedListener {
 	/**
 	 * Is called when Destroy() is called on a contained entity
 	 * This schedules the entity to be removed
+	 * @param entity The entity that destroyed itself
 	 */
 	public void entityDestroyed(Entity entity) {
 		deletes.add(entity);
