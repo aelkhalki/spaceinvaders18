@@ -1,7 +1,9 @@
 package nl.delftelectronics.spaceinvaders.core;
 
+import org.joda.time.Interval;
+
 public class Bullet extends SpriteEntity implements AutomaticMovable {
-    private static final Integer MOVING_SPEED = 15;
+    public static final Integer MOVING_SPEED = 15;
     private static final String FILENAME = "/ufo.png";
     private Direction direction;
 
@@ -12,6 +14,11 @@ public class Bullet extends SpriteEntity implements AutomaticMovable {
 
     public Direction getDirection() {
         return direction;
+    }
+    
+    @Override
+    public void update(Interval delta) {
+    	updatePosition();
     }
 
     public void updatePosition() {

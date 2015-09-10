@@ -14,6 +14,7 @@ import javafx.scene.image.Image;
  */
 public abstract class SpriteEntity extends DrawableEntity {
 	protected Image image;
+	protected String spriteName;
 	
 	/**
 	 * @param positionX
@@ -24,6 +25,13 @@ public abstract class SpriteEntity extends DrawableEntity {
 	 */
 	public SpriteEntity(Integer positionX, Integer positionY, Integer width, Integer height, String spriteName) {
 		super(positionX, positionY, width, height);
+		
+		this.spriteName = spriteName;
+	}
+	
+	@Override
+	public void initialize(GameScene scene) {
+		super.initialize(scene);
 		
 		image = new Image(spriteName);
 	}

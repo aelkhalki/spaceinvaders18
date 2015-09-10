@@ -13,8 +13,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.joda.time.Interval;
-import org.junit.Test;
-import org.testfx.framework.junit.ApplicationTest;
 
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -30,7 +28,6 @@ public class GameSceneTest extends TestCase {
 	/**
 	 * Test method for {@link nl.delftelectronics.spaceinvaders.core.GameScene#update()}.
 	 */
-	@Test
 	public void testUpdate() {
 		GameScene scene = new GameScene(mock(Scene.class));
 		Entity e = mock(Entity.class);
@@ -42,7 +39,6 @@ public class GameSceneTest extends TestCase {
 	/**
 	 * Test method for {@link nl.delftelectronics.spaceinvaders.core.GameScene#draw(javafx.scene.canvas.GraphicsContext)}.
 	 */
-	@Test
 	public void testDraw() {
 		GameScene scene = new GameScene(mock(Scene.class));
 		Entity e1 = mock(Entity.class);
@@ -57,7 +53,6 @@ public class GameSceneTest extends TestCase {
 	/**
 	 * Test method for {@link nl.delftelectronics.spaceinvaders.core.GameScene#entityDestroyed(nl.delftelectronics.spaceinvaders.core.Entity)}.
 	 */
-	@Test
 	public void testEntityDestroyed() {
 		GameScene scene = new GameScene(mock(Scene.class));
 		DestroyEntity e = new DestroyEntity();
@@ -76,7 +71,6 @@ public class GameSceneTest extends TestCase {
 	/**
 	 * Test method for {@link nl.delftelectronics.spaceinvaders.core.GameScene#addEntity(nl.delftelectronics.spaceinvaders.core.Entity)}.
 	 */
-	@Test
 	public void testAddEntity() {
 		GameScene scene = new GameScene(mock(Scene.class));
 		Entity e = mock(Entity.class);

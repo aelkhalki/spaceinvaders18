@@ -147,7 +147,6 @@ public class Engine {
         Iterator<Bullet> playerBulletIterator = playerBullets.iterator();
         while (playerBulletIterator.hasNext()) {
             Bullet playerBullet = playerBulletIterator.next();
-            playerBullet.updatePosition();
             Iterator<Enemy> enemyIterator = enemies.iterator();
             while (enemyIterator.hasNext()) {
                 Enemy enemy = enemyIterator.next();
@@ -166,7 +165,6 @@ public class Engine {
         Iterator<Bullet> enemyBulletIterator = enemyBullets.iterator();
         while (enemyBulletIterator.hasNext()) {
             Bullet enemyBullet = enemyBulletIterator.next();
-            enemyBullet.updatePosition();
             if (enemyBullet.intersects(ship)) {
                 enemyBulletIterator.remove();
                 lives--;
