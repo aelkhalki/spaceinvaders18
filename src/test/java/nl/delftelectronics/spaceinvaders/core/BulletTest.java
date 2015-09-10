@@ -22,7 +22,7 @@ public class BulletTest extends TestCase {
 		
 		Bullet down = new Bullet(10, 10, 10, 10, Direction.SOUTH);
 		Assert.assertEquals((long) 10, (long) down.getPositionY());
-		bullet.update(new Interval(0, 1000));
+		down.update(new Interval(0, 1000));
 		Assert.assertEquals((long) 10 + Bullet.MOVING_SPEED, (long) down.getPositionY());
 	}
 

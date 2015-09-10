@@ -9,7 +9,9 @@ import org.joda.time.Interval;
  */
 public class Bullet extends SpriteEntity implements AutomaticMovable {
     public static final Integer MOVING_SPEED = 15;
-    private static final String FILENAME = "/ufo.png";
+    private static final String FILENAME = "/bullet.png";
+    public static final Integer WIDTH = 3;
+    public static final Integer HEIGHT = 10;
     private Direction direction;
 
     /**
@@ -23,12 +25,14 @@ public class Bullet extends SpriteEntity implements AutomaticMovable {
     public Bullet(Integer positionX, Integer positionY,
     		Integer width, Integer height, Direction direction) {
         super(positionX, positionY, width, height, FILENAME);
+
         this.direction = direction;
     }
 
     /**
-     * Requests the firing direction
-     * @return the firing direction
+     * Return the direction of the Bullet.
+     *
+     * @return the direction of the Bullet.
      */
     public Direction getDirection() {
         return direction;
