@@ -1,49 +1,73 @@
+/**
+ * 
+ */
 package nl.delftelectronics.spaceinvaders.core;
 
-import java.awt.Rectangle;
+import javax.swing.event.EventListenerList;
+import javafx.scene.Scene;
+import org.joda.time.Interval;
 
-public abstract class Entity implements Displayable {
-    private Integer positionX;
-    private Integer positionY;
-    private Integer width;
-    private Integer height;
-    private Rectangle rectangle;
+/**
+ * @author Max
+ *
+ */
+public class Entity {
+	private EventListenerList destroyedEvent;
+	private Boolean destroyed;
+	protected GameScene scene;
+	
+	public Entity() {
+		this.destroyedEvent = new EventListenerList();
+		this.destroyed = false;
+	}
+	
+	public void initialize(GameScene scene) {
+		this.scene = scene;
+	}
+	
+	public void update(Interval timeStep) {
+		
+	}
+	
+	/**
+	 * Adds a listener to the destroy event
+	 * @param listener the listener to add
+	 */
+	public void addDestroyedListener(EntityDestroyedListener listener) {
+		synchronized(destroyedEvent){
+			this.destroyedEvent.add(EntityDestroyedListener.class, listener);
+			if (destroyed)
+				listener.entityDestroyed(this);
+		}
+	}
 
-    public Entity(Integer positionX, Integer positionY, Integer width, Integer height) {
-        this.positionX = positionX;
-        this.positionY = positionY;
-        this.width = width;
-        this.height = height;
-        this.rectangle = new Rectangle(positionX, positionY, width, height);
-    }
+	/**
+	 * Removes a listener from the destroy event
+	 * @param listener the listener to remove
+	 */
+	public void removeDestroyedListener(EntityDestroyedListener listener) {
+		synchronized(destroyedEvent) {
+			this.destroyedEvent.remove(EntityDestroyedListener.class, listener);
+		}
+	}
 
-    public Integer getPositionX() {
-        return positionX;
-    }
-
-    public void setPositionX(Integer newPosition) {
-        positionX = newPosition;
-        rectangle.setLocation(positionX, positionY);
-    }
-
-    public Integer getPositionY() {
-        return positionY;
-    }
-
-    public void setPositionY(Integer newPosition) {
-        positionY = newPosition;
-        rectangle.setLocation(positionX, positionY);
-    }
-
-    public Integer getWidth() {
-        return width;
-    }
-
-    public Integer getHeight() {
-        return height;
-    }
-
-    public boolean intersects(Entity other) {
-        return rectangle.intersects(other.rectangle);
-    }
+	/**
+	 * Notifies subscribed listeners of the destroy event
+	 * This will only notify listeners once
+	 */
+	public void destroy() {
+		synchronized (destroyedEvent) {
+			if (destroyed) {
+				return;
+			}
+			destroyed = true;
+			
+			EntityDestroyedListener[] listeners = destroyedEvent.getListeners(EntityDestroyedListener.class);
+			for(EntityDestroyedListener e : listeners) {
+				e.entityDestroyed(this);
+			}
+		}
+	}
+	
+	
 }

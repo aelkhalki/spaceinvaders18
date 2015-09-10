@@ -1,12 +1,12 @@
 package nl.delftelectronics.spaceinvaders.core;
 
-public class Bullet extends Entity implements AutomaticMovable {
+public class Bullet extends SpriteEntity implements AutomaticMovable {
     private static final Integer MOVING_SPEED = 15;
     private static final String FILENAME = "/ufo.png";
     private Direction direction;
 
     public Bullet(Integer positionX, Integer positionY, Integer width, Integer height, Direction direction) {
-        super(positionX, positionY, width, height);
+        super(positionX, positionY, width, height, FILENAME);
         this.direction = direction;
     }
 
@@ -20,9 +20,5 @@ public class Bullet extends Entity implements AutomaticMovable {
         } else if (direction == Direction.SOUTH) {
             setPositionY(getPositionY() + MOVING_SPEED);
         }
-    }
-
-    public String getSpriteFilename() {
-        return FILENAME;
     }
 }

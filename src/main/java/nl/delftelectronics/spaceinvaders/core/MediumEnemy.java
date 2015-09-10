@@ -6,20 +6,16 @@ public class MediumEnemy extends Enemy {
 
     public MediumEnemy(Integer positionX, Integer positionY, Integer width, Integer height, Integer westBoundary,
             Integer eastBoundary, Integer southBoundary, Direction movingDirection) {
-        super(positionX, positionY, width, height, westBoundary, eastBoundary, southBoundary, movingDirection);
+        super(positionX, positionY, width, height, westBoundary, eastBoundary, southBoundary, movingDirection, FILENAME);
     }
 
     public MediumEnemy(Integer positionX, Integer positionY, Integer width, Integer height, Integer westBoundary,
             Integer eastBoundary, Integer southBoundary) {
-        super(positionX, positionY, width, height, westBoundary, eastBoundary, southBoundary);
+        super(positionX, positionY, width, height, westBoundary, eastBoundary, southBoundary, FILENAME);
     }
 
     @Override
     public Integer getPoints() {
         return points;
-    }
-
-    public String getSpriteFilename() {
-        return FILENAME;
     }
 }
