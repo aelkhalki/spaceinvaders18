@@ -20,14 +20,15 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 import nl.delftelectronics.spaceinvaders.core.Engine;
-import nl.delftelectronics.spaceinvaders.core.Entity;
+import nl.delftelectronics.spaceinvaders.core.GameScene;
+import nl.delftelectronics.spaceinvaders.core.DrawableEntity;
 import nl.delftelectronics.spaceinvaders.core.Actor;
 import nl.delftelectronics.spaceinvaders.core.AutomaticMovable;
 import nl.delftelectronics.spaceinvaders.core.BoundaryReachedException;
 import nl.delftelectronics.spaceinvaders.core.Bullet;
 import nl.delftelectronics.spaceinvaders.core.Direction;
 import nl.delftelectronics.spaceinvaders.core.Enemy;
-import nl.delftelectronics.spaceinvaders.core.Entity;
+import nl.delftelectronics.spaceinvaders.core.DrawableEntity;
 import nl.delftelectronics.spaceinvaders.core.LargeEnemy;
 import nl.delftelectronics.spaceinvaders.core.MediumEnemy;
 import nl.delftelectronics.spaceinvaders.core.Ship;
@@ -40,15 +41,10 @@ public class GUI extends Application {
     private static final Integer WINDOW_HEIGHT = 1050;
     private static final String WINDOW_TITLE = "Space Invaders";
 
-    private static final String SHIP_FILENAME = "/ship.png";
-    private static final String BULLET_FILENAME = "/ufo.png";
-    private static final String SMALL_ENEMY_FILENAME = "/small_enemy.png";
-    private static final String MEDIUM_ENEMY_FILENAME = "/medium_enemy.png";
-    private static final String LARGE_ENEMY_FILENAME = "/large_enemy.png";
 
     private Scene scene;
     private ArrayList<String> inputs = new ArrayList<String>();
-    private HashMap<Entity, Sprite> sprites = new HashMap<Entity, Sprite>();
+    private HashMap<DrawableEntity, Sprite> sprites = new HashMap<DrawableEntity, Sprite>();
 
     private GraphicsContext gc;
     private ArrayList<String> input;
@@ -63,7 +59,7 @@ public class GUI extends Application {
         setWindowTitle(primaryStage, WINDOW_TITLE);
         final GraphicsContext gc = initializeScene(primaryStage, WINDOW_WIDTH, WINDOW_HEIGHT);
 
-        final Engine engine = new Engine(WINDOW_WIDTH, WINDOW_HEIGHT);
+        final Engine engine = new Engine(WINDOW_WIDTH, WINDOW_HEIGHT, new GameScene(scene));
 
         gc.setFill(Color.RED);
         gc.setStroke(Color.BLACK);
@@ -131,9 +127,12 @@ public class GUI extends Application {
                 gc.setFill(Color.BLACK);
                 gc.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
                 gc.setFill(Color.RED);
-                for (Sprite sprite : sprites.values()) {
-                    sprite.render(gc);
-                }
+                //for (Sprite sprite : sprites.values()) {
+                //    sprite.render(gc);
+                //}
+                
+                engine.draw(gc);
+                
                 gc.fillText(String.format("Lives: %d", engine.getLives()), 60, 50);
                 gc.fillText(String.format("Points: %d", engine.getPoints()), 900, 50);
 
@@ -183,21 +182,21 @@ public class GUI extends Application {
         return gc;
     }
 
-    public Sprite createSprite(Entity entity, String imageFilename) {
+    public Sprite createSprite(DrawableEntity entity, String imageFilename) {
         Image image = new Image(imageFilename);
         Sprite sprite = new Sprite(entity, image);
         sprites.put(entity, sprite);
         return sprite;
     }
 
-    public void addEntities(Collection<Entity> entities) {
-        for (Entity entity : entities) {
-            createSprite(entity, entity.getSpriteFilename());
+    public void addEntities(Collection<DrawableEntity> entities) {
+        for (DrawableEntity entity : entities) {
+            createSprite(entity, "/ship.png");
         }
     }
 
-    public void removeEntities(Collection<Entity> entities) {
-        for (Entity entity : entities) {
+    public void removeEntities(Collection<DrawableEntity> entities) {
+        for (DrawableEntity entity : entities) {
             sprites.remove(entity);
         }
     }
