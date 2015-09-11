@@ -1,6 +1,13 @@
 package nl.delftelectronics.spaceinvaders.core;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.verify;
+
+import java.util.Arrays;
+
 import org.joda.time.Interval;
+import org.mockito.ArgumentCaptor;
 
 import junit.framework.Assert;
 import junit.framework.TestCase;
@@ -25,5 +32,5 @@ public class BulletTest extends TestCase {
 		down.update(new Interval(0, 1000));
 		Assert.assertEquals((long) 10 + Bullet.MOVING_SPEED, (long) down.getPositionY());
 	}
-
+	
 }
