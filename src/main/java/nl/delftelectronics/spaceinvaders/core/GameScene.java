@@ -11,6 +11,7 @@ import org.joda.time.Interval;
 
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
+import java.awt.Rectangle;
 
 /**
  * Manages a set of entities
@@ -22,6 +23,8 @@ public class GameScene implements EntityDestroyedListener {
 	private List<Entity> deletes = new ArrayList<Entity>();
 	private Instant lastUpdate;
 	private Instant lastDraw;
+	private boolean hasLoadedGraphics = false;
+	private GraphicsContext graphicsContext;
 	protected Scene scene;
 	
 	/**
@@ -60,6 +63,15 @@ public class GameScene implements EntityDestroyedListener {
 	 * @param gc The graphicsContext to draw in
 	 */
 	public void draw(GraphicsContext gc) {
+		if (!hasLoadedGraphics) {
+			hasLoadedGraphics = true;
+			for (Entity e : entities) {
+				if (e instanceof DrawableEntity) {
+					((DrawableEntity) e).initializeGraphics(gc);
+				}
+			}
+		}
+		
 		if (lastDraw == null) {
 			lastDraw = new Instant();
 		}
@@ -81,6 +93,37 @@ public class GameScene implements EntityDestroyedListener {
 	}
 	
 	/**
+	 * Computes collisions for Collidable entities and returns the list of Entities you're colliding with 
+	 * @param collidee The Entity to use as reference
+	 * @return The list of Entities it collides with
+	 */
+	public List<Entity> getCollisions(Collidable collidee) {
+		ArrayList<Entity> result = new ArrayList<Entity>();
+		
+		Rectangle referenceRectangle = new Rectangle(
+				collidee.getPositionX(), collidee.getPositionY(),
+				collidee.getWidth(), collidee.getHeight());
+		
+		for (Entity candidate : entities) {
+			if (candidate == collidee) {
+				continue;
+			}
+			if (candidate instanceof Collidable) {
+				Collidable c = (Collidable) candidate;
+				Rectangle testRectangle = new Rectangle(
+						c.getPositionX(), c.getPositionY(),
+						c.getWidth(), c.getHeight());
+				
+				if (referenceRectangle.intersects(testRectangle)) {
+					result.add(candidate);
+				}
+			}
+		}
+		
+		return result;
+	}
+	
+	/**
 	 * Adds an entity to the scene
 	 * @param entity The entity to add
 	 */
@@ -88,6 +131,10 @@ public class GameScene implements EntityDestroyedListener {
 		entities.add(entity);
 		entity.initialize(this);
 		entity.addDestroyedListener(this);
+		
+		if (hasLoadedGraphics && entity instanceof DrawableEntity) {
+			((DrawableEntity) entity).initializeGraphics(graphicsContext);
+		}
 	}
 
 	/**

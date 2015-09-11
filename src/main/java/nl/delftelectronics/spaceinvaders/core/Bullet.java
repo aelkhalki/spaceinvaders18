@@ -1,5 +1,7 @@
 package nl.delftelectronics.spaceinvaders.core;
 
+import java.util.List;
+
 import org.joda.time.Interval;
 
 /**
@@ -7,12 +9,13 @@ import org.joda.time.Interval;
  * @author Max
  *
  */
-public class Bullet extends SpriteEntity implements AutomaticMovable {
+public class Bullet extends SpriteEntity implements AutomaticMovable, Collidable {
     public static final Integer MOVING_SPEED = 15;
     private static final String FILENAME = "/bullet.png";
     public static final Integer WIDTH = 3;
     public static final Integer HEIGHT = 10;
     private Direction direction;
+    private boolean isPlayerOwned;
 
     /**
      * Creates a new bullet at a specified location
@@ -23,10 +26,11 @@ public class Bullet extends SpriteEntity implements AutomaticMovable {
      * @param direction The firing direction (must be up or down)
      */
     public Bullet(Integer positionX, Integer positionY,
-    		Integer width, Integer height, Direction direction) {
+    		Integer width, Integer height, boolean isPlayerOwned) {
         super(positionX, positionY, width, height, FILENAME);
 
-        this.direction = direction;
+        this.isPlayerOwned = isPlayerOwned;
+        this.direction = isPlayerOwned ? Direction.NORTH : Direction.SOUTH;
     }
 
     /**
@@ -44,6 +48,26 @@ public class Bullet extends SpriteEntity implements AutomaticMovable {
     @Override
     public void update(Interval delta) {
     	updatePosition();
+    	
+    	List<Entity> collisions = scene.getCollisions(this);
+    	
+    	if (isPlayerOwned) {
+    		for (Entity e : collisions) {
+    			if (e instanceof Enemy) {
+    				destroy();
+    				Enemy enemy = (Enemy) e;
+    				enemy.kill();
+    			}
+    		}
+    	} else {
+    		for (Entity e : collisions) {
+    			if (e instanceof Ship) {
+    				destroy();
+    				Ship s = (Ship) e;
+    				s.hit();
+    			}
+    		}
+    	}
     }
 
     /**

@@ -76,6 +76,31 @@ public class GameSceneTest extends TestCase {
 	}
 	
 	/**
+	 * Test method for {@link nl.delftelectronics.spaceinvaders.core.GameScene#getCollisions(nl.delftelectronics.spaceinvaders.core.Collidable)}.
+	 */
+	public void testCollisions() {
+		GameScene scene = new GameScene(mock(Scene.class));
+		CollisionEntity first = new CollisionEntity(0, 0, 10, 10);
+		scene.addEntity(first);
+		
+		Assert.assertEquals(0, scene.getCollisions(first).size());
+		
+		CollisionEntity second = new CollisionEntity(100, 100, 10, 10);
+		scene.addEntity(second);
+		Assert.assertEquals(0, scene.getCollisions(first).size());
+		
+		CollisionEntity third = new CollisionEntity(5, 5, 10, 50);
+		scene.addEntity(third);
+		Assert.assertEquals(1, scene.getCollisions(first).size());
+		Assert.assertEquals(third, scene.getCollisions(first).get(0));
+		
+		Entity fourth = new Entity();
+		scene.addEntity(fourth);
+		Assert.assertEquals(1, scene.getCollisions(first).size());
+		Assert.assertEquals(third, scene.getCollisions(first).get(0));
+	}
+	
+	/**
 	 * Class used to test entities that remove themselves
 	 * @author Max
 	 *
@@ -87,6 +112,18 @@ public class GameSceneTest extends TestCase {
 		public void update(Interval delta) {
 			updateCount++;
 			destroy();
+		}
+	}
+	
+	/**
+	 * Class used to test entities that collide
+	 * @author Max
+	 *
+	 */
+	static class CollisionEntity extends DrawableEntity implements Collidable {
+
+		public CollisionEntity(Integer positionX, Integer positionY, Integer width, Integer height) {
+			super(positionX, positionY, width, height);
 		}
 	}
 }

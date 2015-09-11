@@ -30,8 +30,16 @@ public class DrawableEntity extends Entity {
 	public void draw(Interval timeStep, GraphicsContext gc) {
 		
 	}
+	
+	/**
+	 * Called after intialize. Used to load graphical resources if neccecary
+	 * @param gc The graphical context to load the resources in
+	 */
+	public void initializeGraphics(GraphicsContext gc) {
+		
+	}
 
-	public Integer getPositionX() {
+	public int getPositionX() {
 		return positionX;
 	}
 
@@ -40,7 +48,7 @@ public class DrawableEntity extends Entity {
 		rectangle.setLocation(positionX, positionY);
 	}
 
-	public Integer getPositionY() {
+	public int getPositionY() {
 		return positionY;
 	}
 
@@ -49,11 +57,11 @@ public class DrawableEntity extends Entity {
 		rectangle.setLocation(positionX, positionY);
 	}
 
-	public Integer getWidth() {
+	public int getWidth() {
 		return width;
 	}
 
-	public Integer getHeight() {
+	public int getHeight() {
 		return height;
 	}
 

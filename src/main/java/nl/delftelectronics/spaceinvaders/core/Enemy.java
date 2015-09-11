@@ -6,7 +6,7 @@ package nl.delftelectronics.spaceinvaders.core;
  * boundary of the playing field, after which it will move down and start moving the other
  * direction horizontally.
  */
-public abstract class Enemy extends Actor implements AutomaticMovable {
+public abstract class Enemy extends Actor implements AutomaticMovable, Collidable {
     protected static final Integer MOVING_SPEED = 3;
     protected static final Integer MOVE_DOWN_SPEED = 20;
     private static final Integer MARGIN_FROM_BOTTOM = 100;
@@ -15,6 +15,7 @@ public abstract class Enemy extends Actor implements AutomaticMovable {
     private Integer westBoundary;
     private Integer eastBoundary;
     private Integer southBoundary;
+    private boolean isKilled = false;
 
     /**
      * Create an Enemy with the initial position, the size, the boundaries of the playing field
@@ -65,6 +66,27 @@ public abstract class Enemy extends Actor implements AutomaticMovable {
      */
     public Direction getMovingDirection() {
         return movingDirection;
+    }
+    
+    /**
+     * Destroys the Entity and decrements the enemy count
+     */
+    public void kill() {
+    	if (isKilled) {
+    		return;
+    	}
+    	
+    	isKilled = true;
+    	destroy();
+    	
+    	if (scene instanceof PlayScene) {
+    		PlayScene s = (PlayScene) scene;
+    		s.enemyCount--;
+    		
+    		if (s.enemyCount == 0) {
+    			s.win();
+    		}
+    	}
     }
 
     /**

@@ -30,9 +30,8 @@ public abstract class SpriteEntity extends DrawableEntity {
 	}
 	
 	@Override
-	public void initialize(GameScene scene) {
-		super.initialize(scene);
-		
+	public void initializeGraphics(GraphicsContext gc) {
+		super.initializeGraphics(gc);
 		image = new Image(spriteName);
 	}
 
