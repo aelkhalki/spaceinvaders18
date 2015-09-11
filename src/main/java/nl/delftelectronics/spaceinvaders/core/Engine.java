@@ -3,6 +3,7 @@ package nl.delftelectronics.spaceinvaders.core;
 import java.util.*;
 
 import javafx.scene.canvas.GraphicsContext;
+import com.google.common.collect.Iterators;
 
 public class Engine {
     private static final int SMALL_ENEMY_ROWS = 1;
@@ -27,6 +28,7 @@ public class Engine {
     private ArrayList<Enemy> enemies;
     private ArrayList<Bullet> playerBullets;
     private ArrayList<Bullet> enemyBullets;
+    private ArrayList<Ufo> ufos;
 
     private ArrayList<DrawableEntity> addedEntities = new ArrayList<DrawableEntity>();
     private ArrayList<DrawableEntity> removedEntities = new ArrayList<DrawableEntity>();
@@ -38,6 +40,7 @@ public class Engine {
 
         this.playerBullets = new ArrayList<Bullet>();
         this.enemyBullets = new ArrayList<Bullet>();
+        this.ufos = new ArrayList<Ufo>();
     }
 
     public Ship getShip() {
@@ -129,6 +132,11 @@ public class Engine {
         updateEnemyPositions();
         updatePlayerBullets();
         updateEnemyBullets();
+        updateUfos();
+
+        if (random.nextDouble() < 0.002) {
+            createUfo();
+        }
 
         currentScene.update();
     }
@@ -176,7 +184,9 @@ public class Engine {
         while (playerProjectileIterator.hasNext()) {
             Bullet playerProjectile = playerProjectileIterator.next();
             playerProjectile.updatePosition();
-            Iterator<Enemy> enemyIterator = enemies.iterator();
+            Iterator<Enemy> regularEnemyIterator = enemies.iterator();
+            Iterator<Ufo> ufoIterator = ufos.iterator();
+            Iterator<Enemy> enemyIterator = Iterators.concat(regularEnemyIterator, ufoIterator);
             boolean intersection = false;
             Set<Enemy> enemiesInRadiusOfThisBullet = new HashSet<Enemy>();
             while (enemyIterator.hasNext()) {
@@ -221,6 +231,28 @@ public class Engine {
                 removedEntities.add(enemyBullet);
                 enemyBullet.destroy();
             }
+        }
+    }
+
+    public void createUfo() {
+        Integer randomBoundary;
+        Direction randomDirection;
+        if (random.nextBoolean()) {
+            randomBoundary = 0;
+            randomDirection = Direction.EAST;
+        } else {
+            randomBoundary = fieldWidth;
+            randomDirection = Direction.WEST;
+        }
+        Ufo ufo = new Ufo(randomBoundary, 100, 0, fieldWidth, randomDirection);
+        ufos.add(ufo);
+        addedEntities.add(ufo);
+        currentScene.addEntity(ufo);
+    }
+
+    public void updateUfos() {
+        for (Ufo ufo : ufos) {
+            ufo.updatePosition();
         }
     }
 
