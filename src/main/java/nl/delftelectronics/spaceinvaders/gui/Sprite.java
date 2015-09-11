@@ -1,8 +1,5 @@
 package nl.delftelectronics.spaceinvaders.gui;
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
-
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -13,9 +10,7 @@ public class Sprite {
     private Image image;
     private Double width;
     private Double height;
-    private double scaleX = 50;
-    private double scaleY = 50;
-    
+
     public Sprite(Entity entity, Image image) {
         this.entity = entity;
         this.image = image;
@@ -24,12 +19,8 @@ public class Sprite {
     }
 
     public void render(GraphicsContext gc) {
-    	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    	//double x = ((scaleY/1280)*screenSize.getHeight());
-    	//double y = ((scaleY/800)*screenSize.getWidth());
         Integer positionX = entity.getPositionX();
         Integer positionY = entity.getPositionY();
-        
         gc.drawImage(image, positionX, positionY);
     }
 
