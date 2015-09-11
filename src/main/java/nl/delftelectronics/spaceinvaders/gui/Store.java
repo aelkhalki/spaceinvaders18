@@ -43,7 +43,7 @@ public class Store {
 		case 4:
 			if(engine.getPoints()>= VERTICAL){
 				engine.setPoints(engine.getPoints()-VERTICAL);
-				Ship.setLIFE(Ship.getLIFE()+1);
+				Ship.setLIFE(Ship.getVERTICAL()+1);
 			}
 			break;
 			
