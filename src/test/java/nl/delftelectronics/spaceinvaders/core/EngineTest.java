@@ -3,25 +3,32 @@ package nl.delftelectronics.spaceinvaders.core;
 import junit.framework.TestCase;
 import org.mockito.ArgumentCaptor;
 
-import java.awt.*;
+import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Collection;
 
 import static org.mockito.Matchers.isA;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.when;
 
 /**
  * Test the Engine class.
  */
 public class EngineTest extends TestCase {
+    private static final int DIMENSION = 100;
+
     /**
      * Add the enemies. Check if the right amount of enemies are added to the scene.
      */
     public void testEnemiesAdded() {
+        final int numberOfEnemies = 60;
         GameScene gameScene = mock(GameScene.class);
-        Engine engine = new Engine(10000, 10000, gameScene);
-        engine.startGame(100, 100, 100, 100);
-        verify(gameScene, times(60)).addEntity(isA(Enemy.class));
+        Engine engine = new Engine(DIMENSION, DIMENSION, gameScene);
+        engine.startGame(DIMENSION, DIMENSION, DIMENSION, DIMENSION);
+        verify(gameScene, times(numberOfEnemies)).addEntity(isA(Enemy.class));
     }
 
     /**
@@ -29,8 +36,8 @@ public class EngineTest extends TestCase {
      */
     public void testPlayerShootBullet() {
         GameScene gameScene = mock(GameScene.class);
-        Engine engine = new Engine(10000, 10000, gameScene);
-        engine.startGame(100, 100, 100, 100);
+        Engine engine = new Engine(DIMENSION, DIMENSION, gameScene);
+        engine.startGame(DIMENSION, DIMENSION, DIMENSION, DIMENSION);
         engine.playerShootBullet();
         verify(gameScene, times(1)).addEntity(isA(Bullet.class));
     }
@@ -40,8 +47,8 @@ public class EngineTest extends TestCase {
      */
     public void testPlayerShootBomb() {
         GameScene gameScene = mock(GameScene.class);
-        Engine engine = new Engine(10000, 10000, gameScene);
-        engine.startGame(100, 100, 100, 100);
+        Engine engine = new Engine(DIMENSION, DIMENSION, gameScene);
+        engine.startGame(DIMENSION, DIMENSION, DIMENSION, DIMENSION);
         engine.playerShootBomb();
         verify(gameScene, times(1)).addEntity(isA(Bomb.class));
     }
@@ -50,16 +57,17 @@ public class EngineTest extends TestCase {
      * Let the update its position. Check if the right method to update the enemy position is
      * called.
      *
-     * @throws EnemyReachedBottomException
-     * @throws BoundaryReachedException
+     * @throws EnemyReachedBottomException enemy reached the bottom of the playing field.
+     * @throws BoundaryReachedException    enemy reached a boundary of the playing field.
      */
-    public void testEnemyPositionUpdate() throws EnemyReachedBottomException, BoundaryReachedException {
+    public void testEnemyPositionUpdate() throws EnemyReachedBottomException,
+            BoundaryReachedException {
         GameScene gameScene = mock(GameScene.class);
         Collection<Enemy> enemies = new ArrayList<Enemy>();
         Enemy enemy = mock(Enemy.class);
         enemies.add(enemy);
-        Engine engine = new Engine(10000, 10000, gameScene);
-        engine.startGame(100, 100, 100, 100);
+        Engine engine = new Engine(DIMENSION, DIMENSION, gameScene);
+        engine.startGame(DIMENSION, DIMENSION, DIMENSION, DIMENSION);
         engine.updateEnemyPositions(enemies);
         verify(enemy, times(1)).updatePosition();
     }
@@ -69,8 +77,8 @@ public class EngineTest extends TestCase {
      */
     public void testPlayerBulletsPositionUpdate() {
         GameScene gameScene = mock(GameScene.class);
-        Engine engine = new Engine(10000, 10000, gameScene);
-        engine.startGame(100, 100, 100, 100);
+        Engine engine = new Engine(DIMENSION, DIMENSION, gameScene);
+        engine.startGame(DIMENSION, DIMENSION, DIMENSION, DIMENSION);
         ArgumentCaptor<Bullet> bulletCaptor = ArgumentCaptor.forClass(Bullet.class);
         reset(gameScene);
         engine.playerShootBullet();
@@ -87,8 +95,8 @@ public class EngineTest extends TestCase {
      */
     public void testPlayerBulletAndEnemyCollision_BulletRemoval() {
         GameScene gameScene = mock(GameScene.class);
-        Engine engine = new Engine(100, 150, gameScene);
-        engine.startGame(100, 100, 100, 100);
+        Engine engine = new Engine(DIMENSION, DIMENSION, gameScene);
+        engine.startGame(DIMENSION, DIMENSION, DIMENSION, DIMENSION);
         ArgumentCaptor<Bullet> bulletCaptor = ArgumentCaptor.forClass(Bullet.class);
         reset(gameScene);
         engine.playerShootBullet();
@@ -103,12 +111,12 @@ public class EngineTest extends TestCase {
      */
     public void testPlayerBulletAndEnemyCollision_EnemyRemoval() {
         GameScene gameScene = mock(GameScene.class);
-        Engine engine = new Engine(100, 150, gameScene);
-        engine.startGame(100, 100, 100, 100);
+        Engine engine = new Engine(DIMENSION, DIMENSION, gameScene);
+        engine.startGame(DIMENSION, DIMENSION, DIMENSION, DIMENSION);
         engine.playerShootBullet();
         Collection<Enemy> enemies = new ArrayList<Enemy>();
         Enemy enemy = mock(Enemy.class);
-        Rectangle boundingBox = new Rectangle(0, 0, 100, 150);
+        Rectangle boundingBox = new Rectangle(0, 0, DIMENSION, DIMENSION);
         when(enemy.getBoundingBox()).thenReturn(boundingBox);
         enemies.add(enemy);
         engine.updatePlayerBullets(enemies);
@@ -120,8 +128,8 @@ public class EngineTest extends TestCase {
      */
     public void testEnemyBulletAndShipCollision() {
         GameScene gameScene = mock(GameScene.class);
-        Engine engine = new Engine(100, 100, gameScene);
-        engine.startGame(100, 100, 100, 100);
+        Engine engine = new Engine(DIMENSION, DIMENSION, gameScene);
+        engine.startGame(DIMENSION, DIMENSION, DIMENSION, DIMENSION);
         Enemy enemy = mock(Enemy.class);
         when(enemy.getPositionX()).thenReturn(0);
         when(enemy.getPositionY()).thenReturn(0);
@@ -137,8 +145,8 @@ public class EngineTest extends TestCase {
      */
     public void testEnemyShootBullet() {
         GameScene gameScene = mock(GameScene.class);
-        Engine engine = new Engine(10000, 10000, gameScene);
-        engine.startGame(100, 100, 100, 100);
+        Engine engine = new Engine(DIMENSION, DIMENSION, gameScene);
+        engine.startGame(DIMENSION, DIMENSION, DIMENSION, DIMENSION);
         Enemy enemy = mock(Enemy.class);
         engine.createEnemyBullet(enemy);
         verify(gameScene, times(1)).addEntity(isA(Bullet.class));

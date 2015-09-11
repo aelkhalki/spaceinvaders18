@@ -23,7 +23,7 @@ import javafx.scene.canvas.GraphicsContext;
 public class GameSceneTest extends TestCase {
 
 	/**
-	 * Test method for {@link nl.delftelectronics.spaceinvaders.core.GameScene#update()}.
+	 * Test method for {@link GameScene#update()}.
 	 */
 	public void testUpdate() {
 		GameScene scene = new GameScene(mock(Scene.class));
@@ -34,7 +34,8 @@ public class GameSceneTest extends TestCase {
 	}
 
 	/**
-	 * Test method for {@link nl.delftelectronics.spaceinvaders.core.GameScene#draw(javafx.scene.canvas.GraphicsContext)}.
+	 * Test method for
+	 * {@link GameScene#draw(javafx.scene.canvas.GraphicsContext)}.
 	 */
 	public void testDraw() {
 		GameScene scene = new GameScene(mock(Scene.class));
@@ -48,7 +49,7 @@ public class GameSceneTest extends TestCase {
 	}
 
 	/**
-	 * Test method for {@link nl.delftelectronics.spaceinvaders.core.GameScene#entityDestroyed(nl.delftelectronics.spaceinvaders.core.Entity)}.
+	 * Test method for {@link GameScene#entityDestroyed(Entity)}.
 	 */
 	public void testEntityDestroyed() {
 		GameScene scene = new GameScene(mock(Scene.class));
@@ -66,7 +67,7 @@ public class GameSceneTest extends TestCase {
 	}
 	
 	/**
-	 * Test method for {@link nl.delftelectronics.spaceinvaders.core.GameScene#addEntity(nl.delftelectronics.spaceinvaders.core.Entity)}.
+	 * Test method for {@link GameScene#addEntity(Entity)}.
 	 */
 	public void testAddEntity() {
 		GameScene scene = new GameScene(mock(Scene.class));

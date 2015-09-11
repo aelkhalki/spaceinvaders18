@@ -28,6 +28,7 @@ public abstract class Enemy extends Actor implements AutomaticMovable {
      * @param eastBoundary    easternmost boundary of the playing field.
      * @param southBoundary   southernmost boundary of the playing field.
      * @param movingDirection initial direction of the Enemy.
+     * @param spriteName      filename of the sprite.
      */
     public Enemy(Integer positionX, Integer positionY, Integer width, Integer height,
                  Integer westBoundary, Integer eastBoundary, Integer southBoundary,
@@ -50,6 +51,7 @@ public abstract class Enemy extends Actor implements AutomaticMovable {
      * @param westBoundary  westernmost boundary of the playing field.
      * @param eastBoundary  easternmost boundary of the playing field.
      * @param southBoundary southernmost boundary of the playing field.
+     * @param spriteName    filename of the sprite.
      */
     public Enemy(Integer positionX, Integer positionY, Integer width, Integer height,
                  Integer westBoundary, Integer eastBoundary, Integer southBoundary,
