@@ -80,5 +80,5 @@ public class Entity {
 				e.entityDestroyed(this);
 			}
 		}
-	}	
+	}
 }

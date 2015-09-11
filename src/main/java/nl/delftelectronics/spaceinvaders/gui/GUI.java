@@ -118,6 +118,9 @@ public class GUI extends Application {
                 if (inputs.contains("SPACE")) {
                     engine.playerShootBullet();
                 }
+                if (inputs.contains("X")) {
+                    engine.playerShootBomb();
+                }
 
                 addEntities(engine.getAddedEntities());
                 removeEntities(engine.getRemovedEntities());

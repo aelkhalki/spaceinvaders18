@@ -1,14 +1,16 @@
 package nl.delftelectronics.spaceinvaders.core;
 
 import org.joda.time.Interval;
+import java.awt.Rectangle;
 
 /**
  * Represents a bullet fired by the player or an enemy
  * @author Max
  *
  */
-public class Bullet extends SpriteEntity implements AutomaticMovable {
+public class Bullet extends SpriteEntity implements AutomaticMovable, Projectile {
     public static final Integer MOVING_SPEED = 15;
+    private static final Integer IMPACT_RADIUS = 1;
     private static final String FILENAME = "/bullet.png";
     public static final Integer WIDTH = 3;
     public static final Integer HEIGHT = 10;
@@ -25,6 +27,13 @@ public class Bullet extends SpriteEntity implements AutomaticMovable {
     public Bullet(Integer positionX, Integer positionY,
     		Integer width, Integer height, Direction direction) {
         super(positionX, positionY, width, height, FILENAME);
+
+        this.direction = direction;
+    }
+
+    public Bullet(Integer positionX, Integer positionY,
+                  Integer width, Integer height, Direction direction, String filename) {
+        super(positionX, positionY, width, height, filename);
 
         this.direction = direction;
     }
@@ -55,5 +64,20 @@ public class Bullet extends SpriteEntity implements AutomaticMovable {
         } else if (direction == Direction.SOUTH) {
             setPositionY(getPositionY() + MOVING_SPEED);
         }
+    }
+
+    /**
+     * Return the bounding box of the impact area.
+     *
+     * @return the bounding box of the impact area.
+     */
+    public Rectangle impactArea() {
+        return new Rectangle(getPositionX() - IMPACT_RADIUS / 2, getPositionY() - IMPACT_RADIUS / 2,
+                IMPACT_RADIUS * 2,
+                IMPACT_RADIUS * 2);
+    }
+
+    public boolean intersects(DrawableEntity other) {
+        return impactArea().intersects(other.getBoundingBox());
     }
 }
