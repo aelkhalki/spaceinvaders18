@@ -20,7 +20,7 @@ public class Engine {
     private int lives = 3;
     private int points = 0;
     private boolean reachedBottom = false;
-    
+
     private GameScene currentScene;
 
     private Ship ship;
@@ -60,9 +60,9 @@ public class Engine {
         addedEntities.add(ship);
         currentScene.addEntity(this.ship);
         this.enemies = createEnemies(enemyWidth, enemyHeight);
-        
-        for(Enemy e : this.enemies) {
-        	currentScene.addEntity(e);
+
+        for (Enemy e : this.enemies) {
+            currentScene.addEntity(e);
         }
     }
 
@@ -126,19 +126,24 @@ public class Engine {
     }
 
     public void update() {
-    	currentScene.update();
-    	
-        boolean moveDown = false;
+        updateEnemyPositions();
+        updatePlayerBullets();
+        updateEnemyBullets();
 
+        currentScene.update();
+    }
+
+    public void updateEnemyPositions() {
+        updateEnemyPositions(this.enemies);
+    }
+
+    public void updateEnemyPositions(Collection<Enemy> enemies) {
+        boolean moveDown = false;
         for (Enemy enemy : enemies) {
             try {
                 enemy.updatePosition();
                 if (random.nextDouble() < 0.0001) {
-                    Bullet enemyBullet = new Bullet(enemy.getPositionX(), enemy.getPositionY(), 3, 10,
-                            Direction.SOUTH);
-                    enemyBullets.add(enemyBullet);
-                    addedEntities.add(enemyBullet);
-                    currentScene.addEntity(enemyBullet);
+                    createEnemyBullet(enemy);
                 }
             } catch (BoundaryReachedException e) {
                 moveDown = true;
@@ -151,7 +156,21 @@ public class Engine {
                 enemy.moveDown();
             }
         }
+    }
 
+    public void createEnemyBullet(Enemy enemy) {
+        Bullet enemyBullet = new Bullet(enemy.getPositionX(), enemy.getPositionY(), 3, 10,
+                Direction.SOUTH);
+        enemyBullets.add(enemyBullet);
+        addedEntities.add(enemyBullet);
+        currentScene.addEntity(enemyBullet);
+    }
+
+    public void updatePlayerBullets() {
+        updatePlayerBullets(this.enemies);
+    }
+
+    public void updatePlayerBullets(Collection<Enemy> enemies) {
         Set<Enemy> enemiesToRemove = new HashSet<Enemy>();
         Iterator<Bullet> playerProjectileIterator = playerBullets.iterator();
         while (playerProjectileIterator.hasNext()) {
@@ -190,7 +209,9 @@ public class Engine {
             enemies.remove(enemy);
             enemy.destroy();
         }
+    }
 
+    public void updateEnemyBullets() {
         Iterator<Bullet> enemyBulletIterator = enemyBullets.iterator();
         while (enemyBulletIterator.hasNext()) {
             Bullet enemyBullet = enemyBulletIterator.next();
@@ -202,9 +223,9 @@ public class Engine {
             }
         }
     }
-    
+
     public void draw(GraphicsContext gc) {
-    	currentScene.draw(gc);
+        currentScene.draw(gc);
     }
 
     public void clearChangedEntities() {
