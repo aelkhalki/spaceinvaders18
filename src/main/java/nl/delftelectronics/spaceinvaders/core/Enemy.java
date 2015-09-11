@@ -1,20 +1,23 @@
 package nl.delftelectronics.spaceinvaders.core;
 
+import org.joda.time.Interval;
+
 /**
  * An Enemy is an object that moves on itself and tries to shoot bullets at the player. The Enemy
  * starts moving east. The enemy will continue moving horizontally until it has reached a
  * boundary of the playing field, after which it will move down and start moving the other
  * direction horizontally.
  */
-public abstract class Enemy extends Actor implements AutomaticMovable, Collidable {
+public abstract class Enemy extends Actor implements Collidable {
     protected static final Integer MOVING_SPEED = 3;
     protected static final Integer MOVE_DOWN_SPEED = 20;
     private static final Integer MARGIN_FROM_BOTTOM = 100;
 
-    private Direction movingDirection;
     private Integer westBoundary;
     private Integer eastBoundary;
     private Integer southBoundary;
+    private PlayScene playScene;
+    private EnemyBlock block;
     private boolean isKilled = false;
 
     /**
@@ -28,44 +31,26 @@ public abstract class Enemy extends Actor implements AutomaticMovable, Collidabl
      * @param westBoundary    westernmost boundary of the playing field.
      * @param eastBoundary    easternmost boundary of the playing field.
      * @param southBoundary   southernmost boundary of the playing field.
-     * @param movingDirection initial direction of the Enemy.
      */
     public Enemy(Integer positionX, Integer positionY, Integer width, Integer height,
                  Integer westBoundary, Integer eastBoundary, Integer southBoundary,
-                 Direction movingDirection, String spriteName) {
-        super(positionX, positionY, width, height, spriteName);
-        this.setMovingDirection(movingDirection);
+                 EnemyBlock block, String spriteName) {
+        super(positionX, positionY, width, height, spriteName, westBoundary, eastBoundary);
         this.westBoundary = westBoundary;
         this.eastBoundary = eastBoundary;
         this.southBoundary = southBoundary;
+        this.block = block;
     }
-
+    
     /**
-     * Create an Enemy with the initial position, the size, the boundaries of the playing field.
-     * The initial direction is east.
-     *
-     * @param positionX     initial x-position of the Enemy.
-     * @param positionY     initial y-position of the Enemy.
-     * @param width         width of the Enemy.
-     * @param height        height of the Enemy.
-     * @param westBoundary  westernmost boundary of the playing field.
-     * @param eastBoundary  easternmost boundary of the playing field.
-     * @param southBoundary southernmost boundary of the playing field.
+     * Creates a reference to the current PlayScene if it exists.
      */
-    public Enemy(Integer positionX, Integer positionY, Integer width, Integer height,
-                 Integer westBoundary, Integer eastBoundary, Integer southBoundary,
-                 String spriteName) {
-        this(positionX, positionY, width, height, westBoundary, eastBoundary, southBoundary,
-                Direction.EAST, spriteName);
-    }
-
-    /**
-     * Return the current Direction.
-     *
-     * @return the current Direction.
-     */
-    public Direction getMovingDirection() {
-        return movingDirection;
+    @Override
+    public void initialize(GameScene scene) {
+    	super.initialize(scene);
+    	if (scene instanceof PlayScene) {
+    		playScene = (PlayScene) scene;
+    	}
     }
     
     /**
@@ -79,44 +64,52 @@ public abstract class Enemy extends Actor implements AutomaticMovable, Collidabl
     	isKilled = true;
     	destroy();
     	
-    	if (scene instanceof PlayScene) {
-    		PlayScene s = (PlayScene) scene;
-    		s.enemyCount--;
+    	if (playScene != null) {
+    		playScene.enemyCount--;
     		
-    		if (s.enemyCount == 0) {
-    			s.win();
+    		if (playScene.enemyCount == 0) {
+    			playScene.win();
     		}
     	}
     }
 
     /**
-     * Change the Direction of this Enemy.
-     *
-     * @param movingDirection the new Direction of the Enemy.
-     */
-    public void setMovingDirection(Direction movingDirection) {
-        this.movingDirection = movingDirection;
-    }
-
-    /**
      * Update the position of the Bullet, based on the Direction and the MOVING_SPEED.
-     *
-     * @throws BoundaryReachedException    thrown iff the Enemy has reached the west or east
-     *                                     boundary.
-     * @throws EnemyReachedBottomException thrown iff the Enemy has approached the south boundary
-     *                                     of the playing field.
      */
-    public void updatePosition() throws BoundaryReachedException, EnemyReachedBottomException {
+    @Override
+    public void update(Interval delta) {
+    	Direction movingDirection = Direction.NORTH;
+    	movingDirection = block.getDirection();
+    	
+    	if (block.getShouldDrop()) {
+    		moveDown();
+    	}
+    	
         if (movingDirection == Direction.EAST) {
             setPositionX(getPositionX() + MOVING_SPEED);
         } else if (movingDirection == Direction.WEST) {
             setPositionX(getPositionX() - MOVING_SPEED);
         }
         if (reachedBoundary()) {
-            throw new BoundaryReachedException();
+        	block.Flip();
         } else if (reachedBottom()) {
-            throw new EnemyReachedBottomException();
+            if (playScene != null) {
+            	playScene.lose();
+            }
         }
+        
+        if (block.random.nextDouble() < 0.0001) {
+        	fire();
+        }
+    }
+    
+    /**
+     * Shoots a bullet
+     */
+    public void fire() {
+    	Bullet enemyBullet = new Bullet(getPositionX(), getPositionY(), 3, 10,
+                false);
+        scene.addEntity(enemyBullet);
     }
 
     /**
@@ -125,7 +118,7 @@ public abstract class Enemy extends Actor implements AutomaticMovable, Collidabl
      * @return true iff the Enemy has reached the west or east boundary.
      */
     public boolean reachedBoundary() {
-        return getPositionX() <= westBoundary || getPositionX() >= eastBoundary;
+        return getPositionX() <= westBoundary || getPositionX() + getWidth() >= eastBoundary;
     }
 
     /**
@@ -143,11 +136,6 @@ public abstract class Enemy extends Actor implements AutomaticMovable, Collidabl
      */
     public void moveDown() {
         setPositionY(getPositionY() + MOVE_DOWN_SPEED);
-        if (movingDirection == Direction.EAST) {
-            movingDirection = Direction.WEST;
-        } else if (movingDirection == Direction.WEST) {
-            movingDirection = Direction.EAST;
-        }
     }
 
     /**

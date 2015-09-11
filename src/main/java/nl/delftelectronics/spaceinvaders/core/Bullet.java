@@ -3,14 +3,16 @@ package nl.delftelectronics.spaceinvaders.core;
 import java.util.List;
 
 import org.joda.time.Interval;
+import java.awt.Rectangle;
 
 /**
  * Represents a bullet fired by the player or an enemy
  * @author Max
  *
  */
-public class Bullet extends SpriteEntity implements AutomaticMovable, Collidable {
+public class Bullet extends SpriteEntity implements AutomaticMovable, Projectile, Collidable {
     public static final Integer MOVING_SPEED = 15;
+    private static final Integer IMPACT_RADIUS = 1;
     private static final String FILENAME = "/bullet.png";
     public static final Integer WIDTH = 3;
     public static final Integer HEIGHT = 10;
@@ -31,6 +33,13 @@ public class Bullet extends SpriteEntity implements AutomaticMovable, Collidable
 
         this.isPlayerOwned = isPlayerOwned;
         this.direction = isPlayerOwned ? Direction.NORTH : Direction.SOUTH;
+    }
+
+    public Bullet(Integer positionX, Integer positionY,
+                  Integer width, Integer height, Direction direction, String filename) {
+        super(positionX, positionY, width, height, filename);
+
+        this.direction = direction;
     }
 
     /**
@@ -79,5 +88,16 @@ public class Bullet extends SpriteEntity implements AutomaticMovable, Collidable
         } else if (direction == Direction.SOUTH) {
             setPositionY(getPositionY() + MOVING_SPEED);
         }
+    }
+
+    /**
+     * Return the bounding box of the impact area.
+     *
+     * @return the bounding box of the impact area.
+     */
+    public Rectangle impactArea() {
+        return new Rectangle(getPositionX() - IMPACT_RADIUS / 2, getPositionY() - IMPACT_RADIUS / 2,
+                IMPACT_RADIUS * 2,
+                IMPACT_RADIUS * 2);
     }
 }

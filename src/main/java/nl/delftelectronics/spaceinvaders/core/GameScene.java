@@ -48,6 +48,14 @@ public class GameScene implements EntityDestroyedListener {
 		Interval delta = new Interval(lastUpdate, now);
 		lastUpdate = now;
 		
+		// Pre updates
+		for (Entity e : entities) {
+			if (e instanceof PreUpdatable) {
+				((PreUpdatable) e).preUpdate(delta);
+			}
+		}
+		
+		// Updates
 		for (Entity e : entities) {
 			e.update(delta);
 		}

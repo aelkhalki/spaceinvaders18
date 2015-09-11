@@ -22,26 +22,9 @@ public class LargeEnemy extends Enemy {
      */
     public LargeEnemy(Integer positionX, Integer positionY, Integer width, Integer height,
                       Integer westBoundary, Integer eastBoundary, Integer southBoundary,
-                      Direction movingDirection) {
+                      EnemyBlock block) {
         super(positionX, positionY, width, height, westBoundary, eastBoundary, southBoundary,
-                movingDirection, FILENAME);
-    }
-
-    /**
-     * Create a LargeEnemy with the initial position, the size, the boundaries of the playing field.
-     * The initial direction is set to east.
-     *
-     * @param positionX     initial x-position of the LargeEnemy.
-     * @param positionY     initial y-position of the LargeEnemy.
-     * @param width         width of the LargeEnemy.
-     * @param height        height of the LargeEnemy.
-     * @param westBoundary  westernmost boundary of the playing field.
-     * @param eastBoundary  easternmost boundary of the playing field.
-     * @param southBoundary southernmost boundary of the playing field.
-     */
-    public LargeEnemy(Integer positionX, Integer positionY, Integer width, Integer height,
-                      Integer westBoundary, Integer eastBoundary, Integer southBoundary) {
-        super(positionX, positionY, width, height, westBoundary, eastBoundary, southBoundary, FILENAME);
+                block, FILENAME);
     }
 
     @Override

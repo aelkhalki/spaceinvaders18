@@ -65,7 +65,11 @@ public class DrawableEntity extends Entity {
 		return height;
 	}
 
+	public Rectangle getBoundingBox() {
+        return rectangle;
+    }
+
 	public boolean intersects(DrawableEntity other) {
-		return rectangle.intersects(other.rectangle);
+		return rectangle.intersects(other.getBoundingBox());
 	}
 }

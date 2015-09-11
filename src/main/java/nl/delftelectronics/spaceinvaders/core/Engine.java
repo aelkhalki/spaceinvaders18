@@ -1,9 +1,6 @@
 package nl.delftelectronics.spaceinvaders.core;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Random;
+import java.util.*;
 
 import javafx.scene.canvas.GraphicsContext;
 
@@ -19,23 +16,12 @@ public class Engine {
     private int lives = 3;
     private int points = 0;
     private boolean reachedBottom = false;
-    
+
     private GameScene currentScene;
-
     private Ship ship;
-    private ArrayList<Enemy> enemies;
-    private ArrayList<Bullet> playerBullets;
-    private ArrayList<Bullet> enemyBullets;
-
-    private ArrayList<DrawableEntity> addedEntities = new ArrayList<DrawableEntity>();
-    private ArrayList<DrawableEntity> removedEntities = new ArrayList<DrawableEntity>();
 
     public Engine(int fieldWidth, int fieldHeight, GameScene startScene) {
         this.currentScene = startScene;
-
-        this.playerBullets = new ArrayList<Bullet>();
-        this.enemyBullets = new ArrayList<Bullet>();
-        
         Engine.instance = this;
     }
     
@@ -65,7 +51,6 @@ public class Engine {
 
     public ArrayList<Enemy> createEnemies(int enemyWidth, int enemyHeight) {
         ArrayList<Enemy> enemies = new ArrayList<Enemy>();
-        
         return enemies;
     }
 
@@ -74,9 +59,16 @@ public class Engine {
         if (currentNanoTime - previousBulletFireTime > 1000000000.0) {
             previousBulletFireTime = currentNanoTime;
             Bullet bullet = ship.shoot();
-            playerBullets.add(bullet);
-            addedEntities.add(bullet);
             currentScene.addEntity(bullet);
+        }
+    }
+
+    public void playerShootBomb() {
+        currentNanoTime = System.nanoTime();
+        if (currentNanoTime - previousBulletFireTime > 1000000000.0) {
+            previousBulletFireTime = currentNanoTime;
+            Bomb bomb = ship.shootBomb();
+            currentScene.addEntity(bomb);
         }
     }
 
@@ -89,80 +81,56 @@ public class Engine {
     }
 
     public void update() {
-    	currentScene.update();
-    	
-        boolean moveDown = false;
-
-        for (Enemy enemy : enemies) {
-            try {
-                enemy.updatePosition();
-                if (random.nextDouble() < 0.0001) {
-                    Bullet enemyBullet = new Bullet(enemy.getPositionX(), enemy.getPositionY(), 3, 10,
-                            false);
-                    enemyBullets.add(enemyBullet);
-                    addedEntities.add(enemyBullet);
-                    currentScene.addEntity(enemyBullet);
-                }
-            } catch (BoundaryReachedException e) {
-                moveDown = true;
-            } catch (EnemyReachedBottomException e) {
-                reachedBottom = true;
-            }
-        }
-        if (moveDown) {
-            for (Enemy enemy : enemies) {
-                enemy.moveDown();
-            }
-        }
-
-        Iterator<Bullet> playerBulletIterator = playerBullets.iterator();
-        while (playerBulletIterator.hasNext()) {
-            Bullet playerBullet = playerBulletIterator.next();
-            Iterator<Enemy> enemyIterator = enemies.iterator();
-            while (enemyIterator.hasNext()) {
-                Enemy enemy = enemyIterator.next();
-                if (playerBullet.intersects(enemy)) {
-                    playerBulletIterator.remove();
-                    enemyIterator.remove();
-                    points += enemy.getPoints();
-                    removedEntities.add(playerBullet);
-                    removedEntities.add(enemy);
-                    enemy.destroy();
-                    playerBullet.destroy();
-                }
-            }
-        }
-
-        Iterator<Bullet> enemyBulletIterator = enemyBullets.iterator();
-        while (enemyBulletIterator.hasNext()) {
-            Bullet enemyBullet = enemyBulletIterator.next();
-            if (enemyBullet.intersects(ship)) {
-                enemyBulletIterator.remove();
-                lives--;
-                removedEntities.add(enemyBullet);
-                enemyBullet.destroy();
-            }
-        }
+        currentScene.update();
     }
     
+    /*
+    public void updatePlayerBullets(Collection<Enemy> enemies) {
+        Set<Enemy> enemiesToRemove = new HashSet<Enemy>();
+        Iterator<Bullet> playerProjectileIterator = playerBullets.iterator();
+        while (playerProjectileIterator.hasNext()) {
+            Bullet playerProjectile = playerProjectileIterator.next();
+            playerProjectile.updatePosition();
+            Iterator<Enemy> enemyIterator = enemies.iterator();
+            boolean intersection = false;
+            Set<Enemy> enemiesInRadiusOfThisBullet = new HashSet<Enemy>();
+            while (enemyIterator.hasNext()) {
+                Enemy enemy = enemyIterator.next();
+                boolean inRadius = playerProjectile.impactArea().intersects(enemy.getBoundingBox());
+                if (playerProjectile.intersects(enemy)) {
+                    intersection = true;
+                    enemiesToRemove.addAll(enemiesInRadiusOfThisBullet);
+                }
+                if (inRadius && !intersection) {
+                    // This enemy within in the impact radius of the bullet. Should the bullet
+                    // actually hit an enemy, then the enemy will be removed.
+                    enemiesInRadiusOfThisBullet.add(enemy);
+                }
+                if (inRadius && intersection) {
+                    // This enemy within in the impact radius of the bullet, and the bullet has
+                    // hit an enemy, so this enemy should disappear.
+                    enemiesToRemove.add(enemy);
+                }
+            }
+            if (intersection) {
+                playerProjectileIterator.remove();
+                removedEntities.add(playerProjectile);
+                playerProjectile.destroy();
+            }
+        }
+        for (Enemy enemy : enemiesToRemove) {
+            points += enemy.getPoints();
+            removedEntities.add(enemy);
+            enemies.remove(enemy);
+            enemy.destroy();
+        }
+    }*/
+
     public void draw(GraphicsContext gc) {
-    	currentScene.draw(gc);
-    }
-
-    public void clearChangedEntities() {
-        addedEntities.clear();
-        removedEntities.clear();
-    }
-
-    public Collection<DrawableEntity> getAddedEntities() {
-        return addedEntities;
-    }
-
-    public Collection<DrawableEntity> getRemovedEntities() {
-        return removedEntities;
+        currentScene.draw(gc);
     }
 
     public boolean isInProgress() {
-        return !reachedBottom && lives > 0 && !enemies.isEmpty();
+        return !reachedBottom && lives > 0;
     }
 }

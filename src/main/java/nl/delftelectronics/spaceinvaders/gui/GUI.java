@@ -44,9 +44,9 @@ public class GUI extends Application {
 
     private Scene scene;
     private ArrayList<String> inputs = new ArrayList<String>();
-    private HashMap<DrawableEntity, Sprite> sprites = new HashMap<DrawableEntity, Sprite>();
-
+    
     private GraphicsContext gc;
+    private Engine engine;
     private ArrayList<String> input;
     private Actor shipActor;
     
@@ -57,9 +57,9 @@ public class GUI extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         setWindowTitle(primaryStage, WINDOW_TITLE);
-        final GraphicsContext gc = initializeScene(primaryStage, WINDOW_WIDTH, WINDOW_HEIGHT);
+        gc = initializeScene(primaryStage, WINDOW_WIDTH, WINDOW_HEIGHT);
 
-        final Engine engine = new Engine(WINDOW_WIDTH, WINDOW_HEIGHT, new GameScene(scene));
+        engine = new Engine(WINDOW_WIDTH, WINDOW_HEIGHT, new GameScene(scene));
 
         gc.setFill(Color.RED);
         gc.setStroke(Color.BLACK);
@@ -87,9 +87,9 @@ public class GUI extends Application {
                 });
 
         listenToKeyInput(scene, inputs);
+        final GUI gui = this;
 
         engine.startGame(100, 100, 100, 100);
-        addEntities(engine.getAddedEntities());
 
         new AnimationTimer() {
             private Long previousNanoTime = System.nanoTime();
@@ -105,46 +105,51 @@ public class GUI extends Application {
                     previousNanoTime = currentNanoTime;
                 }
 
-                engine.update();
+                gui.update();
 
-
-                if (inputs.contains("LEFT")) {
-                    engine.playerMoveLeft();
-                }
-                if (inputs.contains("RIGHT")) {
-                    engine.playerMoveRight();
-                }
-
-                if (inputs.contains("SPACE")) {
-                    engine.playerShootBullet();
-                }
-
-                addEntities(engine.getAddedEntities());
-                removeEntities(engine.getRemovedEntities());
-
-                engine.clearChangedEntities();
-
-                gc.setFill(Color.BLACK);
-                gc.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
-                gc.setFill(Color.RED);
-                //for (Sprite sprite : sprites.values()) {
-                //    sprite.render(gc);
-                //}
+                gui.draw();
                 
-                engine.draw(gc);
-                
-                gc.fillText(String.format("Lives: %d", engine.getLives()), 60, 50);
-                gc.fillText(String.format("Points: %d", engine.getPoints()), 900, 50);
-
                 if (!engine.isInProgress()) {
-                    gc.fillText("GAME OVER!", 600, 500);
-                    gc.strokeText("GAME OVER!", 600, 500);
-                    stop();
+                	stop();
                 }
             }
         }.start();
 
         primaryStage.show();
+    }
+    
+    private void draw() {
+    	gc.setFill(Color.BLACK);
+        gc.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+        gc.setFill(Color.RED);
+        
+        engine.draw(gc);
+        
+        gc.fillText(String.format("Lives: %d", engine.getLives()), 60, 50);
+        gc.fillText(String.format("Points: %d", engine.getPoints()), 900, 50);
+
+        if (!engine.isInProgress()) {
+            gc.fillText("GAME OVER!", 600, 500);
+            gc.strokeText("GAME OVER!", 600, 500);
+        }
+    }
+    
+    public void update() {
+    	engine.update();
+    	
+    	if (inputs.contains("LEFT")) {
+            engine.playerMoveLeft();
+        }
+        if (inputs.contains("RIGHT")) {
+            engine.playerMoveRight();
+        }
+
+        if (inputs.contains("SPACE")) {
+            engine.playerShootBullet();
+        }
+        if (inputs.contains("X")) {
+            engine.playerShootBomb();
+        }
     }
 
     public void listenToKeyInput(Scene scene, final Collection<String> input) {
@@ -172,7 +177,7 @@ public class GUI extends Application {
 
     public GraphicsContext initializeScene(Stage stage, int windowWidth, int windowHeight) {
         Group root = new Group();
-        this.scene = new Scene(root);
+        this.scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
         stage.setScene(scene);
 
         Canvas canvas = new Canvas(windowWidth, windowHeight);
@@ -180,24 +185,5 @@ public class GUI extends Application {
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
         return gc;
-    }
-
-    public Sprite createSprite(DrawableEntity entity, String imageFilename) {
-        Image image = new Image(imageFilename);
-        Sprite sprite = new Sprite(entity, image);
-        sprites.put(entity, sprite);
-        return sprite;
-    }
-
-    public void addEntities(Collection<DrawableEntity> entities) {
-        for (DrawableEntity entity : entities) {
-            createSprite(entity, "/ship.png");
-        }
-    }
-
-    public void removeEntities(Collection<DrawableEntity> entities) {
-        for (DrawableEntity entity : entities) {
-            sprites.remove(entity);
-        }
     }
 }

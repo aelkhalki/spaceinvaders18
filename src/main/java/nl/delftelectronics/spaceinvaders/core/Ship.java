@@ -11,13 +11,16 @@ public class Ship extends Actor implements Collidable {
     /**
      * Create a Ship with the initial position and size.
      *
-     * @param positionX initial x-position of the Ship.
-     * @param positionY initial y-position of the Ship.
-     * @param width     width of the Ship.
-     * @param height    height of the Ship.
+     * @param positionX    initial x-position of the Ship.
+     * @param positionY    initial y-position of the Ship.
+     * @param width        width of the Ship.
+     * @param height       height of the Ship.
+     * @param westBoundary westernmost boundary of the playing field.
+     * @param eastBoundary easternmost boundary of the playing field.
      */
-    public Ship(Integer positionX, Integer positionY, Integer width, Integer height) {
-        super(positionX, positionY, width, height, FILENAME);
+    public Ship(int positionX, int positionY, int width, int height,
+                int westBoundary, int eastBoundary) {
+        super(positionX, positionY, width, height, FILENAME, westBoundary, eastBoundary);
     }
 
     /**
@@ -52,5 +55,24 @@ public class Ship extends Actor implements Collidable {
     		PlayScene s = (PlayScene) scene;
     		s.lose();
     	}
+    }
+
+    /**
+     * Create a bomb in the position of the ship, facing upwards.
+     *
+     * @return a new bomb in the position of the ship, facing upwards.
+     */
+    public Bomb shootBomb() {
+        return new Bomb(getPositionX() + getWidth() / 2, getPositionY(), Bomb.WIDTH,
+                Bomb.HEIGHT, Direction.NORTH);
+    }
+
+    /**
+     * Return the filename of the ship sprite.
+     *
+     * @return the filename of the ship sprite.
+     */
+    public String getSpriteFilename() {
+        return FILENAME;
     }
 }
