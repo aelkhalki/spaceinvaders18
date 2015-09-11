@@ -46,4 +46,8 @@ public abstract class Entity implements Displayable {
     public boolean intersects(Entity other) {
         return rectangle.intersects(other.rectangle);
     }
+
+    public Rectangle getBoundingBox() {
+        return rectangle;
+    }
 }

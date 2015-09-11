@@ -1,10 +1,13 @@
 package nl.delftelectronics.spaceinvaders.core;
 
+import java.awt.Rectangle;
+
 /**
  * A Bullet is a projectile that can be shot by on object. A Bullet has a position and a direction.
  */
-public class Bullet extends Entity implements AutomaticMovable {
+public class Bullet extends Entity implements AutomaticMovable, Projectile {
     private static final Integer MOVING_SPEED = 15;
+    private static final Integer IMPACT_RADIUS = 1;
     private static final String FILENAME = "/bullet.png";
     public static final Integer WIDTH = 3;
     public static final Integer HEIGHT = 10;
@@ -43,6 +46,17 @@ public class Bullet extends Entity implements AutomaticMovable {
         } else if (direction == Direction.SOUTH) {
             setPositionY(getPositionY() + MOVING_SPEED);
         }
+    }
+
+    /**
+     * Return the bounding box of the impact area.
+     *
+     * @return the bounding box of the impact area.
+     */
+    public Rectangle impactArea() {
+        return new Rectangle(getPositionX() - IMPACT_RADIUS / 2, getPositionY() - IMPACT_RADIUS / 2,
+                IMPACT_RADIUS * 2,
+                IMPACT_RADIUS * 2);
     }
 
     /**

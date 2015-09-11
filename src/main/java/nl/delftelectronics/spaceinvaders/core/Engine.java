@@ -1,9 +1,6 @@
 package nl.delftelectronics.spaceinvaders.core;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Random;
+import java.util.*;
 
 public class Engine {
     private static final int SMALL_ENEMY_ROWS = 1;
@@ -98,6 +95,16 @@ public class Engine {
         }
     }
 
+    public void playerShootBomb() {
+        currentNanoTime = System.nanoTime();
+        if (currentNanoTime - previousBulletFireTime > 1000000000.0) {
+            previousBulletFireTime = currentNanoTime;
+            Bomb bomb = ship.shootBomb();
+            playerBullets.add(bomb);
+            addedEntities.add(bomb);
+        }
+    }
+
     public void playerMoveLeft() {
         ship.moveLeft();
     }
@@ -130,21 +137,41 @@ public class Engine {
             }
         }
 
-        Iterator<Bullet> playerBulletIterator = playerBullets.iterator();
-        while (playerBulletIterator.hasNext()) {
-            Bullet playerBullet = playerBulletIterator.next();
-            playerBullet.updatePosition();
+        Set<Enemy> enemiesToRemove = new HashSet<Enemy>();
+        Iterator<Bullet> playerProjectileIterator = playerBullets.iterator();
+        while (playerProjectileIterator.hasNext()) {
+            Bullet playerProjectile = playerProjectileIterator.next();
+            playerProjectile.updatePosition();
             Iterator<Enemy> enemyIterator = enemies.iterator();
+            boolean intersection = false;
+            Set<Enemy> enemiesInRadiusOfThisBullet = new HashSet<Enemy>();
             while (enemyIterator.hasNext()) {
                 Enemy enemy = enemyIterator.next();
-                if (playerBullet.intersects(enemy)) {
-                    playerBulletIterator.remove();
-                    enemyIterator.remove();
-                    points += enemy.getPoints();
-                    removedEntities.add(playerBullet);
-                    removedEntities.add(enemy);
+                boolean inRadius = playerProjectile.impactArea().intersects(enemy.getBoundingBox());
+                if (inRadius && !intersection) {
+                    // This enemy within in the impact radius of the bullet. Should the bullet
+                    // actually hit an enemy, then the enemy will be removed.
+                    enemiesInRadiusOfThisBullet.add(enemy);
+                }
+                if (inRadius && intersection) {
+                    // This enemy within in the impact radius of the bullet, and the bullet has
+                    // hit an enemy, so this enemy should disappear.
+                    enemiesToRemove.add(enemy);
+                }
+                if (playerProjectile.intersects(enemy)) {
+                    intersection = true;
+                    enemiesToRemove.addAll(enemiesInRadiusOfThisBullet);
                 }
             }
+            if (intersection) {
+                playerProjectileIterator.remove();
+                removedEntities.add(playerProjectile);
+            }
+        }
+        for (Enemy enemy : enemiesToRemove) {
+            points += enemy.getPoints();
+            removedEntities.add(enemy);
+            enemies.remove(enemy);
         }
 
         Iterator<Bullet> enemyBulletIterator = enemyBullets.iterator();

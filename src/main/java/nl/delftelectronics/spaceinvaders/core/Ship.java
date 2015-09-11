@@ -30,6 +30,16 @@ public class Ship extends Actor {
     }
 
     /**
+     * Create a bomb in the position of the ship, facing upwards.
+     *
+     * @return a new bomb in the position of the ship, facing upwards.
+     */
+    public Bomb shootBomb() {
+        return new Bomb(getPositionX() + getWidth() / 2, getPositionY(), Bomb.WIDTH,
+                Bomb.HEIGHT, Direction.NORTH);
+    }
+
+    /**
      * Return the filename of the ship sprite.
      *
      * @return the filename of the ship sprite.
@@ -37,4 +47,6 @@ public class Ship extends Actor {
     public String getSpriteFilename() {
         return FILENAME;
     }
+
+
 }
