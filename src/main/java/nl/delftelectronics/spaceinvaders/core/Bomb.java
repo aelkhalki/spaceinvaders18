@@ -8,9 +8,9 @@ import java.awt.Rectangle;
  */
 public class Bomb extends Bullet {
     private static final Integer IMPACT_RADIUS = 150;
-    private static final String FILENAME = "/bullet.png";
-    public static final Integer WIDTH = 3;
-    public static final Integer HEIGHT = 10;
+    private static final String FILENAME = "/bomb.png";
+    public static final Integer WIDTH = 25;
+    public static final Integer HEIGHT = 40;
 
     /**
      * Create a Bomb with an initial position, size and direction.

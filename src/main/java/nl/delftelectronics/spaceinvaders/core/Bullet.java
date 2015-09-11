@@ -76,8 +76,4 @@ public class Bullet extends SpriteEntity implements AutomaticMovable, Projectile
                 IMPACT_RADIUS * 2,
                 IMPACT_RADIUS * 2);
     }
-
-    public boolean intersects(DrawableEntity other) {
-        return impactArea().intersects(other.getBoundingBox());
-    }
 }

@@ -113,6 +113,7 @@ public class Engine {
             Bomb bomb = ship.shootBomb();
             playerBullets.add(bomb);
             addedEntities.add(bomb);
+            currentScene.addEntity(bomb);
         }
     }
 
@@ -162,6 +163,10 @@ public class Engine {
             while (enemyIterator.hasNext()) {
                 Enemy enemy = enemyIterator.next();
                 boolean inRadius = playerProjectile.impactArea().intersects(enemy.getBoundingBox());
+                if (playerProjectile.intersects(enemy)) {
+                    intersection = true;
+                    enemiesToRemove.addAll(enemiesInRadiusOfThisBullet);
+                }
                 if (inRadius && !intersection) {
                     // This enemy within in the impact radius of the bullet. Should the bullet
                     // actually hit an enemy, then the enemy will be removed.
@@ -171,10 +176,6 @@ public class Engine {
                     // This enemy within in the impact radius of the bullet, and the bullet has
                     // hit an enemy, so this enemy should disappear.
                     enemiesToRemove.add(enemy);
-                }
-                if (playerProjectile.intersects(enemy)) {
-                    intersection = true;
-                    enemiesToRemove.addAll(enemiesInRadiusOfThisBullet);
                 }
             }
             if (intersection) {
