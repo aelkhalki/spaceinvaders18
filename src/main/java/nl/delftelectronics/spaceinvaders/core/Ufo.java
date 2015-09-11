@@ -21,10 +21,10 @@ public class Ufo extends Enemy {
      * @param positionY       initial y-position of the Enemy.
      * @param westBoundary    westernmost boundary of the playing field.
      * @param eastBoundary    easternmost boundary of the playing field.
-     * @param southBoundary   southernmost boundary of the playing field.
      * @param movingDirection initial direction of the Enemy.
      */
-    public Ufo(Integer positionX, Integer positionY, Integer westBoundary, Integer eastBoundary, Direction movingDirection) {
+    public Ufo(Integer positionX, Integer positionY, Integer westBoundary, Integer eastBoundary,
+               Direction movingDirection) {
         super(positionX, positionY, WIDTH, HEIGHT, westBoundary, eastBoundary, null,
                 movingDirection, FILENAME);
         this.random = new Random();

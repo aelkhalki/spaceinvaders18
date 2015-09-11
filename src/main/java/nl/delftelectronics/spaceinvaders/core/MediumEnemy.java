@@ -41,7 +41,8 @@ public class MediumEnemy extends Enemy {
      */
     public MediumEnemy(Integer positionX, Integer positionY, Integer width, Integer height,
                        Integer westBoundary, Integer eastBoundary, Integer southBoundary) {
-        super(positionX, positionY, width, height, westBoundary, eastBoundary, southBoundary, FILENAME);
+        super(positionX, positionY, width, height, westBoundary, eastBoundary, southBoundary,
+                FILENAME);
     }
 
     @Override

@@ -6,24 +6,26 @@ import junit.framework.Assert;
 import junit.framework.TestCase;
 
 /**
- * @author Max
- *
+ * Test the Bullet class.
  */
 public class BulletTest extends TestCase {
+    /**
+     * Test method for
+     * {@link nl.delftelectronics.spaceinvaders.core.Bullet#update(org.joda.time.Interval)}.
+     */
+    public void testUpdate() {
+        final int dimension = 10;
+        final int maximumInterval = 1000;
 
-	/**
-	 * Test method for {@link nl.delftelectronics.spaceinvaders.core.Bullet#update(org.joda.time.Interval)}.
-	 */
-	public void testUpdate() {
-		Bullet bullet = new Bullet(10, 10, 10, 10, Direction.NORTH);
-		Assert.assertEquals((long) 10, (long) bullet.getPositionY());
-		bullet.update(new Interval(0, 1000));
-		Assert.assertEquals((long) 10 - Bullet.MOVING_SPEED, (long) bullet.getPositionY());
-		
-		Bullet down = new Bullet(10, 10, 10, 10, Direction.SOUTH);
-		Assert.assertEquals((long) 10, (long) down.getPositionY());
-		down.update(new Interval(0, 1000));
-		Assert.assertEquals((long) 10 + Bullet.MOVING_SPEED, (long) down.getPositionY());
-	}
+        Bullet bullet = new Bullet(dimension, dimension, dimension, dimension, Direction.NORTH);
+        Assert.assertEquals((long) dimension, (long) bullet.getPositionY());
+        bullet.update(new Interval(0, maximumInterval));
+        Assert.assertEquals((long) dimension - Bullet.MOVING_SPEED, (long) bullet.getPositionY());
+
+        Bullet down = new Bullet(dimension, dimension, dimension, dimension, Direction.SOUTH);
+        Assert.assertEquals((long) dimension, (long) down.getPositionY());
+        down.update(new Interval(0, maximumInterval));
+        Assert.assertEquals((long) dimension + Bullet.MOVING_SPEED, (long) down.getPositionY());
+    }
 
 }

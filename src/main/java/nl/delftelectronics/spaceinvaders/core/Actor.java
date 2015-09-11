@@ -16,6 +16,7 @@ public abstract class Actor extends SpriteEntity {
      * @param positionY    y-position of the Actor.
      * @param width        width of the Actor.
      * @param height       height of the Actor.
+     * @param spriteName   filename of the sprite.
      * @param westBoundary westernmost boundary of the playing field.
      * @param eastBoundary easternmost boundary of the playing field.
      */
