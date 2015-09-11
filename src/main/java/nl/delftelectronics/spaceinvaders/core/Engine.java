@@ -126,19 +126,24 @@ public class Engine {
     }
 
     public void update() {
+        updateEnemyPositions();
+        updatePlayerBullets();
+        updateEnemyBullets();
+
         currentScene.update();
+    }
 
+    public void updateEnemyPositions() {
+        updateEnemyPositions(this.enemies);
+    }
+
+    public void updateEnemyPositions(Collection<Enemy> enemies) {
         boolean moveDown = false;
-
         for (Enemy enemy : enemies) {
             try {
                 enemy.updatePosition();
                 if (random.nextDouble() < 0.0001) {
-                    Bullet enemyBullet = new Bullet(enemy.getPositionX(), enemy.getPositionY(), 3, 10,
-                            Direction.SOUTH);
-                    enemyBullets.add(enemyBullet);
-                    addedEntities.add(enemyBullet);
-                    currentScene.addEntity(enemyBullet);
+                    createEnemyBullet(enemy);
                 }
             } catch (BoundaryReachedException e) {
                 moveDown = true;
@@ -151,7 +156,21 @@ public class Engine {
                 enemy.moveDown();
             }
         }
+    }
 
+    public void createEnemyBullet(Enemy enemy) {
+        Bullet enemyBullet = new Bullet(enemy.getPositionX(), enemy.getPositionY(), 3, 10,
+                Direction.SOUTH);
+        enemyBullets.add(enemyBullet);
+        addedEntities.add(enemyBullet);
+        currentScene.addEntity(enemyBullet);
+    }
+
+    public void updatePlayerBullets() {
+        updatePlayerBullets(this.enemies);
+    }
+
+    public void updatePlayerBullets(Collection<Enemy> enemies) {
         Set<Enemy> enemiesToRemove = new HashSet<Enemy>();
         Iterator<Bullet> playerProjectileIterator = playerBullets.iterator();
         while (playerProjectileIterator.hasNext()) {
@@ -184,13 +203,15 @@ public class Engine {
                 playerProjectile.destroy();
             }
         }
-        for (Enemy enemy : enemiesToRemove) {
+        for (Enemy enemy : enemiesToRemove) {x
             points += enemy.getPoints();
             removedEntities.add(enemy);
             enemies.remove(enemy);
             enemy.destroy();
         }
+    }
 
+    public void updateEnemyBullets() {
         Iterator<Bullet> enemyBulletIterator = enemyBullets.iterator();
         while (enemyBulletIterator.hasNext()) {
             Bullet enemyBullet = enemyBulletIterator.next();
