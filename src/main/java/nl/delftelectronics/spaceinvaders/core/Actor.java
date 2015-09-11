@@ -3,7 +3,7 @@ package nl.delftelectronics.spaceinvaders.core;
 /**
  * An actor is a non-playable drawable character.
  */
-public abstract class Actor extends Entity {
+public abstract class Actor extends SpriteEntity {
     protected static final Integer MOVING_SPEED = 5;
 
     /**
@@ -14,8 +14,8 @@ public abstract class Actor extends Entity {
      * @param width     width of the Actor.
      * @param height    height of the Actor.
      */
-    public Actor(Integer positionX, Integer positionY, Integer width, Integer height) {
-        super(positionX, positionY, width, height);
+    public Actor(Integer positionX, Integer positionY, Integer width, Integer height, String spriteName) {
+        super(positionX, positionY, width, height, spriteName);
     }
 
     /**

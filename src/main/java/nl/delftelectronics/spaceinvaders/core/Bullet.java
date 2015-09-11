@@ -1,27 +1,31 @@
 package nl.delftelectronics.spaceinvaders.core;
 
+import org.joda.time.Interval;
+
 /**
- * A Bullet is a projectile that can be shot by on object. A Bullet has a position and a direction.
+ * Represents a bullet fired by the player or an enemy
+ * @author Max
+ *
  */
-public class Bullet extends Entity implements AutomaticMovable {
-    private static final Integer MOVING_SPEED = 15;
+public class Bullet extends SpriteEntity implements AutomaticMovable {
+    public static final Integer MOVING_SPEED = 15;
     private static final String FILENAME = "/bullet.png";
     public static final Integer WIDTH = 3;
     public static final Integer HEIGHT = 10;
     private Direction direction;
 
     /**
-     * Create a Bullet with an initial position, size and direction.
-     *
-     * @param positionX initial x-position.
-     * @param positionY initial y-position.
-     * @param width     width of the Bullet.
-     * @param height    height of the Bullet.
-     * @param direction direction of the Bullet.
+     * Creates a new bullet at a specified location
+     * @param positionX The x position to place the bullet
+     * @param positionY The y position to place the bullet
+     * @param width The width of the bullet
+     * @param height The height of the bullet
+     * @param direction The firing direction (must be up or down)
      */
-    public Bullet(Integer positionX, Integer positionY, Integer width, Integer height,
-                  Direction direction) {
-        super(positionX, positionY, width, height);
+    public Bullet(Integer positionX, Integer positionY,
+    		Integer width, Integer height, Direction direction) {
+        super(positionX, positionY, width, height, FILENAME);
+
         this.direction = direction;
     }
 
@@ -33,9 +37,17 @@ public class Bullet extends Entity implements AutomaticMovable {
     public Direction getDirection() {
         return direction;
     }
+    
+    /**
+     * Updates the bullet position
+     */
+    @Override
+    public void update(Interval delta) {
+    	updatePosition();
+    }
 
     /**
-     * Update the position of the Bullet, based on the Direction and the MOVING_SPEED.
+     * Legacy update function
      */
     public void updatePosition() {
         if (direction == Direction.NORTH) {
@@ -43,14 +55,5 @@ public class Bullet extends Entity implements AutomaticMovable {
         } else if (direction == Direction.SOUTH) {
             setPositionY(getPositionY() + MOVING_SPEED);
         }
-    }
-
-    /**
-     * Return the filename of the bullet sprite.
-     *
-     * @return the filename of the bullet sprite.
-     */
-    public String getSpriteFilename() {
-        return FILENAME;
     }
 }

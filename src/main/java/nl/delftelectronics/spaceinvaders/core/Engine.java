@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Random;
 
+import javafx.scene.canvas.GraphicsContext;
+
 public class Engine {
     private static final int SMALL_ENEMY_ROWS = 1;
     private static final int MEDIUM_ENEMY_ROWS = 2;
@@ -21,18 +23,21 @@ public class Engine {
     private int lives = 3;
     private int points = 0;
     private boolean reachedBottom = false;
+    
+    private GameScene currentScene;
 
     private Ship ship;
     private ArrayList<Enemy> enemies;
     private ArrayList<Bullet> playerBullets;
     private ArrayList<Bullet> enemyBullets;
 
-    private ArrayList<Entity> addedEntities = new ArrayList<Entity>();
-    private ArrayList<Entity> removedEntities = new ArrayList<Entity>();
+    private ArrayList<DrawableEntity> addedEntities = new ArrayList<DrawableEntity>();
+    private ArrayList<DrawableEntity> removedEntities = new ArrayList<DrawableEntity>();
 
-    public Engine(int fieldWidth, int fieldHeight) {
+    public Engine(int fieldWidth, int fieldHeight, GameScene startScene) {
         this.fieldWidth = fieldWidth;
         this.fieldHeight = fieldHeight;
+        this.currentScene = startScene;
 
         this.playerBullets = new ArrayList<Bullet>();
         this.enemyBullets = new ArrayList<Bullet>();
@@ -56,7 +61,12 @@ public class Engine {
 
         this.ship = new Ship(shipPositionX, shipPositionY, shipWidth, shipHeight);
         addedEntities.add(ship);
+        currentScene.addEntity(this.ship);
         this.enemies = createEnemies(enemyWidth, enemyHeight);
+        
+        for(Enemy e : this.enemies) {
+        	currentScene.addEntity(e);
+        }
     }
 
     public ArrayList<Enemy> createEnemies(int enemyWidth, int enemyHeight) {
@@ -95,6 +105,7 @@ public class Engine {
             Bullet bullet = ship.shoot();
             playerBullets.add(bullet);
             addedEntities.add(bullet);
+            currentScene.addEntity(bullet);
         }
     }
 
@@ -107,6 +118,8 @@ public class Engine {
     }
 
     public void update() {
+    	currentScene.update();
+    	
         boolean moveDown = false;
 
         for (Enemy enemy : enemies) {
@@ -117,6 +130,7 @@ public class Engine {
                             Direction.SOUTH);
                     enemyBullets.add(enemyBullet);
                     addedEntities.add(enemyBullet);
+                    currentScene.addEntity(enemyBullet);
                 }
             } catch (BoundaryReachedException e) {
                 moveDown = true;
@@ -133,7 +147,6 @@ public class Engine {
         Iterator<Bullet> playerBulletIterator = playerBullets.iterator();
         while (playerBulletIterator.hasNext()) {
             Bullet playerBullet = playerBulletIterator.next();
-            playerBullet.updatePosition();
             Iterator<Enemy> enemyIterator = enemies.iterator();
             while (enemyIterator.hasNext()) {
                 Enemy enemy = enemyIterator.next();
@@ -143,6 +156,8 @@ public class Engine {
                     points += enemy.getPoints();
                     removedEntities.add(playerBullet);
                     removedEntities.add(enemy);
+                    enemy.destroy();
+                    playerBullet.destroy();
                 }
             }
         }
@@ -150,13 +165,17 @@ public class Engine {
         Iterator<Bullet> enemyBulletIterator = enemyBullets.iterator();
         while (enemyBulletIterator.hasNext()) {
             Bullet enemyBullet = enemyBulletIterator.next();
-            enemyBullet.updatePosition();
             if (enemyBullet.intersects(ship)) {
                 enemyBulletIterator.remove();
                 lives--;
                 removedEntities.add(enemyBullet);
+                enemyBullet.destroy();
             }
         }
+    }
+    
+    public void draw(GraphicsContext gc) {
+    	currentScene.draw(gc);
     }
 
     public void clearChangedEntities() {
@@ -164,11 +183,11 @@ public class Engine {
         removedEntities.clear();
     }
 
-    public Collection<Entity> getAddedEntities() {
+    public Collection<DrawableEntity> getAddedEntities() {
         return addedEntities;
     }
 
-    public Collection<Entity> getRemovedEntities() {
+    public Collection<DrawableEntity> getRemovedEntities() {
         return removedEntities;
     }
 

@@ -16,7 +16,7 @@ public class Ship extends Actor {
      * @param height    height of the Ship.
      */
     public Ship(Integer positionX, Integer positionY, Integer width, Integer height) {
-        super(positionX, positionY, width, height);
+        super(positionX, positionY, width, height, FILENAME);
     }
 
     /**
@@ -27,14 +27,5 @@ public class Ship extends Actor {
     public Bullet shoot() {
         return new Bullet(getPositionX() + getWidth() / 2, getPositionY(), Bullet.WIDTH,
                 Bullet.HEIGHT, Direction.NORTH);
-    }
-
-    /**
-     * Return the filename of the ship sprite.
-     *
-     * @return the filename of the ship sprite.
-     */
-    public String getSpriteFilename() {
-        return FILENAME;
     }
 }

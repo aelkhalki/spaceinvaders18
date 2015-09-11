@@ -31,8 +31,8 @@ public abstract class Enemy extends Actor implements AutomaticMovable {
      */
     public Enemy(Integer positionX, Integer positionY, Integer width, Integer height,
                  Integer westBoundary, Integer eastBoundary, Integer southBoundary,
-                 Direction movingDirection) {
-        super(positionX, positionY, width, height);
+                 Direction movingDirection, String spriteName) {
+        super(positionX, positionY, width, height, spriteName);
         this.setMovingDirection(movingDirection);
         this.westBoundary = westBoundary;
         this.eastBoundary = eastBoundary;
@@ -52,9 +52,10 @@ public abstract class Enemy extends Actor implements AutomaticMovable {
      * @param southBoundary southernmost boundary of the playing field.
      */
     public Enemy(Integer positionX, Integer positionY, Integer width, Integer height,
-                 Integer westBoundary, Integer eastBoundary, Integer southBoundary) {
+                 Integer westBoundary, Integer eastBoundary, Integer southBoundary,
+                 String spriteName) {
         this(positionX, positionY, width, height, westBoundary, eastBoundary, southBoundary,
-                Direction.EAST);
+                Direction.EAST, spriteName);
     }
 
     /**
