@@ -1,8 +1,16 @@
 package nl.delftelectronics.spaceinvaders.gui;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.DataLine;
+
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -18,7 +26,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
-
 import nl.delftelectronics.spaceinvaders.core.Engine;
 import nl.delftelectronics.spaceinvaders.core.GameScene;
 import nl.delftelectronics.spaceinvaders.core.DrawableEntity;
@@ -60,7 +67,7 @@ public class GUI extends Application {
         final GraphicsContext gc = initializeScene(primaryStage, WINDOW_WIDTH, WINDOW_HEIGHT);
 
         final Engine engine = new Engine(WINDOW_WIDTH, WINDOW_HEIGHT, new GameScene(scene));
-
+        
         gc.setFill(Color.RED);
         gc.setStroke(Color.BLACK);
         gc.setLineWidth(2);
@@ -121,7 +128,7 @@ public class GUI extends Application {
                 if (inputs.contains("X")) {
                     engine.playerShootBomb();
                 }
-
+                
                 addEntities(engine.getAddedEntities());
                 removeEntities(engine.getRemovedEntities());
 

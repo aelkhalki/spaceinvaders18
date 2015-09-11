@@ -22,6 +22,13 @@ public class Engine {
     private static final double SHIP_MARGIN_FROM_LEFT = 5 / 100.0;
     private static final double SHIP_MARGIN_FROM_BOTTOM = 10 / 100.0;
 
+
+    private File myFile;
+    private AudioInputStream audioStream;
+    private AudioFormat audioFormat;
+    private DataLine.Info info;
+    private Clip myclip;
+    
     private int fieldWidth;
     private int fieldHeight;
     private long currentNanoTime = System.nanoTime();
@@ -123,11 +130,6 @@ public class Engine {
             addedEntities.add(bullet);
             currentScene.addEntity(bullet);
             try {
-        	    File myFile;
-        	    AudioInputStream audioStream;
-        	    AudioFormat audioFormat;
-        	    DataLine.Info info;
-        	    Clip myclip;
         	    myFile = new File("shoot.wav");
         	    audioStream = AudioSystem.getAudioInputStream(myFile);
         	    audioFormat = audioStream.getFormat();
@@ -137,7 +139,7 @@ public class Engine {
         	    myclip.start();
         	}
         	catch (Exception e) {
-        	    //whatevers
+        	 
         	}
         }
     }
@@ -245,6 +247,18 @@ public class Engine {
             removedEntities.add(enemy);
             enemies.remove(enemy);
             enemy.destroy();
+            
+            try {
+        	    myFile = new File("invaderkilled.wav");
+        	    audioStream = AudioSystem.getAudioInputStream(myFile);
+        	    audioFormat = audioStream.getFormat();
+        	    info = new DataLine.Info(Clip.class, audioFormat);
+        	    myclip = (Clip) AudioSystem.getLine(info);
+        	    myclip.open(audioStream);
+        	    myclip.start();
+        	}
+        	catch (Exception e) {
+        	}
         }
     }
     
@@ -274,6 +288,19 @@ public class Engine {
                 lives--;
                 removedEntities.add(enemyBullet);
                 enemyBullet.destroy();
+                
+                try {
+            	    myFile = new File("invaderkilled.wav");
+            	    audioStream = AudioSystem.getAudioInputStream(myFile);
+            	    audioFormat = audioStream.getFormat();
+            	    info = new DataLine.Info(Clip.class, audioFormat);
+            	    myclip = (Clip) AudioSystem.getLine(info);
+            	    myclip.open(audioStream);
+            	    myclip.start();
+            	}
+            	catch (Exception e) {
+            	
+            	}
             }
         }
     }
