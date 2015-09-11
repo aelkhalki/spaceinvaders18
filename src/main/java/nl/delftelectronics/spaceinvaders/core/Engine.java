@@ -49,12 +49,20 @@ public class Engine {
     public int getPoints() {
         return points;
     }
-
+    
+    public void setPoints(int point){
+    	this.points = point;
+    }
+    
+    public void setLife(int live){
+    	this.lives = live;
+    }
+    
     public void startGame(int shipWidth, int shipHeight, int enemyWidth, int enemyHeight) {
         int shipPositionX = (int) (fieldWidth * SHIP_MARGIN_FROM_LEFT);
         int shipPositionY = (int) (fieldHeight * (1 - SHIP_MARGIN_FROM_BOTTOM));
 
-        this.ship = new Ship(shipPositionX, shipPositionY, shipWidth, shipHeight);
+        this.ship = new Ship(shipPositionX, shipPositionY, shipWidth, shipHeight,0,0,0);
         addedEntities.add(ship);
         this.enemies = createEnemies(enemyWidth, enemyHeight);
     }
@@ -64,7 +72,7 @@ public class Engine {
         for (int column = 0; column < ENEMY_COLUMNS; column++) {
             int currentRow = 0;
             for (int smallEnemyRow = 0; smallEnemyRow < SMALL_ENEMY_ROWS; smallEnemyRow++) {
-                Enemy smallEnemy = new SmallEnemy(10 + 100 * column, 90 * currentRow, enemyWidth, enemyHeight, 0,
+                Enemy smallEnemy = new SmallEnemy(10 + 100 * column, 50 * currentRow, enemyWidth, enemyHeight, 0,
                         fieldWidth, fieldHeight);
                 enemies.add(smallEnemy);
                 currentRow++;
@@ -113,7 +121,7 @@ public class Engine {
             try {
                 enemy.updatePosition();
                 if (random.nextDouble() < 0.0001) {
-                    Bullet enemyBullet = new Bullet(enemy.getPositionX(), enemy.getPositionY(), 30, 30,
+                    Bullet enemyBullet = new Bullet(enemy.getPositionX(), enemy.getPositionY(), 3, 10,
                             Direction.SOUTH);
                     enemyBullets.add(enemyBullet);
                     addedEntities.add(enemyBullet);

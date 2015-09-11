@@ -1,8 +1,11 @@
 package nl.delftelectronics.spaceinvaders.gui;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -18,7 +21,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
-
 import nl.delftelectronics.spaceinvaders.core.Engine;
 import nl.delftelectronics.spaceinvaders.core.Entity;
 import nl.delftelectronics.spaceinvaders.core.Actor;
@@ -36,16 +38,10 @@ import nl.delftelectronics.spaceinvaders.core.EnemyReachedBottomException;
 
 public class GUI extends Application {
     private static final Integer FPS = 24;
-    private static final Integer WINDOW_WIDTH = 1680;
-    private static final Integer WINDOW_HEIGHT = 1050;
     private static final String WINDOW_TITLE = "Space Invaders";
-
-    private static final String SHIP_FILENAME = "/ship.png";
-    private static final String BULLET_FILENAME = "/ufo.png";
-    private static final String SMALL_ENEMY_FILENAME = "/small_enemy.png";
-    private static final String MEDIUM_ENEMY_FILENAME = "/medium_enemy.png";
-    private static final String LARGE_ENEMY_FILENAME = "/large_enemy.png";
-
+    private static Integer WINDOW_WIDTH = 1920;
+    private static Integer WINDOW_HEIGHT = 1080;
+   
     private Scene scene;
     private ArrayList<String> inputs = new ArrayList<String>();
     private HashMap<Entity, Sprite> sprites = new HashMap<Entity, Sprite>();
@@ -53,6 +49,8 @@ public class GUI extends Application {
     private GraphicsContext gc;
     private ArrayList<String> input;
     private Actor shipActor;
+    private Store store;
+    private static final boolean NEXTLEVEL = false;
     
     public static void main(String[] args) {
         launch(args);
@@ -60,11 +58,15 @@ public class GUI extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+    	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    	WINDOW_WIDTH = (int) screenSize.getWidth();
+    	WINDOW_HEIGHT = (int) screenSize.getHeight()-200;
+    	store = new Store();
         setWindowTitle(primaryStage, WINDOW_TITLE);
         final GraphicsContext gc = initializeScene(primaryStage, WINDOW_WIDTH, WINDOW_HEIGHT);
-
+        
         final Engine engine = new Engine(WINDOW_WIDTH, WINDOW_HEIGHT);
-
+        
         gc.setFill(Color.RED);
         gc.setStroke(Color.BLACK);
         gc.setLineWidth(2);
@@ -111,7 +113,7 @@ public class GUI extends Application {
 
                 engine.update();
 
-
+                
                 if (inputs.contains("LEFT")) {
                     engine.playerMoveLeft();
                 }
@@ -122,7 +124,7 @@ public class GUI extends Application {
                 if (inputs.contains("SPACE")) {
                     engine.playerShootBullet();
                 }
-
+            
                 addEntities(engine.getAddedEntities());
                 removeEntities(engine.getRemovedEntities());
 
@@ -140,14 +142,19 @@ public class GUI extends Application {
                 if (!engine.isInProgress()) {
                     gc.fillText("GAME OVER!", 600, 500);
                     gc.strokeText("GAME OVER!", 600, 500);
+                    
+                    gc.fillText("RESTART GAME", 100, 100);
+                    
+                    final Rectangle restartGameArea = new Rectangle(0, 0, 500, 100);
+
                     stop();
                 }
             }
         }.start();
-
+      
         primaryStage.show();
     }
-
+    
     public void listenToKeyInput(Scene scene, final Collection<String> input) {
         scene.setOnKeyPressed(
                 new EventHandler<KeyEvent>() {
@@ -201,4 +208,5 @@ public class GUI extends Application {
             sprites.remove(entity);
         }
     }
+   
 }
