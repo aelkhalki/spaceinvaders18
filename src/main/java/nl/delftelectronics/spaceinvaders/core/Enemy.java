@@ -32,7 +32,7 @@ public abstract class Enemy extends Actor implements AutomaticMovable {
     public Enemy(Integer positionX, Integer positionY, Integer width, Integer height,
                  Integer westBoundary, Integer eastBoundary, Integer southBoundary,
                  Direction movingDirection, String spriteName) {
-        super(positionX, positionY, width, height, spriteName);
+        super(positionX, positionY, width, height, spriteName, westBoundary, eastBoundary);
         this.setMovingDirection(movingDirection);
         this.westBoundary = westBoundary;
         this.eastBoundary = eastBoundary;
@@ -103,7 +103,7 @@ public abstract class Enemy extends Actor implements AutomaticMovable {
      * @return true iff the Enemy has reached the west or east boundary.
      */
     public boolean reachedBoundary() {
-        return getPositionX() <= westBoundary || getPositionX() >= eastBoundary;
+        return getPositionX() <= westBoundary || getPositionX() + getWidth() >= eastBoundary;
     }
 
     /**

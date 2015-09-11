@@ -20,7 +20,7 @@ public class Engine {
     private int lives = 3;
     private int points = 0;
     private boolean reachedBottom = false;
-    
+
     private GameScene currentScene;
 
     private Ship ship;
@@ -56,13 +56,13 @@ public class Engine {
         int shipPositionX = (int) (fieldWidth * SHIP_MARGIN_FROM_LEFT);
         int shipPositionY = (int) (fieldHeight * (1 - SHIP_MARGIN_FROM_BOTTOM));
 
-        this.ship = new Ship(shipPositionX, shipPositionY, shipWidth, shipHeight);
+        this.ship = new Ship(shipPositionX, shipPositionY, shipWidth, shipHeight, 0, fieldWidth);
         addedEntities.add(ship);
         currentScene.addEntity(this.ship);
         this.enemies = createEnemies(enemyWidth, enemyHeight);
-        
-        for(Enemy e : this.enemies) {
-        	currentScene.addEntity(e);
+
+        for (Enemy e : this.enemies) {
+            currentScene.addEntity(e);
         }
     }
 
@@ -71,22 +71,22 @@ public class Engine {
         for (int column = 0; column < ENEMY_COLUMNS; column++) {
             int currentRow = 0;
             for (int smallEnemyRow = 0; smallEnemyRow < SMALL_ENEMY_ROWS; smallEnemyRow++) {
-                Enemy smallEnemy = new SmallEnemy(10 + 100 * column, 90 * currentRow, enemyWidth, enemyHeight, 0,
-                        fieldWidth, fieldHeight);
+                Enemy smallEnemy = new SmallEnemy(10 + 100 * column, 90 * currentRow, enemyWidth,
+                        enemyHeight, 0, fieldWidth, fieldHeight);
                 enemies.add(smallEnemy);
                 currentRow++;
                 addedEntities.add(smallEnemy);
             }
             for (int mediumEnemyRow = 0; mediumEnemyRow < MEDIUM_ENEMY_ROWS; mediumEnemyRow++) {
-                Enemy mediumEnemy = new MediumEnemy(10 + 100 * column, 90 * currentRow, enemyWidth, enemyHeight, 0,
-                        fieldWidth, fieldHeight);
+                Enemy mediumEnemy = new MediumEnemy(10 + 100 * column, 90 * currentRow, enemyWidth,
+                        enemyHeight, 0, fieldWidth, fieldHeight);
                 enemies.add(mediumEnemy);
                 currentRow++;
                 addedEntities.add(mediumEnemy);
             }
             for (int largeEnemyRow = 0; largeEnemyRow < LARGE_ENEMY_ROWS; largeEnemyRow++) {
-                Enemy largeEnemy = new LargeEnemy(10 + 100 * column, 90 * currentRow, enemyWidth, enemyHeight, 0,
-                        fieldWidth, fieldHeight);
+                Enemy largeEnemy = new LargeEnemy(10 + 100 * column, 90 * currentRow, enemyWidth,
+                        enemyHeight, 0, fieldWidth, fieldHeight);
                 enemies.add(largeEnemy);
                 currentRow++;
                 addedEntities.add(largeEnemy);
@@ -126,8 +126,8 @@ public class Engine {
     }
 
     public void update() {
-    	currentScene.update();
-    	
+        currentScene.update();
+
         boolean moveDown = false;
 
         for (Enemy enemy : enemies) {
@@ -202,9 +202,9 @@ public class Engine {
             }
         }
     }
-    
+
     public void draw(GraphicsContext gc) {
-    	currentScene.draw(gc);
+        currentScene.draw(gc);
     }
 
     public void clearChangedEntities() {

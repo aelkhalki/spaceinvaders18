@@ -10,13 +10,16 @@ public class Ship extends Actor {
     /**
      * Create a Ship with the initial position and size.
      *
-     * @param positionX initial x-position of the Ship.
-     * @param positionY initial y-position of the Ship.
-     * @param width     width of the Ship.
-     * @param height    height of the Ship.
+     * @param positionX    initial x-position of the Ship.
+     * @param positionY    initial y-position of the Ship.
+     * @param width        width of the Ship.
+     * @param height       height of the Ship.
+     * @param westBoundary westernmost boundary of the playing field.
+     * @param eastBoundary easternmost boundary of the playing field.
      */
-    public Ship(Integer positionX, Integer positionY, Integer width, Integer height) {
-        super(positionX, positionY, width, height, FILENAME);
+    public Ship(Integer positionX, Integer positionY, Integer width, Integer height,
+                Integer westBoundary, Integer eastBoundary) {
+        super(positionX, positionY, width, height, FILENAME, westBoundary, eastBoundary);
     }
 
     /**
