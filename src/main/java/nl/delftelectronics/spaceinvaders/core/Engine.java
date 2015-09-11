@@ -203,7 +203,7 @@ public class Engine {
                 playerProjectile.destroy();
             }
         }
-        for (Enemy enemy : enemiesToRemove) {x
+        for (Enemy enemy : enemiesToRemove) {
             points += enemy.getPoints();
             removedEntities.add(enemy);
             enemies.remove(enemy);
