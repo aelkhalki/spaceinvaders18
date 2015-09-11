@@ -1,9 +1,9 @@
 package nl.delftelectronics.spaceinvaders.core;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Random;
+import java.util.*;
+
+import javafx.scene.canvas.GraphicsContext;
+import com.google.common.collect.Iterators;
 
 public class Engine {
     private static final int SMALL_ENEMY_ROWS = 1;
@@ -22,20 +22,25 @@ public class Engine {
     private int points = 0;
     private boolean reachedBottom = false;
 
+    private GameScene currentScene;
+
     private Ship ship;
     private ArrayList<Enemy> enemies;
     private ArrayList<Bullet> playerBullets;
     private ArrayList<Bullet> enemyBullets;
+    private ArrayList<Ufo> ufos;
 
-    private ArrayList<Entity> addedEntities = new ArrayList<Entity>();
-    private ArrayList<Entity> removedEntities = new ArrayList<Entity>();
+    private ArrayList<DrawableEntity> addedEntities = new ArrayList<DrawableEntity>();
+    private ArrayList<DrawableEntity> removedEntities = new ArrayList<DrawableEntity>();
 
-    public Engine(int fieldWidth, int fieldHeight) {
+    public Engine(int fieldWidth, int fieldHeight, GameScene startScene) {
         this.fieldWidth = fieldWidth;
         this.fieldHeight = fieldHeight;
+        this.currentScene = startScene;
 
         this.playerBullets = new ArrayList<Bullet>();
         this.enemyBullets = new ArrayList<Bullet>();
+        this.ufos = new ArrayList<Ufo>();
     }
 
     public Ship getShip() {
@@ -54,9 +59,14 @@ public class Engine {
         int shipPositionX = (int) (fieldWidth * SHIP_MARGIN_FROM_LEFT);
         int shipPositionY = (int) (fieldHeight * (1 - SHIP_MARGIN_FROM_BOTTOM));
 
-        this.ship = new Ship(shipPositionX, shipPositionY, shipWidth, shipHeight);
+        this.ship = new Ship(shipPositionX, shipPositionY, shipWidth, shipHeight, 0, fieldWidth);
         addedEntities.add(ship);
+        currentScene.addEntity(this.ship);
         this.enemies = createEnemies(enemyWidth, enemyHeight);
+
+        for (Enemy e : this.enemies) {
+            currentScene.addEntity(e);
+        }
     }
 
     public ArrayList<Enemy> createEnemies(int enemyWidth, int enemyHeight) {
@@ -64,22 +74,22 @@ public class Engine {
         for (int column = 0; column < ENEMY_COLUMNS; column++) {
             int currentRow = 0;
             for (int smallEnemyRow = 0; smallEnemyRow < SMALL_ENEMY_ROWS; smallEnemyRow++) {
-                Enemy smallEnemy = new SmallEnemy(10 + 100 * column, 90 * currentRow, enemyWidth, enemyHeight, 0,
-                        fieldWidth, fieldHeight);
+                Enemy smallEnemy = new SmallEnemy(10 + 100 * column, 90 * currentRow, enemyWidth,
+                        enemyHeight, 0, fieldWidth, fieldHeight);
                 enemies.add(smallEnemy);
                 currentRow++;
                 addedEntities.add(smallEnemy);
             }
             for (int mediumEnemyRow = 0; mediumEnemyRow < MEDIUM_ENEMY_ROWS; mediumEnemyRow++) {
-                Enemy mediumEnemy = new MediumEnemy(10 + 100 * column, 90 * currentRow, enemyWidth, enemyHeight, 0,
-                        fieldWidth, fieldHeight);
+                Enemy mediumEnemy = new MediumEnemy(10 + 100 * column, 90 * currentRow, enemyWidth,
+                        enemyHeight, 0, fieldWidth, fieldHeight);
                 enemies.add(mediumEnemy);
                 currentRow++;
                 addedEntities.add(mediumEnemy);
             }
             for (int largeEnemyRow = 0; largeEnemyRow < LARGE_ENEMY_ROWS; largeEnemyRow++) {
-                Enemy largeEnemy = new LargeEnemy(10 + 100 * column, 90 * currentRow, enemyWidth, enemyHeight, 0,
-                        fieldWidth, fieldHeight);
+                Enemy largeEnemy = new LargeEnemy(10 + 100 * column, 90 * currentRow, enemyWidth,
+                        enemyHeight, 0, fieldWidth, fieldHeight);
                 enemies.add(largeEnemy);
                 currentRow++;
                 addedEntities.add(largeEnemy);
@@ -95,6 +105,18 @@ public class Engine {
             Bullet bullet = ship.shoot();
             playerBullets.add(bullet);
             addedEntities.add(bullet);
+            currentScene.addEntity(bullet);
+        }
+    }
+
+    public void playerShootBomb() {
+        currentNanoTime = System.nanoTime();
+        if (currentNanoTime - previousBulletFireTime > 1000000000.0) {
+            previousBulletFireTime = currentNanoTime;
+            Bomb bomb = ship.shootBomb();
+            playerBullets.add(bomb);
+            addedEntities.add(bomb);
+            currentScene.addEntity(bomb);
         }
     }
 
@@ -107,16 +129,29 @@ public class Engine {
     }
 
     public void update() {
-        boolean moveDown = false;
+        updateEnemyPositions();
+        updatePlayerBullets();
+        updateEnemyBullets();
+        updateUfos();
 
+        if (random.nextDouble() < 0.002) {
+            createUfo();
+        }
+
+        currentScene.update();
+    }
+
+    public void updateEnemyPositions() {
+        updateEnemyPositions(this.enemies);
+    }
+
+    public void updateEnemyPositions(Collection<Enemy> enemies) {
+        boolean moveDown = false;
         for (Enemy enemy : enemies) {
             try {
                 enemy.updatePosition();
                 if (random.nextDouble() < 0.0001) {
-                    Bullet enemyBullet = new Bullet(enemy.getPositionX(), enemy.getPositionY(), 30, 30,
-                            Direction.SOUTH);
-                    enemyBullets.add(enemyBullet);
-                    addedEntities.add(enemyBullet);
+                    createEnemyBullet(enemy);
                 }
             } catch (BoundaryReachedException e) {
                 moveDown = true;
@@ -129,34 +164,100 @@ public class Engine {
                 enemy.moveDown();
             }
         }
+    }
 
-        Iterator<Bullet> playerBulletIterator = playerBullets.iterator();
-        while (playerBulletIterator.hasNext()) {
-            Bullet playerBullet = playerBulletIterator.next();
-            playerBullet.updatePosition();
-            Iterator<Enemy> enemyIterator = enemies.iterator();
+    public void createEnemyBullet(Enemy enemy) {
+        Bullet enemyBullet = new Bullet(enemy.getPositionX(), enemy.getPositionY(), 3, 10,
+                Direction.SOUTH);
+        enemyBullets.add(enemyBullet);
+        addedEntities.add(enemyBullet);
+        currentScene.addEntity(enemyBullet);
+    }
+
+    public void updatePlayerBullets() {
+        updatePlayerBullets(this.enemies);
+    }
+
+    public void updatePlayerBullets(Collection<Enemy> enemies) {
+        Set<Enemy> enemiesToRemove = new HashSet<Enemy>();
+        Iterator<Bullet> playerProjectileIterator = playerBullets.iterator();
+        while (playerProjectileIterator.hasNext()) {
+            Bullet playerProjectile = playerProjectileIterator.next();
+            playerProjectile.updatePosition();
+            Iterator<Enemy> regularEnemyIterator = enemies.iterator();
+            Iterator<Ufo> ufoIterator = ufos.iterator();
+            Iterator<Enemy> enemyIterator = Iterators.concat(regularEnemyIterator, ufoIterator);
+            boolean intersection = false;
+            Set<Enemy> enemiesInRadiusOfThisBullet = new HashSet<Enemy>();
             while (enemyIterator.hasNext()) {
                 Enemy enemy = enemyIterator.next();
-                if (playerBullet.intersects(enemy)) {
-                    playerBulletIterator.remove();
-                    enemyIterator.remove();
-                    points += enemy.getPoints();
-                    removedEntities.add(playerBullet);
-                    removedEntities.add(enemy);
+                boolean inRadius = playerProjectile.impactArea().intersects(enemy.getBoundingBox());
+                if (playerProjectile.intersects(enemy)) {
+                    intersection = true;
+                    enemiesToRemove.addAll(enemiesInRadiusOfThisBullet);
+                }
+                if (inRadius && !intersection) {
+                    // This enemy within in the impact radius of the bullet. Should the bullet
+                    // actually hit an enemy, then the enemy will be removed.
+                    enemiesInRadiusOfThisBullet.add(enemy);
+                }
+                if (inRadius && intersection) {
+                    // This enemy within in the impact radius of the bullet, and the bullet has
+                    // hit an enemy, so this enemy should disappear.
+                    enemiesToRemove.add(enemy);
                 }
             }
+            if (intersection) {
+                playerProjectileIterator.remove();
+                removedEntities.add(playerProjectile);
+                playerProjectile.destroy();
+            }
         }
+        for (Enemy enemy : enemiesToRemove) {
+            points += enemy.getPoints();
+            removedEntities.add(enemy);
+            enemies.remove(enemy);
+            enemy.destroy();
+        }
+    }
 
+    public void updateEnemyBullets() {
         Iterator<Bullet> enemyBulletIterator = enemyBullets.iterator();
         while (enemyBulletIterator.hasNext()) {
             Bullet enemyBullet = enemyBulletIterator.next();
-            enemyBullet.updatePosition();
             if (enemyBullet.intersects(ship)) {
                 enemyBulletIterator.remove();
                 lives--;
                 removedEntities.add(enemyBullet);
+                enemyBullet.destroy();
             }
         }
+    }
+
+    public void createUfo() {
+        Integer randomBoundary;
+        Direction randomDirection;
+        if (random.nextBoolean()) {
+            randomBoundary = 0;
+            randomDirection = Direction.EAST;
+        } else {
+            randomBoundary = fieldWidth;
+            randomDirection = Direction.WEST;
+        }
+        Ufo ufo = new Ufo(randomBoundary, 100, 0, fieldWidth, randomDirection);
+        ufos.add(ufo);
+        addedEntities.add(ufo);
+        currentScene.addEntity(ufo);
+    }
+
+    public void updateUfos() {
+        for (Ufo ufo : ufos) {
+            ufo.updatePosition();
+        }
+    }
+
+    public void draw(GraphicsContext gc) {
+        currentScene.draw(gc);
     }
 
     public void clearChangedEntities() {
@@ -164,11 +265,11 @@ public class Engine {
         removedEntities.clear();
     }
 
-    public Collection<Entity> getAddedEntities() {
+    public Collection<DrawableEntity> getAddedEntities() {
         return addedEntities;
     }
 
-    public Collection<Entity> getRemovedEntities() {
+    public Collection<DrawableEntity> getRemovedEntities() {
         return removedEntities;
     }
 

@@ -48,7 +48,10 @@
       <property name="max" value="40"/>
       <property name="countEmpty" value="false"/>
     </module>
-    <module name="ParameterNumber"/>
+    <module name="ParameterNumber">
+      <property name="max" value="8"/>
+      <property name="tokens" value="METHOD_DEF"/>
+    </module>
     <module name="EmptyForIteratorPad"/>
     <module name="MethodParamPad"/>
     <module name="NoWhitespaceAfter">

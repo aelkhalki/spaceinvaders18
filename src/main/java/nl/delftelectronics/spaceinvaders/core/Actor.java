@@ -1,17 +1,46 @@
 package nl.delftelectronics.spaceinvaders.core;
 
-public abstract class Actor extends Entity {
+/**
+ * An actor is a non-playable drawable character.
+ */
+public abstract class Actor extends SpriteEntity {
     protected static final Integer MOVING_SPEED = 5;
 
-    public Actor(Integer positionX, Integer positionY, Integer width, Integer height) {
-        super(positionX, positionY, width, height);
+    private Integer westBoundary;
+    private Integer eastBoundary;
+
+    /**
+     * Create an Actor with a given position and size.
+     *
+     * @param positionX    x-position of the Actor.
+     * @param positionY    y-position of the Actor.
+     * @param width        width of the Actor.
+     * @param height       height of the Actor.
+     * @param westBoundary westernmost boundary of the playing field.
+     * @param eastBoundary easternmost boundary of the playing field.
+     */
+    public Actor(Integer positionX, Integer positionY, Integer width, Integer height,
+                 String spriteName, Integer westBoundary, Integer eastBoundary) {
+        super(positionX, positionY, width, height, spriteName);
+        this.westBoundary = westBoundary;
+        this.eastBoundary = eastBoundary;
     }
 
+    /**
+     * Move the Actor to the left, based on MOVING_SPEED.
+     */
     public void moveLeft() {
-        setPositionX(getPositionX() - MOVING_SPEED);
+        if (getPositionX() - MOVING_SPEED >= westBoundary) {
+            setPositionX(getPositionX() - MOVING_SPEED);
+        }
     }
 
+    /**
+     * Move the Actor to the right, based on MOVING_SPEED.
+     */
     public void moveRight() {
-        setPositionX(getPositionX() + MOVING_SPEED);
+        if (getPositionX() + getWidth() + MOVING_SPEED <= eastBoundary) {
+            setPositionX(getPositionX() + MOVING_SPEED);
+        }
     }
 }
