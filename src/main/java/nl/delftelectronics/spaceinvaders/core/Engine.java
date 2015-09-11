@@ -1,10 +1,20 @@
 package nl.delftelectronics.spaceinvaders.core;
 
 import java.util.*;
+import java.io.File;
+import java.io.IOException;
 
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.DataLine;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.SourceDataLine;
+import javax.sound.sampled.*;
 import javafx.scene.canvas.GraphicsContext;
 
 public class Engine {
+    
     private static final int SMALL_ENEMY_ROWS = 1;
     private static final int MEDIUM_ENEMY_ROWS = 2;
     private static final int LARGE_ENEMY_ROWS = 2;
@@ -43,6 +53,13 @@ public class Engine {
     public Ship getShip() {
         return ship;
     }
+
+	public ArrayList<Bullet> getEnemyBullet(){
+		return enemyBullets;
+	}
+	public ArrayList<Bullet> getShipBullet(){
+		return playerBullets;
+	}
 
     public int getLives() {
         return lives;
@@ -96,6 +113,8 @@ public class Engine {
     }
 
     public void playerShootBullet() {
+    	
+    
         currentNanoTime = System.nanoTime();
         if (currentNanoTime - previousBulletFireTime > 1000000000.0) {
             previousBulletFireTime = currentNanoTime;
@@ -103,6 +122,23 @@ public class Engine {
             playerBullets.add(bullet);
             addedEntities.add(bullet);
             currentScene.addEntity(bullet);
+            try {
+        	    File myFile;
+        	    AudioInputStream audioStream;
+        	    AudioFormat audioFormat;
+        	    DataLine.Info info;
+        	    Clip myclip;
+        	    myFile = new File("shoot.wav");
+        	    audioStream = AudioSystem.getAudioInputStream(myFile);
+        	    audioFormat = audioStream.getFormat();
+        	    info = new DataLine.Info(Clip.class, audioFormat);
+        	    myclip = (Clip) AudioSystem.getLine(info);
+        	    myclip.open(audioStream);
+        	    myclip.start();
+        	}
+        	catch (Exception e) {
+        	    //whatevers
+        	}
         }
     }
 
@@ -114,6 +150,7 @@ public class Engine {
             playerBullets.add(bomb);
             addedEntities.add(bomb);
             currentScene.addEntity(bomb);
+        	
         }
     }
 
@@ -210,11 +247,28 @@ public class Engine {
             enemy.destroy();
         }
     }
-
+    
+    
+    
     public void updateEnemyBullets() {
         Iterator<Bullet> enemyBulletIterator = enemyBullets.iterator();
+        Iterator<Bullet> playerBulletIterator = playerBullets.iterator();
         while (enemyBulletIterator.hasNext()) {
             Bullet enemyBullet = enemyBulletIterator.next();
+
+            if(playerBulletIterator.hasNext()){
+            while(playerBulletIterator.hasNext()){
+            	Bullet playerBullet = playerBulletIterator.next();
+            if(enemyBullet.intersects(playerBullet)){
+            	enemyBulletIterator.remove();
+            	playerBulletIterator.remove();
+            	removedEntities.add(enemyBullet);
+            	removedEntities.add(playerBullet);
+            	enemyBullet.destroy();
+            	playerBullet.destroy();
+            }
+            }
+            }
             if (enemyBullet.intersects(ship)) {
                 enemyBulletIterator.remove();
                 lives--;

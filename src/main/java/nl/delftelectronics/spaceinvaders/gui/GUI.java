@@ -37,8 +37,8 @@ import nl.delftelectronics.spaceinvaders.core.EnemyReachedBottomException;
 
 public class GUI extends Application {
     private static final Integer FPS = 24;
-    private static final Integer WINDOW_WIDTH = 1680;
-    private static final Integer WINDOW_HEIGHT = 1050;
+    private static final Integer WINDOW_WIDTH = 1280;
+    private static final Integer WINDOW_HEIGHT = 720;
     private static final String WINDOW_TITLE = "Space Invaders";
 
 
