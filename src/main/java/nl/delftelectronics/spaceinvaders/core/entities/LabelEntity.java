@@ -40,7 +40,6 @@ public class LabelEntity extends DrawableEntity implements Collidable {
 	@Override
 	public void draw(Interval delta, GraphicsContext gc) {
 		final int lineWidth = 2;
-        final int fontSize = 48;
         gc.setFill(Color.RED);
         gc.setStroke(Color.BLACK);
         gc.setLineWidth(lineWidth);

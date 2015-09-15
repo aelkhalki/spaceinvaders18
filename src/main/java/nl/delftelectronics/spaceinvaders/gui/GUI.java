@@ -32,14 +32,6 @@ public class GUI extends Application {
     private static final Integer WINDOW_HEIGHT = 1050;
     private static final String WINDOW_TITLE = "Space Invaders";
     private static final double SECOND = 1000000000.0;
-    private static final Integer START_GAME_AREA_X = 0;
-    private static final Integer START_GAME_AREA_Y = 0;
-    private static final Integer START_GAME_AREA_WIDTH = 500;
-    private static final Integer START_GAME_AREA_HEIGHT = 100;
-    private static final Integer QUIT_GAME_AREA_X = 0;
-    private static final Integer QUIT_GAME_AREA_Y = 400;
-    private static final Integer QUIT_GAME_AREA_WIDTH = 500;
-    private static final Integer QUIT_GAME_AREA_HEIGHT = 100;
 
     private Scene scene;
     private ArrayList<String> inputs = new ArrayList<String>();
@@ -49,7 +41,6 @@ public class GUI extends Application {
     private ArrayList<String> input;
     private Actor shipActor;
     
-
     /**
      * Launch the game.
      *
@@ -64,7 +55,7 @@ public class GUI extends Application {
         setWindowTitle(primaryStage, WINDOW_TITLE);
         gc = initializeScene(primaryStage, WINDOW_WIDTH, WINDOW_HEIGHT);
 
-        engine = new Engine(new GameScene(scene), inputs);
+        engine = new Engine(new GameScene(scene));
 
         scene.setOnMouseClicked(
                 new EventHandler<MouseEvent>() {
@@ -73,7 +64,7 @@ public class GUI extends Application {
                     }
                 });
 
-        listenToKeyInput(scene, inputs);
+        listenToKeyInput();
         
         final GUI gui = this;
 
@@ -91,10 +82,6 @@ public class GUI extends Application {
         gc.setFill(Color.RED);
         
         engine.draw(gc);
-        /*
-        gc.fillText(String.format("Lives: %d", engine.getLives()), 60, 50);
-        gc.fillText(String.format("Points: %d", engine.getPoints()), 900, 50);
-        */
     }
     
     public void update() {
@@ -107,14 +94,12 @@ public class GUI extends Application {
      * @param scene current scene.
      * @param input collection of input.
      */
-    public void listenToKeyInput(Scene scene, final Collection<String> input) {
+    public void listenToKeyInput() {
         scene.setOnKeyPressed(
                 new EventHandler<KeyEvent>() {
                     public void handle(KeyEvent e) {
                         String code = e.getCode().toString();
-                        if (!input.contains(code)) {
-                            input.add(code);
-                        }
+                        engine.keyDown(code);
                     }
                 });
 
@@ -122,7 +107,7 @@ public class GUI extends Application {
                 new EventHandler<KeyEvent>() {
                     public void handle(KeyEvent e) {
                         String code = e.getCode().toString();
-                        input.remove(code);
+                        engine.keyUp(code);
                     }
                 });
     }
@@ -186,16 +171,6 @@ public class GUI extends Application {
                 gc.setFill(Color.RED);
 
                 engine.draw(gc);
-/*
-                gc.fillText(String.format("Lives: %d", engine.getLives()), livesStatusPosition[0],
-                        livesStatusPosition[1]);
-                gc.fillText(String.format("Points: %d", engine.getPoints()),
-                        pointsStatusPosition[0], pointsStatusPosition[1]);
-                if (!engine.isInProgress()) {
-                    gc.fillText("GAME OVER!", gameOverPosition[0], gameOverPosition[1]);
-                    gc.strokeText("GAME OVER!", gameOverPosition[0], gameOverPosition[1]);
-                    stop();
-                }*/
             }
         };
     }

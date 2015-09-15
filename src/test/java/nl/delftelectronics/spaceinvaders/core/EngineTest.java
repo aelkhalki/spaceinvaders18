@@ -26,7 +26,7 @@ public class EngineTest extends TestCase {
     
 	public void testClick() {
 		GameScene gameScene = mock(GameScene.class);
-    	Engine engine = new Engine(gameScene, new ArrayList<String>());
+    	Engine engine = new Engine(gameScene);
     	
     	Collidable all = new DummyCollidable(0, 0, 1000, 1000);
     	

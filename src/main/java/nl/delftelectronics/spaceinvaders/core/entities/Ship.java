@@ -68,11 +68,9 @@ public class Ship extends Actor implements Collidable {
     public void hit() {
     	if (lives > 0) {
     		lives--;
-    	} else {
-    		return;
     	}
     	
-    	if (scene instanceof PlayScene) {
+    	if (lives == 0 && scene instanceof PlayScene) {
     		PlayScene s = (PlayScene) scene;
     		s.lose();
     	}

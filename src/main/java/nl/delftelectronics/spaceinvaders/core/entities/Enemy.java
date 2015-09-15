@@ -99,10 +99,8 @@ public abstract class Enemy extends Actor implements Collidable {
         }
         if (reachedBoundary()) {
         	block.flip();
-        } else if (reachedBottom()) {
-            if (playScene != null) {
-            	playScene.lose();
-            }
+        } else if (reachedBottom() && playScene != null) {
+            playScene.lose();
         }
         
         if (block.random.nextDouble() < 0.0001) {

@@ -6,12 +6,14 @@ package nl.delftelectronics.spaceinvaders.core;
 import junit.framework.TestCase;
 import nl.delftelectronics.spaceinvaders.core.entities.DrawableEntity;
 import nl.delftelectronics.spaceinvaders.core.entities.Entity;
+import nl.delftelectronics.spaceinvaders.core.entities.EntityDestroyedListener;
 import nl.delftelectronics.spaceinvaders.core.scenes.GameScene;
 import junit.framework.Assert;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import org.joda.time.Interval;
 
@@ -91,15 +93,18 @@ public class GameSceneTest extends TestCase {
 		
 		CollisionEntity second = new CollisionEntity(100, 100, 10, 10);
 		scene.addEntity(second);
+		scene.update();
 		Assert.assertEquals(0, scene.getCollisions(first).size());
 		
 		CollisionEntity third = new CollisionEntity(5, 5, 10, 50);
 		scene.addEntity(third);
+		scene.update();
 		Assert.assertEquals(1, scene.getCollisions(first).size());
 		Assert.assertEquals(third, scene.getCollisions(first).get(0));
 		
 		Entity fourth = new Entity();
 		scene.addEntity(fourth);
+		scene.update();
 		Assert.assertEquals(1, scene.getCollisions(first).size());
 		Assert.assertEquals(third, scene.getCollisions(first).get(0));
 	}
