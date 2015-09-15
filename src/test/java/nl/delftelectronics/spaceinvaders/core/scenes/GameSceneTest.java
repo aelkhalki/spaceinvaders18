@@ -1,9 +1,10 @@
 /**
  * 
  */
-package nl.delftelectronics.spaceinvaders.core;
+package nl.delftelectronics.spaceinvaders.core.scenes;
 
 import junit.framework.TestCase;
+import nl.delftelectronics.spaceinvaders.core.Collidable;
 import nl.delftelectronics.spaceinvaders.core.entities.DrawableEntity;
 import nl.delftelectronics.spaceinvaders.core.entities.Entity;
 import nl.delftelectronics.spaceinvaders.core.scenes.GameScene;

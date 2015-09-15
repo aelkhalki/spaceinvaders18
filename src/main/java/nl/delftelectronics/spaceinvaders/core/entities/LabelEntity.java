@@ -10,6 +10,8 @@ import org.joda.time.Interval;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.scene.text.TextAlignment;
+import javafx.geometry.VPos;
 import nl.delftelectronics.spaceinvaders.core.Collidable;
 import nl.delftelectronics.spaceinvaders.core.Engine;
 import javafx.scene.canvas.GraphicsContext;
@@ -43,6 +45,8 @@ public class LabelEntity extends DrawableEntity implements Collidable {
         gc.setFill(Color.RED);
         gc.setStroke(Color.BLACK);
         gc.setLineWidth(lineWidth);
+        gc.setTextAlign(TextAlignment.LEFT);
+        gc.setTextBaseline(VPos.TOP);
         gc.setFont(font);
         gc.fillText(text, getPositionX(), getPositionY());
 	}

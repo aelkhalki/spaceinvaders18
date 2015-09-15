@@ -1,4 +1,4 @@
-package nl.delftelectronics.spaceinvaders.core;
+package nl.delftelectronics.spaceinvaders.core.entities;
 
 import org.joda.time.Interval;
 
@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import static org.mockito.Matchers.any;
 import junit.framework.Assert;
 import junit.framework.TestCase;
+import nl.delftelectronics.spaceinvaders.core.Collidable;
 import nl.delftelectronics.spaceinvaders.core.entities.Bullet;
 import nl.delftelectronics.spaceinvaders.core.entities.Entity;
 import nl.delftelectronics.spaceinvaders.core.scenes.GameScene;
