@@ -1,6 +1,11 @@
-package nl.delftelectronics.spaceinvaders.core;
+package nl.delftelectronics.spaceinvaders.core.entities;
 
 import org.joda.time.Interval;
+
+import nl.delftelectronics.spaceinvaders.core.Collidable;
+import nl.delftelectronics.spaceinvaders.core.Direction;
+import nl.delftelectronics.spaceinvaders.core.Engine;
+import nl.delftelectronics.spaceinvaders.core.scenes.PlayScene;
 
 /**
  * The ship is the playable character in the game. It can only move horizontally and shoot

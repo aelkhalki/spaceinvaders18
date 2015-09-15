@@ -1,4 +1,4 @@
-package nl.delftelectronics.spaceinvaders.core;
+package nl.delftelectronics.spaceinvaders.core.entities;
 
 /**
  * A MediumEnemy is a medium sized Enemy, worth 20 points.

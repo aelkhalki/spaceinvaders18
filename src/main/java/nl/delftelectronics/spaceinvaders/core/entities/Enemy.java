@@ -1,6 +1,11 @@
-package nl.delftelectronics.spaceinvaders.core;
+package nl.delftelectronics.spaceinvaders.core.entities;
 
 import org.joda.time.Interval;
+
+import nl.delftelectronics.spaceinvaders.core.Collidable;
+import nl.delftelectronics.spaceinvaders.core.Direction;
+import nl.delftelectronics.spaceinvaders.core.scenes.GameScene;
+import nl.delftelectronics.spaceinvaders.core.scenes.PlayScene;
 
 /**
  * An Enemy is an object that moves on itself and tries to shoot bullets at the player. The Enemy

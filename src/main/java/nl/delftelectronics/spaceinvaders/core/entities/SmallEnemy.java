@@ -1,4 +1,4 @@
-package nl.delftelectronics.spaceinvaders.core;
+package nl.delftelectronics.spaceinvaders.core.entities;
 
 /**
  * A SmallEnemy is a small Enemy, worth 40 points.

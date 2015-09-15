@@ -1,6 +1,8 @@
-package nl.delftelectronics.spaceinvaders.core;
+package nl.delftelectronics.spaceinvaders.core.entities;
 
 import java.awt.Rectangle;
+
+import nl.delftelectronics.spaceinvaders.core.Direction;
 
 /**
  * A Bomb is a projectile that can be shot by an object. If a bullet hits an Enemy, it also hits

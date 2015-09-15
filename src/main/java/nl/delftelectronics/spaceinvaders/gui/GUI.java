@@ -1,5 +1,6 @@
 package nl.delftelectronics.spaceinvaders.gui;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -17,9 +18,10 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
-import nl.delftelectronics.spaceinvaders.core.Actor;
 import nl.delftelectronics.spaceinvaders.core.Engine;
-import nl.delftelectronics.spaceinvaders.core.GameScene;
+import nl.delftelectronics.spaceinvaders.core.entities.Actor;
+import nl.delftelectronics.spaceinvaders.core.scenes.GameScene;
+import nl.delftelectronics.spaceinvaders.core.scenes.MenuScene;
 
 /**
  * The GUI is the runnable class of this game. It handles the frames and the graphics.
@@ -29,7 +31,6 @@ public class GUI extends Application {
     private static final Integer WINDOW_WIDTH = 1680;
     private static final Integer WINDOW_HEIGHT = 1050;
     private static final String WINDOW_TITLE = "Space Invaders";
-    private static final Integer ENTITY_DIMENSION = 100;
     private static final double SECOND = 1000000000.0;
     private static final Integer START_GAME_AREA_X = 0;
     private static final Integer START_GAME_AREA_Y = 0;
@@ -63,45 +64,22 @@ public class GUI extends Application {
         setWindowTitle(primaryStage, WINDOW_TITLE);
         gc = initializeScene(primaryStage, WINDOW_WIDTH, WINDOW_HEIGHT);
 
-        engine = new Engine(WINDOW_WIDTH, WINDOW_HEIGHT, new GameScene(scene));
-
-        final int lineWidth = 2;
-        final int fontSize = 48;
-        gc.setFill(Color.RED);
-        gc.setStroke(Color.BLACK);
-        gc.setLineWidth(lineWidth);
-        Font font = Font.font("Arial", FontWeight.BOLD, fontSize);
-        gc.setFont(font);
-
-        final int[] startGameCoordinates = {100, 100};
-        final int[] quitGameCoordinates = {100, 500};
-        gc.fillText("START GAME", startGameCoordinates[0], startGameCoordinates[1]);
-        gc.fillText("QUIT GAME", quitGameCoordinates[0], quitGameCoordinates[1]);
-
-        final Rectangle startGameArea = new Rectangle(START_GAME_AREA_X, START_GAME_AREA_Y,
-                START_GAME_AREA_WIDTH, START_GAME_AREA_HEIGHT);
-
-        final Rectangle quitGameArea = new Rectangle(QUIT_GAME_AREA_X, QUIT_GAME_AREA_Y,
-                QUIT_GAME_AREA_WIDTH, QUIT_GAME_AREA_HEIGHT);
-
-        final boolean[] started = {false};
+        engine = new Engine(new GameScene(scene), inputs);
 
         scene.setOnMouseClicked(
                 new EventHandler<MouseEvent>() {
                     public void handle(MouseEvent e) {
-                        if (startGameArea.contains(e.getX(), e.getY())) {
-                            started[0] = true;
-                        } else if (quitGameArea.contains(e.getX(), e.getY())) {
-                            System.exit(0);
-                        }
+                        engine.addClick(new Point((int) e.getX(), (int) e.getY()));
                     }
                 });
 
         listenToKeyInput(scene, inputs);
+        
         final GUI gui = this;
 
-        engine.startGame(ENTITY_DIMENSION, ENTITY_DIMENSION, ENTITY_DIMENSION, ENTITY_DIMENSION, inputs);
-        AnimationTimer at = createAnimationTimer(started, engine, gc);
+        engine.setScene(new MenuScene(scene));
+        
+        AnimationTimer at = createAnimationTimer(engine, gc);
         at.start();
 
         primaryStage.show();
@@ -113,14 +91,10 @@ public class GUI extends Application {
         gc.setFill(Color.RED);
         
         engine.draw(gc);
-        
+        /*
         gc.fillText(String.format("Lives: %d", engine.getLives()), 60, 50);
         gc.fillText(String.format("Points: %d", engine.getPoints()), 900, 50);
-
-        if (!engine.isInProgress()) {
-            gc.fillText("GAME OVER!", 600, 500);
-            gc.strokeText("GAME OVER!", 600, 500);
-        }
+        */
     }
     
     public void update() {
@@ -191,7 +165,7 @@ public class GUI extends Application {
      * @param gc      the graphics context.
      * @return the animation timer that shows the game to the window.
      */
-    public AnimationTimer createAnimationTimer(final boolean[] started, final Engine engine,
+    public AnimationTimer createAnimationTimer(final Engine engine,
                                                final GraphicsContext gc) {
         return new AnimationTimer() {
             private Long previousNanoTime = System.nanoTime();
@@ -201,7 +175,7 @@ public class GUI extends Application {
 
             public void handle(long currentNanoTime) {
                 double elapsedTime = (currentNanoTime - previousNanoTime) / SECOND;
-                if (!started[0] || elapsedTime < 1 / FPS) {
+                if (elapsedTime < 1 / FPS) {
                     previousNanoTime = currentNanoTime;
                     return;
                 }
@@ -212,7 +186,7 @@ public class GUI extends Application {
                 gc.setFill(Color.RED);
 
                 engine.draw(gc);
-
+/*
                 gc.fillText(String.format("Lives: %d", engine.getLives()), livesStatusPosition[0],
                         livesStatusPosition[1]);
                 gc.fillText(String.format("Points: %d", engine.getPoints()),
@@ -221,7 +195,7 @@ public class GUI extends Application {
                     gc.fillText("GAME OVER!", gameOverPosition[0], gameOverPosition[1]);
                     gc.strokeText("GAME OVER!", gameOverPosition[0], gameOverPosition[1]);
                     stop();
-                }
+                }*/
             }
         };
     }

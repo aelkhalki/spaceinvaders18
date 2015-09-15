@@ -1,8 +1,10 @@
-package nl.delftelectronics.spaceinvaders.core;
+package nl.delftelectronics.spaceinvaders.core.entities;
 
 import java.util.Random;
 
 import org.joda.time.Interval;
+
+import nl.delftelectronics.spaceinvaders.core.Direction;
 
 /**
  * An Ufo is an enemy that does not shoot any bullets, and is worth a random number of points.

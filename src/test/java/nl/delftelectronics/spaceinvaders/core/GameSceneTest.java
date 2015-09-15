@@ -4,6 +4,9 @@
 package nl.delftelectronics.spaceinvaders.core;
 
 import junit.framework.TestCase;
+import nl.delftelectronics.spaceinvaders.core.entities.DrawableEntity;
+import nl.delftelectronics.spaceinvaders.core.entities.Entity;
+import nl.delftelectronics.spaceinvaders.core.scenes.GameScene;
 import junit.framework.Assert;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
@@ -77,7 +80,7 @@ public class GameSceneTest extends TestCase {
 	}
 	
 	/**
-	 * Test method for {@link nl.delftelectronics.spaceinvaders.core.GameScene#getCollisions(nl.delftelectronics.spaceinvaders.core.Collidable)}.
+	 * Test method for {@link nl.delftelectronics.spaceinvaders.core.scenes.GameScene#getCollisions(nl.delftelectronics.spaceinvaders.core.Collidable)}.
 	 */
 	public void testCollisions() {
 		GameScene scene = new GameScene(mock(Scene.class));

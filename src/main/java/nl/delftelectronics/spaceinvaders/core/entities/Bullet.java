@@ -1,8 +1,11 @@
-package nl.delftelectronics.spaceinvaders.core;
+package nl.delftelectronics.spaceinvaders.core.entities;
 
 import java.util.List;
 
 import org.joda.time.Interval;
+
+import nl.delftelectronics.spaceinvaders.core.Collidable;
+import nl.delftelectronics.spaceinvaders.core.Direction;
 
 import java.awt.Rectangle;
 
@@ -11,7 +14,7 @@ import java.awt.Rectangle;
  *
  * @author Max
  */
-public class Bullet extends SpriteEntity implements AutomaticMovable, Projectile, Collidable {
+public class Bullet extends SpriteEntity implements Projectile, Collidable {
     public static final Integer MOVING_SPEED = 15;
     private static final Integer IMPACT_RADIUS = 1;
     private static final String FILENAME = "/bullet.png";

@@ -1,4 +1,4 @@
-package nl.delftelectronics.spaceinvaders.core;
+package nl.delftelectronics.spaceinvaders.core.entities;
 
 /**
  * A LargeEnemy is a large Enemy, worth 10 points.

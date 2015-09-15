@@ -1,7 +1,7 @@
 /**
  * 
  */
-package nl.delftelectronics.spaceinvaders.core;
+package nl.delftelectronics.spaceinvaders.core.scenes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +11,12 @@ import org.joda.time.Interval;
 
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
+import nl.delftelectronics.spaceinvaders.core.Collidable;
+import nl.delftelectronics.spaceinvaders.core.entities.DrawableEntity;
+import nl.delftelectronics.spaceinvaders.core.entities.Entity;
+import nl.delftelectronics.spaceinvaders.core.entities.EntityDestroyedListener;
+import nl.delftelectronics.spaceinvaders.core.entities.PreUpdatable;
+
 import java.awt.Rectangle;
 
 /**
@@ -25,7 +31,7 @@ public class GameScene implements EntityDestroyedListener {
 	private Instant lastDraw;
 	private boolean hasLoadedGraphics = false;
 	private GraphicsContext graphicsContext;
-	protected Scene scene;
+	public Scene scene;
 	
 	/**
 	 * Creates a new GameScene with a given width and height

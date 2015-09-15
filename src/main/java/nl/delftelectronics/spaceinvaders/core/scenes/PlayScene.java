@@ -1,11 +1,19 @@
 /**
  * 
  */
-package nl.delftelectronics.spaceinvaders.core;
+package nl.delftelectronics.spaceinvaders.core.scenes;
 
 import java.util.Random;
 
 import javafx.scene.Scene;
+import nl.delftelectronics.spaceinvaders.core.Direction;
+import nl.delftelectronics.spaceinvaders.core.entities.Enemy;
+import nl.delftelectronics.spaceinvaders.core.entities.EnemyBlock;
+import nl.delftelectronics.spaceinvaders.core.entities.LargeEnemy;
+import nl.delftelectronics.spaceinvaders.core.entities.MediumEnemy;
+import nl.delftelectronics.spaceinvaders.core.entities.Ship;
+import nl.delftelectronics.spaceinvaders.core.entities.SmallEnemy;
+import nl.delftelectronics.spaceinvaders.core.entities.Ufo;
 
 /**
  * @author Max
@@ -25,6 +33,7 @@ public class PlayScene extends GameScene {
     private static final double ENEMY_FIRE_CHANCE = 0.0001;            // ratio
     private static final int STARTING_LIVES = 3;
     private static final int STARTING_POINTS = 0;
+    private static final int ENTITY_DIMENSION = 100;
 
 	private int points = 0;
 	public int enemyCount = 0;
@@ -37,7 +46,7 @@ public class PlayScene extends GameScene {
 	/**
 	 * @param scene
 	 */
-	public PlayScene(Scene scene, int enemyWidth, int enemyHeight, int shipWidth, int shipHeight) {
+	public PlayScene(Scene scene) {
 		super(scene);
 		
 		fieldWidth = (int) scene.getWidth();
@@ -52,26 +61,26 @@ public class PlayScene extends GameScene {
 		for (int column = 0; column < ENEMY_COLUMNS; column++) {
             int currentRow = 0;
             for (int smallEnemyRow = 0; smallEnemyRow < SMALL_ENEMY_ROWS; smallEnemyRow++) {
-                Enemy smallEnemy = new SmallEnemy(10 + 100 * column, 90 * currentRow, enemyWidth, enemyHeight, 0,
+                Enemy smallEnemy = new SmallEnemy(10 + 100 * column, 90 * currentRow, ENTITY_DIMENSION, ENTITY_DIMENSION, 0,
                         fieldWidth, fieldHeight, block);
                 addEntity(smallEnemy);
                 currentRow++;
             }
             for (int mediumEnemyRow = 0; mediumEnemyRow < MEDIUM_ENEMY_ROWS; mediumEnemyRow++) {
-                Enemy mediumEnemy = new MediumEnemy(10 + 100 * column, 90 * currentRow, enemyWidth, enemyHeight, 0,
+                Enemy mediumEnemy = new MediumEnemy(10 + 100 * column, 90 * currentRow, ENTITY_DIMENSION, ENTITY_DIMENSION, 0,
                         fieldWidth, fieldHeight, block);
                 addEntity(mediumEnemy);
                 currentRow++;
             }
             for (int largeEnemyRow = 0; largeEnemyRow < LARGE_ENEMY_ROWS; largeEnemyRow++) {
-                Enemy largeEnemy = new LargeEnemy(10 + 100 * column, 90 * currentRow, enemyWidth, enemyHeight, 0,
+                Enemy largeEnemy = new LargeEnemy(10 + 100 * column, 90 * currentRow, ENTITY_DIMENSION, ENTITY_DIMENSION, 0,
                         fieldWidth, fieldHeight, block);
                 addEntity(largeEnemy);
                 currentRow++;
             }
         }
 		
-		ship = new Ship(shipPositionX, shipPositionY, shipWidth, shipHeight, 0, fieldWidth);
+		ship = new Ship(shipPositionX, shipPositionY, ENTITY_DIMENSION, ENTITY_DIMENSION, 0, fieldWidth);
         addEntity(ship);
 	}
 	

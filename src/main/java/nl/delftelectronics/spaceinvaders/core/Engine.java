@@ -1,5 +1,7 @@
 package nl.delftelectronics.spaceinvaders.core;
 
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -9,6 +11,9 @@ import java.util.Random;
 import java.util.Set;
 
 import javafx.scene.canvas.GraphicsContext;
+import nl.delftelectronics.spaceinvaders.core.scenes.GameScene;
+import nl.delftelectronics.spaceinvaders.core.scenes.PlayScene;
+
 import com.google.common.collect.Iterators;
 
 /**
@@ -18,7 +23,8 @@ public class Engine {
 	
     private static Engine instance;
     private List<String> inputs = new ArrayList<String>();
-
+    private List<Point> clicks = new ArrayList<Point>();
+    
     private GameScene currentScene;
 
     /**
@@ -28,8 +34,9 @@ public class Engine {
      * @param fieldHeight the height of the playing field.
      * @param startScene  the scene.
      */
-    public Engine(int fieldWidth, int fieldHeight, GameScene startScene) {
+    public Engine(GameScene startScene, List<String> inputs) {
         this.currentScene = startScene;
+        this.inputs = inputs;
         Engine.instance = this;
     }
     
@@ -41,13 +48,6 @@ public class Engine {
     	return instance;
     }
     
-    public Ship getShip() {
-    	if (currentScene instanceof PlayScene) {
-    		return ((PlayScene) currentScene).ship;
-    	}
-    	return null;
-    }
-    
     /**
      * Tests whether a specified key is currently pressed
      * @param key  the key to test.
@@ -56,44 +56,32 @@ public class Engine {
     public boolean isKeyPressed(String key) {
     	return inputs.contains(key);
     }
-
+    
     /**
-     * Return the number of lives the player has left.
-     *
-     * @return the number of lives the player has left.
+     * Registers a click until the next update
+     * @param position  the position that was clicked
      */
-    public int getLives() {
-    	if (getShip() == null) {
-    		return 0;
-    	}
-    	
-        return getShip().getLives();
+    public void addClick(Point position) {
+    	clicks.add(position);
     }
-
-    /**
-     * Return the number of points the player has accumulated.
-     *
-     * @return the number of points the player has accumulated.
-     */
-    public int getPoints() {
-    	if (currentScene instanceof PlayScene) {
-    		return ((PlayScene) currentScene).getPoints();
-    	} else {
-    		return 0;
-    	}
+    
+    public void setScene(GameScene scene) {
+    	currentScene = scene;
     }
-
-    /**
-     * Create the ship and the enemies.
-     *
-     * @param shipWidth   the width of the ship (in pixels).
-     * @param shipHeight  the height of the ship (in pixels).
-     * @param enemyWidth  the width of the enemy (in pixels).
-     * @param enemyHeight the height of the enemy (in pixels).
-     */
-    public void startGame(int shipWidth, int shipHeight, int enemyWidth, int enemyHeight, List<String> inputs) {
-        currentScene = new PlayScene(currentScene.scene, shipWidth, shipHeight, enemyWidth, enemyHeight);
-        this.inputs = inputs;
+    
+    public GameScene getScene() {
+    	return currentScene;
+    }
+    
+    public boolean wasClicked(Collidable collider) {
+    	Rectangle r = new Rectangle(collider.getPositionX(), collider.getPositionY(),
+    			collider.getWidth(), collider.getHeight());
+    	for (Point p : clicks) {
+    		if (r.contains(p)) {
+    			return true;
+    		}
+    	}
+    	return false;
     }
 
     /**
@@ -101,10 +89,9 @@ public class Engine {
      */
     public void update() {
         currentScene.update();
+        clicks.clear();
     }
     
-    
-
     /**
      * Draw all drawable entities in the scene.
      *
@@ -112,14 +99,5 @@ public class Engine {
      */
     public void draw(GraphicsContext gc) {
         currentScene.draw(gc);
-    }
-
-    /**
-     * True if the game is in progress, otherwise false.
-     *
-     * @return true if the game is in progress, otherwise false.
-     */
-    public boolean isInProgress() {
-        return getLives() > 0;
     }
 }

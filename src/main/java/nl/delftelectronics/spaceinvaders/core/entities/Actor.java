@@ -1,4 +1,4 @@
-package nl.delftelectronics.spaceinvaders.core;
+package nl.delftelectronics.spaceinvaders.core.entities;
 
 /**
  * An actor is a non-playable drawable character.
