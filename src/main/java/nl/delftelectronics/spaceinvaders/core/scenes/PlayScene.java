@@ -27,13 +27,8 @@ public class PlayScene extends GameScene {
 	private static final int ENEMY_COLUMNS = 12;
 	private static final double SHIP_MARGIN_FROM_LEFT = 0.05; // ratio
 	private static final double SHIP_MARGIN_FROM_BOTTOM = 0.1; // ratio
-	private static final int ENEMY_MARGIN_FROM_TOP = 10; // pixels
 	private static final int UFO_MARGIN_FROM_TOP = 100; // pixels
-	private static final int REDUCED_ENEMY_HEIGHT = 90; // pixels
 	private static final double UFO_CHANCE = 0.002; // ratio
-	private static final double ENEMY_FIRE_CHANCE = 0.0001; // ratio
-	private static final int STARTING_LIVES = 3;
-	private static final int STARTING_POINTS = 0;
 	private static final int ENTITY_DIMENSION = 100;
 
 	private int points = 0;
@@ -41,7 +36,6 @@ public class PlayScene extends GameScene {
 	private int fieldWidth;
 	private int fieldHeight;
 	private Random random = new Random();
-	public Direction enemyDirection = Direction.EAST;
 	public Ship ship;
 	private boolean finished = false;
 

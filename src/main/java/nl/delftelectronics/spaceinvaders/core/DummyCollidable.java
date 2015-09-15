@@ -30,6 +30,7 @@ public class DummyCollidable implements Collidable {
 	
 	/**
 	 * Returns the x position
+	 * @return the x position
 	 */
 	public int getPositionX() {
 		return positionX;
@@ -37,6 +38,7 @@ public class DummyCollidable implements Collidable {
 
 	/**
 	 * Returns the y position
+	 * @return the y position
 	 */
 	public int getPositionY() {
 		return positionY;
@@ -44,6 +46,7 @@ public class DummyCollidable implements Collidable {
 
 	/**
 	 * Returns the width
+	 * @return the width
 	 */
 	public int getWidth() {
 		return width;
@@ -51,6 +54,7 @@ public class DummyCollidable implements Collidable {
 
 	/**
 	 * Returns the height
+	 * @return the height
 	 */
 	public int getHeight() {
 		return height;

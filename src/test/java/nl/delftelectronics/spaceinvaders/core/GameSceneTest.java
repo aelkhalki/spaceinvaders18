@@ -6,14 +6,12 @@ package nl.delftelectronics.spaceinvaders.core;
 import junit.framework.TestCase;
 import nl.delftelectronics.spaceinvaders.core.entities.DrawableEntity;
 import nl.delftelectronics.spaceinvaders.core.entities.Entity;
-import nl.delftelectronics.spaceinvaders.core.entities.EntityDestroyedListener;
 import nl.delftelectronics.spaceinvaders.core.scenes.GameScene;
 import junit.framework.Assert;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 import org.joda.time.Interval;
 

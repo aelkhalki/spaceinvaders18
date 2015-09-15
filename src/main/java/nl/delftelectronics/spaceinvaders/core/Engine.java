@@ -25,8 +25,6 @@ public class Engine {
 	 *
 	 * @param startScene
 	 *            the scene.
-	 * @param inputs
-	 *            the list of currently pressed keys
 	 */
 	public Engine(GameScene startScene) {
 		this.currentScene = startScene;
@@ -47,24 +45,36 @@ public class Engine {
 	 * 
 	 * @param key
 	 *            the key to test.
-	 * @return
+	 * @return true if the key is pressed
 	 */
 	public boolean isKeyPressed(String key) {
 		synchronized (inputs) {
 			return inputs.contains(key);
 		}
 	}
-	
+
+	/**
+	 * Registers a key as pressed
+	 * 
+	 * @param key
+	 *            the key to register
+	 */
 	public void keyDown(String key) {
-		synchronized(inputs) {
-			if(!inputs.contains(key)) {
+		synchronized (inputs) {
+			if (!inputs.contains(key)) {
 				inputs.add(key);
 			}
 		}
 	}
-	
+
+	/**
+	 * Registers a key as released
+	 * 
+	 * @param key
+	 *            the key to release
+	 */
 	public void keyUp(String key) {
-		synchronized(inputs) {
+		synchronized (inputs) {
 			inputs.remove(key);
 		}
 	}
@@ -109,8 +119,8 @@ public class Engine {
 	 * @return Whether a click was registered
 	 */
 	public boolean wasClicked(Collidable collider) {
-		Rectangle r = new Rectangle(collider.getPositionX(), collider.getPositionY(), collider.getWidth(),
-				collider.getHeight());
+		Rectangle r = new Rectangle(collider.getPositionX(), collider.getPositionY(),
+				collider.getWidth(), collider.getHeight());
 		synchronized (clicks) {
 			for (Point p : clicks) {
 				if (r.contains(p)) {
