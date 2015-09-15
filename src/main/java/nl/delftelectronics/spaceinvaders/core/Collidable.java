@@ -12,20 +12,20 @@ public interface Collidable {
 	 * The x position of the rectangle
 	 * @return the y position of the rectangle
 	 */
-	int getPositionX();
+	double getPositionX();
 	/**
 	 * The y position of the rectangle
 	 * @return the y position of the rectangle
 	 */
-	int getPositionY();
+	double getPositionY();
 	/**
 	 * The width of the rectangle
 	 * @return the width of the rectangle
 	 */
-	int getWidth();
+	double getWidth();
 	/**
 	 * The height of the rectangle
 	 * @return the height of the rectangle
 	 */
-	int getHeight();
+	double getHeight();
 }

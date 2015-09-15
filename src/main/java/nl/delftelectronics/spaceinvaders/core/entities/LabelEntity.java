@@ -70,4 +70,8 @@ public class LabelEntity extends DrawableEntity implements Collidable {
 	public void removeClickedListener(LabelClickedListener listener) {
 		clickedEvent.remove(LabelClickedListener.class, listener);
 	}
+
+	public void setText(String text) {
+		this.text = text;
+	}
 }

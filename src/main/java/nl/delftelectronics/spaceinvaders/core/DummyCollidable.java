@@ -8,10 +8,10 @@ package nl.delftelectronics.spaceinvaders.core;
  * Represents a non-entity collidable.
  */
 public class DummyCollidable implements Collidable {
-	private int positionX;
-	private int positionY;
-	private int width;
-	private int height;
+	private double positionX;
+	private double positionY;
+	private double width;
+	private double height;
 	
 	/**
 	 * Creates a new DummyCollidable
@@ -20,8 +20,8 @@ public class DummyCollidable implements Collidable {
 	 * @param width The width of the collidable
 	 * @param height The height of the collidable
 	 */
-	public DummyCollidable(int positionX, int positionY,
-			int width, int height) {
+	public DummyCollidable(double positionX, double positionY,
+			double width, double height) {
 		this.positionX = positionX;
 		this.positionY = positionY;
 		this.width = width;
@@ -32,7 +32,7 @@ public class DummyCollidable implements Collidable {
 	 * Returns the x position
 	 * @return the x position
 	 */
-	public int getPositionX() {
+	public double getPositionX() {
 		return positionX;
 	}
 
@@ -40,7 +40,7 @@ public class DummyCollidable implements Collidable {
 	 * Returns the y position
 	 * @return the y position
 	 */
-	public int getPositionY() {
+	public double getPositionY() {
 		return positionY;
 	}
 
@@ -48,7 +48,7 @@ public class DummyCollidable implements Collidable {
 	 * Returns the width
 	 * @return the width
 	 */
-	public int getWidth() {
+	public double getWidth() {
 		return width;
 	}
 
@@ -56,7 +56,7 @@ public class DummyCollidable implements Collidable {
 	 * Returns the height
 	 * @return the height
 	 */
-	public int getHeight() {
+	public double getHeight() {
 		return height;
 	}
 

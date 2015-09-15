@@ -33,6 +33,23 @@ public class Ufo extends Enemy {
                 block, FILENAME);
         this.random = new Random();
     }
+    
+    @Override
+    /**
+     * Destroys the Entity and does not decrement the enemy count
+     */
+    public void kill() {
+    	if (isKilled) {
+    		return;
+    	}
+    	
+    	isKilled = true;
+    	destroy();
+    	
+    	if (playScene != null) {
+    		playScene.addPoints(getPoints());
+    	}
+    }
 
     @Override
     public Integer getPoints() {

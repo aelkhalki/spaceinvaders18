@@ -119,8 +119,8 @@ public class Engine {
 	 * @return Whether a click was registered
 	 */
 	public boolean wasClicked(Collidable collider) {
-		Rectangle r = new Rectangle(collider.getPositionX(), collider.getPositionY(),
-				collider.getWidth(), collider.getHeight());
+		Rectangle r = new Rectangle((int)collider.getPositionX(), (int)collider.getPositionY(),
+				(int)collider.getWidth(), (int)collider.getHeight());
 		synchronized (clicks) {
 			for (Point p : clicks) {
 				if (r.contains(p)) {

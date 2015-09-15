@@ -21,9 +21,9 @@ public abstract class Enemy extends Actor implements Collidable {
     private Integer westBoundary;
     private Integer eastBoundary;
     private Integer southBoundary;
-    private PlayScene playScene;
+    protected PlayScene playScene;
     protected EnemyBlock block;
-    private boolean isKilled = false;
+    protected boolean isKilled = false;
 
     /**
      * Create an Enemy with the initial position, the size, the boundaries of the playing field
@@ -73,6 +73,7 @@ public abstract class Enemy extends Actor implements Collidable {
     	
     	if (playScene != null) {
     		playScene.enemyCount--;
+    		playScene.addPoints(getPoints());
     		
     		if (playScene.enemyCount == 0) {
     			playScene.win();

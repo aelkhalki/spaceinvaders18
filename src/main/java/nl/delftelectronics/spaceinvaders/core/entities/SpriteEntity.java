@@ -22,7 +22,7 @@ public abstract class SpriteEntity extends DrawableEntity {
      * @param height     the height of the sprite entity.
      * @param spriteName the filename of the sprite.
      */
-	public SpriteEntity(int positionX, int positionY, int width, int height, String spriteName) {
+	public SpriteEntity(double positionX, double positionY, double width, double height, String spriteName) {
 		super(positionX, positionY, width, height);
 		
 		this.spriteName = spriteName;

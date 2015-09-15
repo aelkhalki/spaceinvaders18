@@ -9,10 +9,10 @@ import org.joda.time.Interval;
  * Represents an entity that can draw itself
  */
 public class DrawableEntity extends Entity {
-    private int positionX;
-    private int positionY;
-    private int width;
-    private int height;
+    private double positionX;
+    private double positionY;
+    private double width;
+    private double height;
     private Rectangle rectangle;
 
     /**
@@ -23,12 +23,12 @@ public class DrawableEntity extends Entity {
      * @param width     the width of the entity.
      * @param height    the height of the entity.
      */
-    public DrawableEntity(int positionX, int positionY, int width, int height) {
+    public DrawableEntity(double positionX, double positionY, double width, double height) {
         this.positionX = positionX;
         this.positionY = positionY;
         this.width = width;
         this.height = height;
-        this.rectangle = new Rectangle(positionX, positionY, width, height);
+        this.rectangle = new Rectangle((int)positionX, (int)positionY, (int)width, (int)height);
     }
 	
 	/**
@@ -54,7 +54,7 @@ public class DrawableEntity extends Entity {
      *
      * @return the x-coordinate of the position.
      */
-    public int getPositionX() {
+    public double getPositionX() {
         return positionX;
     }
 
@@ -63,9 +63,9 @@ public class DrawableEntity extends Entity {
      *
      * @param newPosition the new x-coordinate.
      */
-    public void setPositionX(int newPosition) {
+    public void setPositionX(double newPosition) {
         positionX = newPosition;
-        rectangle.setLocation(positionX, positionY);
+        rectangle.setLocation((int)positionX, (int)positionY);
     }
 
     /**
@@ -73,7 +73,7 @@ public class DrawableEntity extends Entity {
      *
      * @return the y-coordinate of the position.
      */
-    public int getPositionY() {
+    public double getPositionY() {
         return positionY;
     }
 
@@ -82,9 +82,9 @@ public class DrawableEntity extends Entity {
      *
      * @param newPosition the new y-coordinate.
      */
-    public void setPositionY(int newPosition) {
+    public void setPositionY(double newPosition) {
         positionY = newPosition;
-        rectangle.setLocation(positionX, positionY);
+        rectangle.setLocation((int)positionX, (int)positionY);
     }
 
     /**
@@ -92,7 +92,7 @@ public class DrawableEntity extends Entity {
      *
      * @return the width of the entity.
      */
-    public int getWidth() {
+    public double getWidth() {
         return width;
     }
 
@@ -101,7 +101,7 @@ public class DrawableEntity extends Entity {
      *
      * @return the height of the entity.
      */
-    public int getHeight() {
+    public double getHeight() {
         return height;
     }
 

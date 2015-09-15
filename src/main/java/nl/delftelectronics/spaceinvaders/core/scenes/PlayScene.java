@@ -38,6 +38,8 @@ public class PlayScene extends GameScene {
 	private Random random = new Random();
 	public Ship ship;
 	private boolean finished = false;
+	private LabelEntity scoreLabel;
+	private LabelEntity livesLabel;
 
 	/**
 	 * @param scene
@@ -61,23 +63,32 @@ public class PlayScene extends GameScene {
 						ENTITY_DIMENSION, 0, fieldWidth, fieldHeight, block);
 				addEntity(smallEnemy);
 				currentRow++;
+				enemyCount++;
 			}
 			for (int mediumEnemyRow = 0; mediumEnemyRow < MEDIUM_ENEMY_ROWS; mediumEnemyRow++) {
 				Enemy mediumEnemy = new MediumEnemy(10 + 100 * column, 90 * currentRow, ENTITY_DIMENSION,
 						ENTITY_DIMENSION, 0, fieldWidth, fieldHeight, block);
 				addEntity(mediumEnemy);
 				currentRow++;
+				enemyCount++;
 			}
 			for (int largeEnemyRow = 0; largeEnemyRow < LARGE_ENEMY_ROWS; largeEnemyRow++) {
 				Enemy largeEnemy = new LargeEnemy(10 + 100 * column, 90 * currentRow, ENTITY_DIMENSION,
 						ENTITY_DIMENSION, 0, fieldWidth, fieldHeight, block);
 				addEntity(largeEnemy);
 				currentRow++;
+				enemyCount++;
 			}
 		}
 
 		ship = new Ship(shipPositionX, shipPositionY, ENTITY_DIMENSION, ENTITY_DIMENSION, 0, fieldWidth);
 		addEntity(ship);
+		
+		scoreLabel = new LabelEntity(30,30,0,0, "Score: " + points);
+		livesLabel = new LabelEntity(400, 30, 0, 0, "Lives: " + ship.getLives());
+		
+		addEntity(scoreLabel);
+		addEntity(livesLabel);
 	}
 
 	/**
@@ -109,6 +120,8 @@ public class PlayScene extends GameScene {
 			return;
 		}
 		this.points += points;
+		
+		scoreLabel.setText("Score: " + points);
 	}
 
 	@Override
@@ -122,6 +135,8 @@ public class PlayScene extends GameScene {
 		if (random.nextDouble() < UFO_CHANCE) {
 			createUfo();
 		}
+		
+		livesLabel.setText("Lives: " + ship.getLives());
 	}
 
 	public void lose() {
