@@ -1,5 +1,7 @@
 package nl.delftelectronics.spaceinvaders.core;
 
+import org.joda.time.Interval;
+
 /**
  * The ship is the playable character in the game. It can only move horizontally and shoot
  * bullets up.
@@ -7,6 +9,8 @@ package nl.delftelectronics.spaceinvaders.core;
 public class Ship extends Actor implements Collidable {
     private static final String FILENAME = "/ship.png";
     protected int lives = 3;
+    private long lastBulletFire = 0;
+    private static final double BULLET_FIRE_TIME_DELAY = 1000000000.0; // nanoseconds
 
     /**
      * Create a Ship with the initial position and size.
@@ -31,6 +35,18 @@ public class Ship extends Actor implements Collidable {
     public Bullet shoot() {
         return new Bullet(getPositionX() + getWidth() / 2, getPositionY(), Bullet.WIDTH,
                 Bullet.HEIGHT, true);
+    }
+    
+    /**
+     * Order the ship to shoot a bullet.
+     */
+    public void playerShootBullet() {
+        long currentNanoTime = System.nanoTime();
+        if (currentNanoTime - lastBulletFire > BULLET_FIRE_TIME_DELAY) {
+        	lastBulletFire = currentNanoTime;
+            Bullet bullet = shoot();
+            scene.addEntity(bullet);
+        }
     }
     
     /**
@@ -65,6 +81,38 @@ public class Ship extends Actor implements Collidable {
     public Bomb shootBomb() {
         return new Bomb(getPositionX() + getWidth() / 2, getPositionY(), Bomb.WIDTH,
                 Bomb.HEIGHT, Direction.NORTH);
+    }
+    
+    /**
+     * Order the ship to shoot a bomb.
+     */
+    public void playerShootBomb() {
+        long currentNanoTime = System.nanoTime();
+        if (currentNanoTime - lastBulletFire > BULLET_FIRE_TIME_DELAY) {
+        	lastBulletFire = currentNanoTime;
+            Bomb bomb = shootBomb();
+            scene.addEntity(bomb);
+        }
+    }
+    
+    @Override
+    public void update(Interval delta) {
+    	super.update(delta);
+    	
+    	Engine engine = Engine.getInstance();
+    	if (engine.isKeyPressed("SPACE")) {
+    		playerShootBullet();
+    	}
+    	if (engine.isKeyPressed("X")) {
+    		playerShootBomb();
+    	}
+    	
+    	if (engine.isKeyPressed("RIGHT")) {
+    		moveRight();
+    	}
+    	if (engine.isKeyPressed("LEFT")) {
+    		moveLeft();
+    	}
     }
 
     /**

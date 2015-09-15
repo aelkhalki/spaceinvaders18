@@ -18,7 +18,7 @@ public class MediumEnemy extends Enemy {
      * @param westBoundary    westernmost boundary of the playing field.
      * @param eastBoundary    easternmost boundary of the playing field.
      * @param southBoundary   southernmost boundary of the playing field.
-     * @param movingDirection initial direction of the MediumEnemy.
+     * @param block 		  the block of enemies this enemy belongs to.
      */
     public MediumEnemy(Integer positionX, Integer positionY, Integer width, Integer height,
                        Integer westBoundary, Integer eastBoundary, Integer southBoundary,

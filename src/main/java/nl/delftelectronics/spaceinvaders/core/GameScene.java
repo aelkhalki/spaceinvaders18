@@ -96,8 +96,8 @@ public class GameScene implements EntityDestroyedListener {
 		
 		for (Entity e : deletes) {
 			entities.remove(e);
-			deletes.remove(e);
 		}
+		deletes.clear();
 	}
 	
 	/**

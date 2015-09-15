@@ -36,7 +36,7 @@ public class EnemyBlock extends Entity implements PreUpdatable {
 	/**
 	 * Requests the block to flip movement direction
 	 */
-	public void Flip() {
+	public void flip() {
 		shouldFlip = true;
 	}
 	

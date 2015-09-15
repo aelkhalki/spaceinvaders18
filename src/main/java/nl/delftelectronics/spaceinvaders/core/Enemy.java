@@ -17,7 +17,7 @@ public abstract class Enemy extends Actor implements Collidable {
     private Integer eastBoundary;
     private Integer southBoundary;
     private PlayScene playScene;
-    private EnemyBlock block;
+    protected EnemyBlock block;
     private boolean isKilled = false;
 
     /**
@@ -31,6 +31,8 @@ public abstract class Enemy extends Actor implements Collidable {
      * @param westBoundary    westernmost boundary of the playing field.
      * @param eastBoundary    easternmost boundary of the playing field.
      * @param southBoundary   southernmost boundary of the playing field.
+     * @param block 		  the block of enemies this enemy belongs to.
+     * @param spriteName      filename of the sprite.
      */
     public Enemy(Integer positionX, Integer positionY, Integer width, Integer height,
                  Integer westBoundary, Integer eastBoundary, Integer southBoundary,
@@ -41,7 +43,7 @@ public abstract class Enemy extends Actor implements Collidable {
         this.southBoundary = southBoundary;
         this.block = block;
     }
-    
+
     /**
      * Creates a reference to the current PlayScene if it exists.
      */
@@ -91,7 +93,7 @@ public abstract class Enemy extends Actor implements Collidable {
             setPositionX(getPositionX() - MOVING_SPEED);
         }
         if (reachedBoundary()) {
-        	block.Flip();
+        	block.flip();
         } else if (reachedBottom()) {
             if (playScene != null) {
             	playScene.lose();

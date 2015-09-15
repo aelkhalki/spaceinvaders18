@@ -3,12 +3,13 @@ package nl.delftelectronics.spaceinvaders.core;
 import java.util.List;
 
 import org.joda.time.Interval;
+
 import java.awt.Rectangle;
 
 /**
  * Represents a bullet fired by the player or an enemy
- * @author Max
  *
+ * @author Max
  */
 public class Bullet extends SpriteEntity implements AutomaticMovable, Projectile, Collidable {
     public static final Integer MOVING_SPEED = 15;
@@ -21,10 +22,11 @@ public class Bullet extends SpriteEntity implements AutomaticMovable, Projectile
 
     /**
      * Creates a new bullet at a specified location
+     *
      * @param positionX The x position to place the bullet
      * @param positionY The y position to place the bullet
-     * @param width The width of the bullet
-     * @param height The height of the bullet
+     * @param width     The width of the bullet
+     * @param height    The height of the bullet
      * @param direction The firing direction (must be up or down)
      */
     public Bullet(Integer positionX, Integer positionY,
@@ -35,6 +37,16 @@ public class Bullet extends SpriteEntity implements AutomaticMovable, Projectile
         this.direction = isPlayerOwned ? Direction.NORTH : Direction.SOUTH;
     }
 
+    /**
+     * Creates a new bullet at a specified location
+     *
+     * @param positionX The x position to place the bullet
+     * @param positionY The y position to place the bullet
+     * @param width     The width of the bullet
+     * @param height    The height of the bullet
+     * @param direction The firing direction (must be up or down)
+     * @param filename  The filename of the sprite.
+     */
     public Bullet(Integer positionX, Integer positionY,
                   Integer width, Integer height, Direction direction, String filename) {
         super(positionX, positionY, width, height, filename);
@@ -50,7 +62,7 @@ public class Bullet extends SpriteEntity implements AutomaticMovable, Projectile
     public Direction getDirection() {
         return direction;
     }
-    
+
     /**
      * Updates the bullet position
      */

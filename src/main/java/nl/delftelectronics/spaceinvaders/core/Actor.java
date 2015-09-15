@@ -16,11 +16,12 @@ public abstract class Actor extends SpriteEntity {
      * @param positionY    y-position of the Actor.
      * @param width        width of the Actor.
      * @param height       height of the Actor.
+     * @param spriteName   filename of the sprite.
      * @param westBoundary westernmost boundary of the playing field.
      * @param eastBoundary easternmost boundary of the playing field.
      */
-    public Actor(Integer positionX, Integer positionY, Integer width, Integer height,
-                 String spriteName, Integer westBoundary, Integer eastBoundary) {
+    public Actor(int positionX, int positionY, int width, int height,
+                 String spriteName, int westBoundary, int eastBoundary) {
         super(positionX, positionY, width, height, spriteName);
         this.westBoundary = westBoundary;
         this.eastBoundary = eastBoundary;
