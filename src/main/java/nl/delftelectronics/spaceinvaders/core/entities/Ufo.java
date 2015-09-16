@@ -15,7 +15,7 @@ public class Ufo extends Enemy {
     private static final Integer WIDTH = 100;
     private static final Integer HEIGHT = 100;
     private static final String FILENAME = "/ufo.png";
-    private static final Integer MOVING_SPEED = 7;
+    private static final Integer MOVING_SPEED = 7 * 30;
     private Random random;
     /**
      * Create an Enemy with the initial position, the size, the boundaries of the playing field
@@ -58,10 +58,11 @@ public class Ufo extends Enemy {
 
     @Override
     public void update(Interval delta) {
+    	double movement = MOVING_SPEED * delta.toDurationMillis() / 1000;
         if (block.getDirection() == Direction.EAST) {
-            setPositionX(getPositionX() + MOVING_SPEED);
+            setPositionX(getPositionX() + movement);
         } else {
-            setPositionX(getPositionX() - MOVING_SPEED);
+            setPositionX(getPositionX() - movement);
         }
     }
 }

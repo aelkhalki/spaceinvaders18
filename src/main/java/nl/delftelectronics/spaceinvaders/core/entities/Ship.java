@@ -111,10 +111,10 @@ public class Ship extends Actor implements Collidable {
     	}
     	
     	if (engine.isKeyPressed("RIGHT")) {
-    		moveRight();
+    		moveRight(delta);
     	}
     	if (engine.isKeyPressed("LEFT")) {
-    		moveLeft();
+    		moveLeft(delta);
     	}
     }
 
