@@ -50,26 +50,55 @@ public final class Logger {
 		}
 	}
 	
+	/**
+	 * Logs a message with Debug severity
+	 * @param message  The message format string to log
+	 * @param args     The message arguments
+	 */
 	public static void debug(String message, Object... args) {
 		log(LogLevel.Debug, message, args);
 	}
 	
+	/**
+	 * Logs a message with Info severity
+	 * @param message  The message format string to log
+	 * @param args     The message arguments
+	 */
 	public static void info(String message, Object... args) {
 		log(LogLevel.Info, message, args);
 	}
 	
+	/**
+	 * Logs a message with Default severity
+	 * @param message  The message format string to log
+	 * @param args     The message arguments
+	 */
 	public static void write(String message, Object... args) {
 		log(LogLevel.Default, message, args);
 	}
 	
+	/**
+	 * Logs a message with Warning severity
+	 * @param message  The message format string to log
+	 * @param args     The message arguments
+	 */
 	public static void warning(String message, Object... args) {
 		log(LogLevel.Warning, message, args);
 	}
 	
+	/**
+	 * Logs a message with Error severity
+	 * @param message  The message format string to log
+	 * @param args     The message arguments
+	 */
 	public static void error(String message, Object... args) {
 		log(LogLevel.Error, message, args);
 	}
 	
+	/**
+	 * Logs an exception with Error severity
+	 * @param e  The exception to log
+	 */
 	public static void error(Exception e) {
 		error("An error occured: %s: %s", e.toString(), e.getStackTrace().toString());
 	}
