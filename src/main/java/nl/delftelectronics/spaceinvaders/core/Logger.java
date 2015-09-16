@@ -50,6 +50,30 @@ public final class Logger {
 		}
 	}
 	
+	public static void debug(String message, Object... args) {
+		log(LogLevel.Debug, message, args);
+	}
+	
+	public static void info(String message, Object... args) {
+		log(LogLevel.Info, message, args);
+	}
+	
+	public static void write(String message, Object... args) {
+		log(LogLevel.Default, message, args);
+	}
+	
+	public static void warning(String message, Object... args) {
+		log(LogLevel.Warning, message, args);
+	}
+	
+	public static void error(String message, Object... args) {
+		log(LogLevel.Error, message, args);
+	}
+	
+	public static void error(Exception e) {
+		error("An error occured: %s: %s", e.toString(), e.getStackTrace().toString());
+	}
+	
 	/**
 	 * Redirects log output to a specified stream.
 	 * @param stream  The new output stream to use

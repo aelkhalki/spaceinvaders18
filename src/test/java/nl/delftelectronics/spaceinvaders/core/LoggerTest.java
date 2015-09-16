@@ -8,6 +8,7 @@ import nl.delftelectronics.spaceinvaders.core.Logger.LogLevel;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.times;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -93,6 +94,24 @@ public class LoggerTest extends TestCase {
 		Logger.setLogLevel(Logger.LogLevel.None);
 		Assert.assertEquals(Logger.LogLevel.None, Logger.getLogLevel());
 	}
+	
+	/**
+	 * Tests convenience methods for debug levels
+	 */
+	public void testConvenience() {
+		PrintStream output = mock(PrintStream.class);
+		Logger.setOutputStream(output);
+		Logger.setLogLevel(Logger.LogLevel.Debug);
+		
+		Logger.debug("hi");
+		Logger.info("hi");
+		Logger.write("hi");
+		Logger.warning("hi");
+		Logger.error("hi");
+		Logger.error(new Exception());
+		
+		verify(output, times(6)).println(any(String.class));
+	}
 
 	/**
 	 * Tests whether the arguments are null checked
@@ -104,9 +123,15 @@ public class LoggerTest extends TestCase {
 			fail();
 		} catch (IllegalArgumentException e) {
 		}
+		
+		try {
+			Logger.setOutputStream(null);
+			fail();
+		} catch (IllegalArgumentException e) {
+		}
 
 		try {
-			Logger.log(null, "hi");
+			Logger.log(null, "hi", (Object[])null);
 			fail();
 		} catch (IllegalArgumentException e) {
 		}
