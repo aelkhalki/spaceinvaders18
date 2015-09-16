@@ -4,6 +4,7 @@
 package nl.delftelectronics.spaceinvaders.core;
 
 import java.io.PrintStream;
+import java.util.Arrays;
 
 import org.joda.time.DateTime;
 
@@ -100,7 +101,7 @@ public final class Logger {
 	 * @param e  The exception to log
 	 */
 	public static void error(Exception e) {
-		error("An error occured: %s: %s", e.toString(), e.getStackTrace().toString());
+		error("An error occured: %s: %s", e.toString(), Arrays.toString(e.getStackTrace()));
 	}
 	
 	/**

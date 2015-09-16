@@ -110,7 +110,9 @@ public class LoggerTest extends TestCase {
 		Logger.error("hi");
 		Logger.error(new Exception());
 		
+		//CHECKSTYLE.OFF: MagicNumber
 		verify(output, times(6)).println(any(String.class));
+		//CHECKSTYLE.ON: MagicNumber
 	}
 
 	/**
@@ -131,7 +133,7 @@ public class LoggerTest extends TestCase {
 		}
 
 		try {
-			Logger.log(null, "hi", (Object[])null);
+			Logger.log(null, "hi", (Object[]) null);
 			fail();
 		} catch (IllegalArgumentException e) {
 		}
