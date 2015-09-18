@@ -147,7 +147,7 @@ public class PlayScene extends GameScene {
 		}
 		this.points += points;
 		
-		scoreLabel.setText("Score: " + points);
+		scoreLabel.setText("Score: " + this.points);
 	}
 
 	@Override
