@@ -1,10 +1,12 @@
 /**
  * 
  */
-package nl.delftelectronics.spaceinvaders.core;
+package nl.delftelectronics.spaceinvaders.core.entities;
 
 import javax.swing.event.EventListenerList;
 import org.joda.time.Interval;
+
+import nl.delftelectronics.spaceinvaders.core.scenes.GameScene;
 
 /**
  * Represents a game Entity

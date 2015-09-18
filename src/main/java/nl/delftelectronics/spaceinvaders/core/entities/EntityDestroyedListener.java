@@ -1,7 +1,7 @@
 /**
  *
  */
-package nl.delftelectronics.spaceinvaders.core;
+package nl.delftelectronics.spaceinvaders.core.entities;
 
 import java.util.EventListener;
 

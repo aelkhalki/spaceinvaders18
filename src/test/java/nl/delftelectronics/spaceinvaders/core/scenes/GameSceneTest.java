@@ -1,9 +1,10 @@
-/**
- * 
- */
-package nl.delftelectronics.spaceinvaders.core;
+//CHECKSTYLE.OFF: MagicNumber
+package nl.delftelectronics.spaceinvaders.core.scenes;
 
 import junit.framework.TestCase;
+import nl.delftelectronics.spaceinvaders.core.Collidable;
+import nl.delftelectronics.spaceinvaders.core.entities.DrawableEntity;
+import nl.delftelectronics.spaceinvaders.core.entities.Entity;
 import junit.framework.Assert;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
@@ -77,6 +78,34 @@ public class GameSceneTest extends TestCase {
 	}
 	
 	/**
+	 * Test method for getCollisions.
+	 */
+	public void testCollisions() {
+		GameScene scene = new GameScene(mock(Scene.class));
+		CollisionEntity first = new CollisionEntity(0, 0, 10, 10);
+		scene.addEntity(first);
+		
+		Assert.assertEquals(0, scene.getCollisions(first).size());
+		
+		CollisionEntity second = new CollisionEntity(100, 100, 10, 10);
+		scene.addEntity(second);
+		scene.update();
+		Assert.assertEquals(0, scene.getCollisions(first).size());
+		
+		CollisionEntity third = new CollisionEntity(5, 5, 10, 50);
+		scene.addEntity(third);
+		scene.update();
+		Assert.assertEquals(1, scene.getCollisions(first).size());
+		Assert.assertEquals(third, scene.getCollisions(first).get(0));
+		
+		Entity fourth = new Entity();
+		scene.addEntity(fourth);
+		scene.update();
+		Assert.assertEquals(1, scene.getCollisions(first).size());
+		Assert.assertEquals(third, scene.getCollisions(first).get(0));
+	}
+	
+	/**
 	 * Class used to test entities that remove themselves
 	 * @author Max
 	 *
@@ -88,6 +117,25 @@ public class GameSceneTest extends TestCase {
 		public void update(Interval delta) {
 			updateCount++;
 			destroy();
+		}
+	}
+	
+	/**
+	 * Class used to test entities that collide
+	 * @author Max
+	 *
+	 */
+	static class CollisionEntity extends DrawableEntity implements Collidable {
+		/**
+		 * Creates a new Drawable collision entity for testing
+		 * @param positionX The left offset of the collision box
+		 * @param positionY The top offset of the collision box
+		 * @param width     The width of the collision box
+		 * @param height    The height of the collision box
+		 */
+		public CollisionEntity(double positionX, double positionY,
+				double width, double height) {
+			super(positionX, positionY, width, height);
 		}
 	}
 }
