@@ -149,8 +149,8 @@ public final class Logger {
 	 */
 	public enum LogLevel {
 		Debug(0),
+		Default(50),
 		Info(100),
-		Default(200),
 		Warning(300),
 		Error(400),
 		None(1000);

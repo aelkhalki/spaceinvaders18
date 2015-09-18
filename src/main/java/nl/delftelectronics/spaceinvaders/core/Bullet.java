@@ -71,11 +71,15 @@ public class Bullet extends SpriteEntity implements AutomaticMovable, Projectile
      * Legacy update function
      */
     public void updatePosition() {
+        int oldX = getPositionX();
+        int oldY = getPositionY();
         if (direction == Direction.NORTH) {
             setPositionY(getPositionY() - MOVING_SPEED);
         } else if (direction == Direction.SOUTH) {
             setPositionY(getPositionY() + MOVING_SPEED);
         }
+        Logger.info("%s moved from (%d, %d) to (%d, %d)", getClass().getSimpleName(), oldX, oldY,
+                getPositionX(), getPositionY());
     }
 
     /**

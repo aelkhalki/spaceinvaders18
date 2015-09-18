@@ -257,6 +257,11 @@ public class Engine {
         enemyBullets.add(enemyBullet);
         addedEntities.add(enemyBullet);
         currentScene.addEntity(enemyBullet);
+        Logger.info("%s fired a %s at (%d, %d) in the direction %s",
+                getClass().getSimpleName(),
+                enemyBullet.getClass().getSimpleName(),
+                enemyBullet.getPositionX(), enemyBullet.getPositionY(),
+                enemyBullet.getDirection());
     }
 
     /**
@@ -291,6 +296,13 @@ public class Engine {
                 boolean inRadius = playerProjectile.impactArea().intersects(enemy.getBoundingBox());
                 if (playerProjectile.intersects(enemy)) {
                     intersection = true;
+                    for (Enemy enemyToRemove : enemiesInRadiusOfThisBullet) {
+                        enemiesToRemove.add(enemyToRemove);
+                        Logger.info("%s is hit by a %s at (%d, %d)",
+                                enemy.getClass().getSimpleName(),
+                                playerProjectile.getClass().getSimpleName(),
+                                enemy.getPositionX(), enemy.getPositionY());
+                    }
                     enemiesToRemove.addAll(enemiesInRadiusOfThisBullet);
                 }
                 if (inRadius && !intersection) {
@@ -302,6 +314,10 @@ public class Engine {
                     // This enemy within in the impact radius of the bullet, and the bullet has
                     // hit an enemy, so this enemy should disappear.
                     enemiesToRemove.add(enemy);
+                    Logger.info("%s is hit by a %s at (%d, %d)",
+                            enemy.getClass().getSimpleName(),
+                            playerProjectile.getClass().getSimpleName(),
+                            enemy.getPositionX(), enemy.getPositionY());
                 }
             }
             if (intersection) {

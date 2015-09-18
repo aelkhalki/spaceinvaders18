@@ -28,8 +28,14 @@ public class Ship extends Actor {
      * @return a new bullet in the position of the ship, facing up.
      */
     public Bullet shoot() {
-        return new Bullet(getPositionX() + getWidth() / 2, getPositionY(), Bullet.WIDTH,
+        Bullet bullet = new Bullet(getPositionX() + getWidth() / 2, getPositionY(), Bullet.WIDTH,
                 Bullet.HEIGHT, Direction.NORTH);
+        Logger.info("%s fired a %s at (%d, %d) in the direction %s",
+                getClass().getSimpleName(),
+                bullet.getClass().getSimpleName(),
+                bullet.getPositionX(), bullet.getPositionY(),
+                bullet.getDirection());
+        return bullet;
     }
 
     /**
@@ -38,8 +44,14 @@ public class Ship extends Actor {
      * @return a new bomb in the position of the ship, facing upwards.
      */
     public Bomb shootBomb() {
-        return new Bomb(getPositionX() + getWidth() / 2, getPositionY(), Bomb.WIDTH,
+        Bomb bullet = new Bomb(getPositionX() + getWidth() / 2, getPositionY(), Bomb.WIDTH,
                 Bomb.HEIGHT, Direction.NORTH);
+        Logger.info("%s fired a %s at (%d, %d) in the direction %s",
+                getClass().getSimpleName(),
+                bullet.getClass().getSimpleName(),
+                bullet.getPositionX(), bullet.getPositionY(),
+                bullet.getDirection());
+        return bullet;
     }
 
     /**

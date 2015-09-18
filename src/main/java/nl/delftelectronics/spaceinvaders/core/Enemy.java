@@ -87,11 +87,15 @@ public abstract class Enemy extends Actor implements AutomaticMovable {
      *                                     of the playing field.
      */
     public void updatePosition() throws BoundaryReachedException, EnemyReachedBottomException {
+        int oldX = getPositionX();
+        int oldY = getPositionY();
         if (movingDirection == Direction.EAST) {
             setPositionX(getPositionX() + MOVING_SPEED);
         } else if (movingDirection == Direction.WEST) {
             setPositionX(getPositionX() - MOVING_SPEED);
         }
+        Logger.info("%s moved from (%d, %d) to (%d, %d)", getClass().getSimpleName(), oldX, oldY,
+                getPositionX(), getPositionY());
         if (reachedBoundary()) {
             throw new BoundaryReachedException();
         } else if (reachedBottom()) {
