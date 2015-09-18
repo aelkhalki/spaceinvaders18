@@ -25,9 +25,9 @@ import javafx.scene.canvas.GraphicsContext;
 public class LabelEntity extends DrawableEntity implements Collidable {
 
 	private EventListenerList clickedEvent;
-	//CHECKSTYLE:OFF - MagicNumber
+	//CHECKSTYLE.OFF: MagicNumber
 	protected Font font = Font.font("Arial", FontWeight.BOLD, 48);
-	//CHECKSTYLE:ON - MagicNumber
+	//CHECKSTYLE.ON: MagicNumber
 	protected String text;
 
 	/**

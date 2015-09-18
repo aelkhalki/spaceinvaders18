@@ -25,14 +25,14 @@ public class MenuScene extends GameScene implements LabelClickedListener {
 	public MenuScene(Scene scene) {
 		super(scene);
 		
-		//CHECKSTYLE:OFF - MagicNumber
+		//CHECKSTYLE.OFF: MagicNumber - Don't want to import a layout engine
 		startButton = new LabelEntity(100, 100, 500, 100, "START GAME");
 		startButton.addClickedListener(this);
 		addEntity(startButton);
 		quitButton = new LabelEntity(100, 500, 500, 100, "QUIT GAME");
 		quitButton.addClickedListener(this);
 		addEntity(quitButton);
-		//CHECKSTYLE:ON - MagicNumber
+		//CHECKSTYLE.ON: MagicNumber
 	}
 
 	/**

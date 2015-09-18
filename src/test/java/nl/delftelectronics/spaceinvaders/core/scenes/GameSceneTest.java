@@ -1,4 +1,4 @@
-//CHECKSTYLE:OFF - MagicNumber
+//CHECKSTYLE.OFF: MagicNumber
 package nl.delftelectronics.spaceinvaders.core.scenes;
 
 import junit.framework.TestCase;

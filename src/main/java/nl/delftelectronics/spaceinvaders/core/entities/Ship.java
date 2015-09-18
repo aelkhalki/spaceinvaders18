@@ -13,9 +13,9 @@ import nl.delftelectronics.spaceinvaders.core.scenes.PlayScene;
  */
 public class Ship extends Actor implements Collidable {
     private static final String FILENAME = "/ship.png";
-    //CHECKSTYLE:OFF - MagicNumber
+    //CHECKSTYLE.OFF: MagicNumber
     protected int lives = 3;
-    //CHECKSTYLE:ON - MagicNumber
+    //CHECKSTYLE.ON: MagicNumber
     private long lastBulletFire = 0;
     private static final double BULLET_FIRE_TIME_DELAY = 1000000000.0; // nanoseconds
 
