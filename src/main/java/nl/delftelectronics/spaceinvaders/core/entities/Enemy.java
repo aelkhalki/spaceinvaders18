@@ -140,7 +140,7 @@ public abstract class Enemy extends SpriteEntity implements Collidable {
 		Bullet enemyBullet = new Bullet(getPositionX(), getPositionY(),
 				BULLET_WIDTH, BULLET_HEIGHT, false);
 		scene.addEntity(enemyBullet);
-		Logger.write("%s fired a Bullet at (%f, %f) in the direction South",
+		Logger.info("%s fired a Bullet at (%f, %f) in the direction South",
 				this.getClass().toString(),
 				getPositionX(), getPositionY());
 	}

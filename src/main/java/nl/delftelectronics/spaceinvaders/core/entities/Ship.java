@@ -41,7 +41,7 @@ public class Ship extends Actor implements Collidable {
      */
     public Bullet shoot() {
     	double x = getPositionX() + getWidth() / 2;
-        Logger.write("%s fired a Bullet at (%f, %f) in the direction North",
+        Logger.info("%s fired a Bullet at (%f, %f) in the direction North",
         		this.getClass().toString(),
 				x, getPositionY());
         return new Bullet(x, getPositionY(), Bullet.WIDTH,
@@ -89,7 +89,7 @@ public class Ship extends Actor implements Collidable {
      */
     public Bomb shootBomb() {
     	double x = getPositionX() + getWidth() / 2;
-        Logger.write("%s fired a Bomb at (%f, %f) in the direction North",
+        Logger.info("%s fired a Bomb at (%f, %f) in the direction North",
         		this.getClass().toString(),
 				x, getPositionY());
         return new Bomb(x, getPositionY(), Bomb.WIDTH,
