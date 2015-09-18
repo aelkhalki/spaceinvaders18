@@ -128,7 +128,7 @@ public abstract class Enemy extends SpriteEntity implements Collidable {
 		}
 		
 		if (prevX != getPositionX() || prevY != getPositionY()) {
-			Logger.info("%s moved from (%f, %f) to (%f, %f)", this.getClass().toString(),
+			Logger.info("%s moved from (%f, %f) to (%f, %f)", this.getClass().getSimpleName(),
 					prevX, prevY, getPositionX(), getPositionY());
 		}
 	}
@@ -141,7 +141,7 @@ public abstract class Enemy extends SpriteEntity implements Collidable {
 				BULLET_WIDTH, BULLET_HEIGHT, false);
 		scene.addEntity(enemyBullet);
 		Logger.info("%s fired a Bullet at (%f, %f) in the direction South",
-				this.getClass().toString(),
+				this.getClass().getSimpleName(),
 				getPositionX(), getPositionY());
 	}
 

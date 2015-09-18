@@ -67,8 +67,8 @@ public abstract class Projectile extends SpriteEntity implements Collidable {
 					Enemy enemy = (Enemy) e;
 					enemy.kill();
 					
-					Logger.info("%s is hit by a %s at (%f, %f)", e.getClass().toString(),
-							this.getClass().toString(), getPositionX(), getPositionY());
+					Logger.info("%s is hit by a %s at (%f, %f)", e.getClass().getSimpleName(),
+							this.getClass().getSimpleName(), getPositionX(), getPositionY());
 				}
 			}
 		} else {
@@ -78,8 +78,8 @@ public abstract class Projectile extends SpriteEntity implements Collidable {
 					Ship s = (Ship) e;
 					s.hit();
 					
-					Logger.info("%s is hit by a %s at (%f, %f)", s.getClass().toString(),
-							this.getClass().toString(), getPositionX(), getPositionY());
+					Logger.info("%s is hit by a %s at (%f, %f)", s.getClass().getSimpleName(),
+							this.getClass().getSimpleName(), getPositionX(), getPositionY());
 				}
 			}
 		}
