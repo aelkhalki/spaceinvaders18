@@ -5,6 +5,7 @@ import org.joda.time.Interval;
 
 import nl.delftelectronics.spaceinvaders.core.Collidable;
 import nl.delftelectronics.spaceinvaders.core.Direction;
+import nl.delftelectronics.spaceinvaders.core.Logger;
 
 /**
  * A Projectile is an object that can be thrown or fired.
@@ -65,6 +66,9 @@ public abstract class Projectile extends SpriteEntity implements Collidable {
 					destroy();
 					Enemy enemy = (Enemy) e;
 					enemy.kill();
+					
+					Logger.info("%s is hit by a %s at (%f, %f)", e.getClass().getSimpleName(),
+							this.getClass().getSimpleName(), getPositionX(), getPositionY());
 				}
 			}
 		} else {
@@ -73,6 +77,9 @@ public abstract class Projectile extends SpriteEntity implements Collidable {
 					destroy();
 					Ship s = (Ship) e;
 					s.hit();
+					
+					Logger.info("%s is hit by a %s at (%f, %f)", s.getClass().getSimpleName(),
+							this.getClass().getSimpleName(), getPositionX(), getPositionY());
 				}
 			}
 		}

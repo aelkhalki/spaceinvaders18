@@ -4,6 +4,7 @@ import org.joda.time.Interval;
 
 import nl.delftelectronics.spaceinvaders.core.Collidable;
 import nl.delftelectronics.spaceinvaders.core.Engine;
+import nl.delftelectronics.spaceinvaders.core.Logger;
 import nl.delftelectronics.spaceinvaders.core.scenes.PlayScene;
 
 /**
@@ -39,7 +40,11 @@ public class Ship extends Actor implements Collidable {
      * @return a new bullet in the position of the ship, facing up.
      */
     public Bullet shoot() {
-        return new Bullet(getPositionX() + getWidth() / 2, getPositionY(), Bullet.WIDTH,
+    	double x = getPositionX() + getWidth() / 2;
+        Logger.info("%s fired a Bullet at (%f, %f) in the direction North",
+        		this.getClass().toString(),
+				x, getPositionY());
+        return new Bullet(x, getPositionY(), Bullet.WIDTH,
                 Bullet.HEIGHT, true);
     }
     
@@ -83,7 +88,11 @@ public class Ship extends Actor implements Collidable {
      * @return a new bomb in the position of the ship, facing upwards.
      */
     public Bomb shootBomb() {
-        return new Bomb(getPositionX() + getWidth() / 2, getPositionY(), Bomb.WIDTH,
+    	double x = getPositionX() + getWidth() / 2;
+        Logger.info("%s fired a Bomb at (%f, %f) in the direction North",
+        		this.getClass().toString(),
+				x, getPositionY());
+        return new Bomb(x, getPositionY(), Bomb.WIDTH,
                 Bomb.HEIGHT);
     }
     

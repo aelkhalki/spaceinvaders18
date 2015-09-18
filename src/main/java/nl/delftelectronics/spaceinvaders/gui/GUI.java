@@ -13,6 +13,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import nl.delftelectronics.spaceinvaders.core.Engine;
+import nl.delftelectronics.spaceinvaders.core.Logger;
+import nl.delftelectronics.spaceinvaders.core.Logger.LogLevel;
 import nl.delftelectronics.spaceinvaders.core.scenes.GameScene;
 import nl.delftelectronics.spaceinvaders.core.scenes.MenuScene;
 
@@ -39,6 +41,7 @@ public class GUI extends Application {
 	 *            command line arguments (not used).
 	 */
 	public static void main(String[] args) {
+		Logger.setLogLevel(LogLevel.Info);
 		launch(args);
 	}
 
