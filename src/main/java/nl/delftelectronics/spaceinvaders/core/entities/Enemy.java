@@ -4,6 +4,7 @@ import org.joda.time.Interval;
 
 import nl.delftelectronics.spaceinvaders.core.Collidable;
 import nl.delftelectronics.spaceinvaders.core.Direction;
+import nl.delftelectronics.spaceinvaders.core.Logger;
 import nl.delftelectronics.spaceinvaders.core.scenes.GameScene;
 import nl.delftelectronics.spaceinvaders.core.scenes.PlayScene;
 
@@ -99,6 +100,9 @@ public abstract class Enemy extends SpriteEntity implements Collidable {
 	 */
 	@Override
 	public void update(Interval delta) {
+		double prevX = getPositionX();
+		double prevY = getPositionY();
+		
 		Direction movingDirection = Direction.NORTH;
 		movingDirection = block.getDirection();
 
@@ -122,6 +126,11 @@ public abstract class Enemy extends SpriteEntity implements Collidable {
 		if (block.random.nextDouble() < SHOOTING_CHANCE) {
 			fire();
 		}
+		
+		if (prevX != getPositionX() || prevY != getPositionY()) {
+			Logger.info("%s moved from (%f, %f) to (%f, %f)", this.getClass().toString(),
+					prevX, prevY, getPositionX(), getPositionY());
+		}
 	}
 
 	/**
@@ -131,6 +140,9 @@ public abstract class Enemy extends SpriteEntity implements Collidable {
 		Bullet enemyBullet = new Bullet(getPositionX(), getPositionY(),
 				BULLET_WIDTH, BULLET_HEIGHT, false);
 		scene.addEntity(enemyBullet);
+		Logger.write("%s fired a Bullet at (%f, %f) in the direction South",
+				this.getClass().toString(),
+				getPositionX(), getPositionY());
 	}
 
 	/**
