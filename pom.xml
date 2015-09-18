@@ -63,6 +63,7 @@
 				<configuration>
 					<configLocation>${basedir}/checkstyle.xml</configLocation>
 					<includeTestSourceDirectory>true</includeTestSourceDirectory>
+					<failOnViolation>false</failOnViolation>
 				</configuration>
 				<executions>
 				  <execution>
@@ -104,6 +105,7 @@
 				<configuration>
 					<xmlOutput>true</xmlOutput>
 					<includeTests>true</includeTests>
+					<failOnError>false</failOnError>
 				</configuration>
 				<executions>
 				  <execution>
