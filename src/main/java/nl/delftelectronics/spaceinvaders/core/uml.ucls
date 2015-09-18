@@ -1,0 +1,561 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.1.8" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
+  associations="true" dependencies="false" nesting-relationships="true">  
+  <enumeration id="1" language="java" name="nl.delftelectronics.spaceinvaders.core.Logger.LogLevel" 
+    project="spaceinvaders" file="/spaceinvaders/src/main/java/nl/delftelectronics/spaceinvaders/core/Logger.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="209" width="194" x="37" y="380"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </enumeration>  
+  <class id="2" language="java" name="nl.delftelectronics.spaceinvaders.core.Logger" project="spaceinvaders" 
+    file="/spaceinvaders/src/main/java/nl/delftelectronics/spaceinvaders/core/Logger.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="299" width="227" x="37" y="41"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <enumeration id="3" language="java" name="nl.delftelectronics.spaceinvaders.core.Direction" project="spaceinvaders" 
+    file="/spaceinvaders/src/main/java/nl/delftelectronics/spaceinvaders/core/Direction.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="155" width="194" x="409" y="70"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </enumeration>  
+  <class id="4" language="java" name="nl.delftelectronics.spaceinvaders.core.DummyCollidable" project="spaceinvaders" 
+    file="/spaceinvaders/src/main/java/nl/delftelectronics/spaceinvaders/core/DummyCollidable.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="227" width="302" x="643" y="70"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="5" language="java" name="nl.delftelectronics.spaceinvaders.core.Collidable" project="spaceinvaders" 
+    file="/spaceinvaders/src/main/java/nl/delftelectronics/spaceinvaders/core/Collidable.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="137" width="194" x="643" y="437"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="6" language="java" name="nl.delftelectronics.spaceinvaders.core.BoundaryReachedException" 
+    project="spaceinvaders" 
+    file="/spaceinvaders/src/main/java/nl/delftelectronics/spaceinvaders/core/BoundaryReachedException.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="101" width="218" x="985" y="70"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="7" language="java" name="nl.delftelectronics.spaceinvaders.core.Engine" project="spaceinvaders" 
+    file="/spaceinvaders/src/main/java/nl/delftelectronics/spaceinvaders/core/Engine.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="317" width="206" x="1243" y="70"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="8" language="java" name="nl.delftelectronics.spaceinvaders.core.Displayable" project="spaceinvaders" 
+    file="/spaceinvaders/src/main/java/nl/delftelectronics/spaceinvaders/core/Displayable.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="83" width="194" x="1499" y="70"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="9" language="java" name="nl.delftelectronics.spaceinvaders.core.entities.PreUpdatable" 
+    project="spaceinvaders" 
+    file="/spaceinvaders/src/main/java/nl/delftelectronics/spaceinvaders/core/entities/PreUpdatable.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="83" width="232" x="1470" y="2016"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="10" language="java" name="nl.delftelectronics.spaceinvaders.core.entities.MediumEnemy" 
+    project="spaceinvaders" 
+    file="/spaceinvaders/src/main/java/nl/delftelectronics/spaceinvaders/core/entities/MediumEnemy.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="137" width="489" x="-374" y="1677"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="11" language="java" name="nl.delftelectronics.spaceinvaders.core.entities.DrawableEntity" 
+    project="spaceinvaders" 
+    file="/spaceinvaders/src/main/java/nl/delftelectronics/spaceinvaders/core/entities/DrawableEntity.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="353" width="288" x="998" y="552"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="12" language="java" name="nl.delftelectronics.spaceinvaders.core.entities.SpriteEntity" 
+    project="spaceinvaders" 
+    file="/spaceinvaders/src/main/java/nl/delftelectronics/spaceinvaders/core/entities/SpriteEntity.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="155" width="306" x="998" y="945"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="13" language="java" name="nl.delftelectronics.spaceinvaders.core.entities.Actor" project="spaceinvaders" 
+    file="/spaceinvaders/src/main/java/nl/delftelectronics/spaceinvaders/core/entities/Actor.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="173" width="356" x="175" y="1212"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="14" language="java" name="nl.delftelectronics.spaceinvaders.core.entities.Ufo" project="spaceinvaders" 
+    file="/spaceinvaders/src/main/java/nl/delftelectronics/spaceinvaders/core/entities/Ufo.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="263" width="246" x="155" y="1677"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="15" language="java" name="nl.delftelectronics.spaceinvaders.core.entities.Ship" project="spaceinvaders" 
+    file="/spaceinvaders/src/main/java/nl/delftelectronics/spaceinvaders/core/entities/Ship.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="299" width="234" x="-648" y="1677"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="16" language="java" name="nl.delftelectronics.spaceinvaders.core.entities.Bullet" project="spaceinvaders" 
+    file="/spaceinvaders/src/main/java/nl/delftelectronics/spaceinvaders/core/entities/Bullet.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="209" width="284" x="1742" y="1677"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="17" language="java" name="nl.delftelectronics.spaceinvaders.core.entities.LabelClickedListener" 
+    project="spaceinvaders" 
+    file="/spaceinvaders/src/main/java/nl/delftelectronics/spaceinvaders/core/entities/LabelClickedListener.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="83" width="232" x="275" y="285"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="18" language="java" name="nl.delftelectronics.spaceinvaders.core.entities.Enemy" project="spaceinvaders" 
+    file="/spaceinvaders/src/main/java/nl/delftelectronics/spaceinvaders/core/entities/Enemy.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="425" width="406" x="608" y="1212"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="19" language="java" name="nl.delftelectronics.spaceinvaders.core.entities.Entity" project="spaceinvaders" 
+    file="/spaceinvaders/src/main/java/nl/delftelectronics/spaceinvaders/core/entities/Entity.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="227" width="344" x="1470" y="285"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="20" language="java" name="nl.delftelectronics.spaceinvaders.core.entities.Bomb" project="spaceinvaders" 
+    file="/spaceinvaders/src/main/java/nl/delftelectronics/spaceinvaders/core/entities/Bomb.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="209" width="236" x="2066" y="1677"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="21" language="java" name="nl.delftelectronics.spaceinvaders.core.entities.EntityDestroyedListener" 
+    project="spaceinvaders" 
+    file="/spaceinvaders/src/main/java/nl/delftelectronics/spaceinvaders/core/entities/EntityDestroyedListener.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="83" width="232" x="1962" y="285"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="22" language="java" name="nl.delftelectronics.spaceinvaders.core.entities.EnemyBlock" 
+    project="spaceinvaders" 
+    file="/spaceinvaders/src/main/java/nl/delftelectronics/spaceinvaders/core/entities/EnemyBlock.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="209" width="232" x="1470" y="1677"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="23" language="java" name="nl.delftelectronics.spaceinvaders.core.entities.LabelEntity" 
+    project="spaceinvaders" 
+    file="/spaceinvaders/src/main/java/nl/delftelectronics/spaceinvaders/core/entities/LabelEntity.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="227" width="312" x="646" y="945"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="24" language="java" name="nl.delftelectronics.spaceinvaders.core.entities.LargeEnemy" 
+    project="spaceinvaders" 
+    file="/spaceinvaders/src/main/java/nl/delftelectronics/spaceinvaders/core/entities/LargeEnemy.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="137" width="475" x="441" y="1677"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="25" language="java" name="nl.delftelectronics.spaceinvaders.core.entities.SmallEnemy" 
+    project="spaceinvaders" 
+    file="/spaceinvaders/src/main/java/nl/delftelectronics/spaceinvaders/core/entities/SmallEnemy.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="137" width="474" x="956" y="1677"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="26" language="java" name="nl.delftelectronics.spaceinvaders.core.entities.Projectile" 
+    project="spaceinvaders" 
+    file="/spaceinvaders/src/main/java/nl/delftelectronics/spaceinvaders/core/entities/Projectile.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="173" width="342" x="1742" y="1212"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="27" language="java" name="nl.delftelectronics.spaceinvaders.core.scenes.MenuScene" project="spaceinvaders" 
+    file="/spaceinvaders/src/main/java/nl/delftelectronics/spaceinvaders/core/scenes/MenuScene.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="101" width="231" x="696" y="2168"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="28" language="java" name="nl.delftelectronics.spaceinvaders.core.scenes.PlayScene" project="spaceinvaders" 
+    file="/spaceinvaders/src/main/java/nl/delftelectronics/spaceinvaders/core/scenes/PlayScene.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="533" width="261" x="967" y="2168"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="29" language="java" name="nl.delftelectronics.spaceinvaders.core.scenes.GameScene" project="spaceinvaders" 
+    file="/spaceinvaders/src/main/java/nl/delftelectronics/spaceinvaders/core/scenes/GameScene.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="263" width="236" x="832" y="1865"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="30" language="java" name="nl.delftelectronics.spaceinvaders.gui.GUI" project="spaceinvaders" 
+    file="/spaceinvaders/src/main/java/nl/delftelectronics/spaceinvaders/gui/GUI.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="317" width="391" x="1180" y="2301"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <association id="31">    
+    <end type="SOURCE" refId="19" navigable="false">      
+      <attribute id="32" name="scene"/>      
+      <multiplicity id="33" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="29" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="34">    
+    <bendpoint x="1479" y="1212"/>    
+    <bendpoint x="1479" y="945"/>    
+    <bendpoint x="1479" y="552"/>    
+    <end type="SOURCE" refId="22"/>    
+    <end type="TARGET" refId="19"/>  
+  </generalization>  
+  <realization id="35">    
+    <end type="SOURCE" refId="29"/>    
+    <end type="TARGET" refId="21"/>  
+  </realization>  
+  <association id="36">    
+    <end type="SOURCE" refId="18" navigable="false">      
+      <attribute id="37" name="playScene"/>      
+      <multiplicity id="38" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="28" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="39">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="18"/>  
+  </generalization>  
+  <association id="40">    
+    <end type="SOURCE" refId="26" navigable="false">      
+      <attribute id="41" name="direction"/>      
+      <multiplicity id="42" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="43">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="44" name="logLevel"/>      
+      <multiplicity id="45" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="46">    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="26"/>  
+  </generalization>  
+  <nesting id="47">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="1"/>  
+  </nesting>  
+  <realization id="48">    
+    <end type="SOURCE" refId="15"/>    
+    <end type="TARGET" refId="5"/>  
+  </realization>  
+  <association id="49">    
+    <end type="SOURCE" refId="18" navigable="false">      
+      <attribute id="50" name="block"/>      
+      <multiplicity id="51" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="22" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="52">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="19"/>  
+  </generalization>  
+  <association id="53">    
+    <end type="SOURCE" refId="27" navigable="false">      
+      <attribute id="54" name="startButton"/>      
+      <multiplicity id="55" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="23" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="56">    
+    <end type="SOURCE" refId="20"/>    
+    <end type="TARGET" refId="26"/>  
+  </generalization>  
+  <realization id="57">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="5"/>  
+  </realization>  
+  <association id="58">    
+    <end type="SOURCE" refId="29" navigable="false">      
+      <attribute id="59" name="additions"/>      
+      <multiplicity id="60" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="61">    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="62" name="currentScene"/>      
+      <multiplicity id="63" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="29" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="64">    
+    <end type="SOURCE" refId="18"/>    
+    <end type="TARGET" refId="5"/>  
+  </realization>  
+  <association id="65">    
+    <end type="SOURCE" refId="30" navigable="false">      
+      <attribute id="66" name="engine"/>      
+      <multiplicity id="67" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="68">    
+    <end type="SOURCE" refId="28" navigable="false">      
+      <attribute id="69" name="scoreLabel"/>      
+      <multiplicity id="70" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="23" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="71">    
+    <end type="SOURCE" refId="29" navigable="false">      
+      <attribute id="72" name="deletes"/>      
+      <multiplicity id="73" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="74">    
+    <end type="SOURCE" refId="28" navigable="false">      
+      <attribute id="75" name="livesLabel"/>      
+      <multiplicity id="76" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="23" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="77">    
+    <end type="SOURCE" refId="28"/>    
+    <end type="TARGET" refId="29"/>  
+  </generalization>  
+  <generalization id="78">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="11"/>  
+  </generalization>  
+  <generalization id="79">    
+    <end type="SOURCE" refId="25"/>    
+    <end type="TARGET" refId="18"/>  
+  </generalization>  
+  <generalization id="80">    
+    <end type="SOURCE" refId="18"/>    
+    <end type="TARGET" refId="12"/>  
+  </generalization>  
+  <association id="81">    
+    <end type="SOURCE" refId="28" navigable="false">      
+      <attribute id="82" name="ship"/>      
+      <multiplicity id="83" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="15" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="84">    
+    <end type="SOURCE" refId="15"/>    
+    <end type="TARGET" refId="13"/>  
+  </generalization>  
+  <generalization id="85">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="18"/>  
+  </generalization>  
+  <generalization id="86">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="12"/>  
+  </generalization>  
+  <realization id="87">    
+    <end type="SOURCE" refId="26"/>    
+    <end type="TARGET" refId="5"/>  
+  </realization>  
+  <realization id="88">    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="17"/>  
+  </realization>  
+  <generalization id="89">    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="29"/>  
+  </generalization>  
+  <generalization id="90">    
+    <end type="SOURCE" refId="23"/>    
+    <end type="TARGET" refId="11"/>  
+  </generalization>  
+  <generalization id="91">    
+    <end type="SOURCE" refId="26"/>    
+    <end type="TARGET" refId="12"/>  
+  </generalization>  
+  <generalization id="92">    
+    <end type="SOURCE" refId="24"/>    
+    <end type="TARGET" refId="18"/>  
+  </generalization>  
+  <association id="93">    
+    <end type="SOURCE" refId="27" navigable="false">      
+      <attribute id="94" name="quitButton"/>      
+      <multiplicity id="95" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="23" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="96">    
+    <end type="SOURCE" refId="23"/>    
+    <end type="TARGET" refId="5"/>  
+  </realization>  
+  <association id="97">    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="98" name="instance"/>      
+      <multiplicity id="99" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="100">    
+    <end type="SOURCE" refId="22"/>    
+    <end type="TARGET" refId="9"/>  
+  </realization>  
+  <association id="101">    
+    <end type="SOURCE" refId="29" navigable="false">      
+      <attribute id="102" name="entities"/>      
+      <multiplicity id="103" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="104">    
+    <end type="SOURCE" refId="22" navigable="false">      
+      <attribute id="105" name="movementDirection"/>      
+      <multiplicity id="106" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

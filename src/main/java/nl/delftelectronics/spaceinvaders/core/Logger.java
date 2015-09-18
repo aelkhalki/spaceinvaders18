@@ -17,7 +17,8 @@ public final class Logger {
 	private static Object lockObject = new Object();
 	private static LogLevel logLevel = LogLevel.Default;
 	private static PrintStream outputStream = System.out; 
-	
+	private static boolean isDebug = java.lang.management.ManagementFactory.getRuntimeMXBean().
+		    getInputArguments().toString().indexOf("jdwp") >= 0;
 	/**
 	 * Non usable constructor, is a static class
 	 */
@@ -41,13 +42,13 @@ public final class Logger {
 			if (logLevel.level < Logger.logLevel.level) {
 				return;
 			}
-			
+			if(isDebug){
 			String output = String.format(message, args);
 			outputStream.print(DateTime.now());
 			outputStream.print(" ");
 			outputStream.print(logLevel);
 			outputStream.print(": ");
-			outputStream.println(output);
+			outputStream.println(output);}
 		}
 	}
 	
