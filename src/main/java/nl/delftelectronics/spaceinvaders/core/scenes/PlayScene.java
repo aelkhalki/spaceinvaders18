@@ -6,7 +6,6 @@ package nl.delftelectronics.spaceinvaders.core.scenes;
 import java.util.Random;
 
 import javafx.scene.Scene;
-import nl.delftelectronics.spaceinvaders.core.Direction;
 import nl.delftelectronics.spaceinvaders.core.entities.Enemy;
 import nl.delftelectronics.spaceinvaders.core.entities.EnemyBlock;
 import nl.delftelectronics.spaceinvaders.core.entities.LabelEntity;
@@ -17,6 +16,7 @@ import nl.delftelectronics.spaceinvaders.core.entities.SmallEnemy;
 import nl.delftelectronics.spaceinvaders.core.entities.Ufo;
 
 /**
+ * The scene that contains and builds the game
  * @author Max
  *
  */
@@ -42,11 +42,12 @@ public class PlayScene extends GameScene {
 	private LabelEntity livesLabel;
 
 	/**
-	 * @param scene
+	 * Builds a new PlayScene
+	 * @param scene The javaFX scene to attach to
 	 */
 	public PlayScene(Scene scene) {
 		super(scene);
-
+		
 		fieldWidth = (int) scene.getWidth();
 		fieldHeight = (int) scene.getHeight();
 
@@ -59,33 +60,36 @@ public class PlayScene extends GameScene {
 		for (int column = 0; column < ENEMY_COLUMNS; column++) {
 			int currentRow = 0;
 			for (int smallEnemyRow = 0; smallEnemyRow < SMALL_ENEMY_ROWS; smallEnemyRow++) {
-				Enemy smallEnemy = new SmallEnemy(10 + 100 * column, 90 * currentRow, ENTITY_DIMENSION,
-						ENTITY_DIMENSION, 0, fieldWidth, fieldHeight, block);
+				Enemy smallEnemy = new SmallEnemy(10 + 100 * column, 90 * currentRow,
+						ENTITY_DIMENSION, ENTITY_DIMENSION, 0, fieldWidth, fieldHeight, block);
 				addEntity(smallEnemy);
 				currentRow++;
 				enemyCount++;
 			}
 			for (int mediumEnemyRow = 0; mediumEnemyRow < MEDIUM_ENEMY_ROWS; mediumEnemyRow++) {
-				Enemy mediumEnemy = new MediumEnemy(10 + 100 * column, 90 * currentRow, ENTITY_DIMENSION,
-						ENTITY_DIMENSION, 0, fieldWidth, fieldHeight, block);
+				Enemy mediumEnemy = new MediumEnemy(10 + 100 * column, 90 * currentRow,
+						ENTITY_DIMENSION, ENTITY_DIMENSION, 0, fieldWidth, fieldHeight, block);
 				addEntity(mediumEnemy);
 				currentRow++;
 				enemyCount++;
 			}
 			for (int largeEnemyRow = 0; largeEnemyRow < LARGE_ENEMY_ROWS; largeEnemyRow++) {
-				Enemy largeEnemy = new LargeEnemy(10 + 100 * column, 90 * currentRow, ENTITY_DIMENSION,
-						ENTITY_DIMENSION, 0, fieldWidth, fieldHeight, block);
+				Enemy largeEnemy = new LargeEnemy(10 + 100 * column, 90 * currentRow,
+						ENTITY_DIMENSION, ENTITY_DIMENSION, 0, fieldWidth, fieldHeight, block);
 				addEntity(largeEnemy);
 				currentRow++;
 				enemyCount++;
 			}
 		}
 
-		ship = new Ship(shipPositionX, shipPositionY, ENTITY_DIMENSION, ENTITY_DIMENSION, 0, fieldWidth);
+		ship = new Ship(shipPositionX, shipPositionY,
+				ENTITY_DIMENSION, ENTITY_DIMENSION, 0, fieldWidth);
 		addEntity(ship);
 		
+		//CHECKSTYLE:OFF - MagicNumber
 		scoreLabel = new LabelEntity(30,30,0,0, "Score: " + points);
 		livesLabel = new LabelEntity(400, 30, 0, 0, "Lives: " + ship.getLives());
+		//CHECKSTYLE:ON - MagicNumber
 		
 		addEntity(scoreLabel);
 		addEntity(livesLabel);
@@ -111,10 +115,18 @@ public class PlayScene extends GameScene {
 		addEntity(ufo);
 	}
 
+	/**
+	 * Gets the current score for the player
+	 * @return The amount of points scored
+	 */
 	public int getPoints() {
 		return points;
 	}
 
+	/**
+	 * Adds a positive amount of points to the player score
+	 * @param points  The amount of points the player scored
+	 */
 	public void addPoints(int points) {
 		if (points < 0) {
 			return;
@@ -139,6 +151,9 @@ public class PlayScene extends GameScene {
 		livesLabel.setText("Lives: " + ship.getLives());
 	}
 
+	/**
+	 * Called when an entity thinks the player has lost
+	 */
 	public void lose() {
 		if (finished) {
 			return;
@@ -149,6 +164,9 @@ public class PlayScene extends GameScene {
 		addEntity(gameOver);
 	}
 
+	/**
+	 * Called when an entity thinks the player has won
+	 */
 	public void win() {
 		if (finished) {
 			return;

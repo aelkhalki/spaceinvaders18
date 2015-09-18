@@ -129,8 +129,11 @@ public class GameScene implements EntityDestroyedListener {
 	public List<Entity> getCollisions(Collidable collidee) {
 		ArrayList<Entity> result = new ArrayList<Entity>();
 
-		Rectangle referenceRectangle = new Rectangle((int)collidee.getPositionX(), (int)collidee.getPositionY(),
-				(int)collidee.getWidth(), (int)collidee.getHeight());
+		Rectangle referenceRectangle = new Rectangle(
+				(int) collidee.getPositionX(),
+				(int) collidee.getPositionY(),
+				(int) collidee.getWidth(),
+				(int) collidee.getHeight());
 
 		for (Entity candidate : entities) {
 			if (candidate == collidee) {
@@ -138,8 +141,9 @@ public class GameScene implements EntityDestroyedListener {
 			}
 			if (candidate instanceof Collidable) {
 				Collidable c = (Collidable) candidate;
-				Rectangle testRectangle = new Rectangle((int)c.getPositionX(), (int)c.getPositionY(),
-						(int)c.getWidth(), (int)c.getHeight());
+				Rectangle testRectangle = new Rectangle(
+						(int) c.getPositionX(), (int) c.getPositionY(),
+						(int) c.getWidth(), (int) c.getHeight());
 
 				if (referenceRectangle.intersects(testRectangle)) {
 					result.add(candidate);

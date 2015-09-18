@@ -11,8 +11,6 @@ import static org.mockito.Matchers.any;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 import nl.delftelectronics.spaceinvaders.core.Collidable;
-import nl.delftelectronics.spaceinvaders.core.entities.Bullet;
-import nl.delftelectronics.spaceinvaders.core.entities.Entity;
 import nl.delftelectronics.spaceinvaders.core.scenes.GameScene;
 
 /**
@@ -21,7 +19,7 @@ import nl.delftelectronics.spaceinvaders.core.scenes.GameScene;
 public class BulletTest extends TestCase {
     /**
      * Test method for
-     * {@link nl.delftelectronics.spaceinvaders.core.entities.Bullet#update(org.joda.time.Interval)}.
+     *{@link nl.delftelectronics.spaceinvaders.core.entities.Bullet#update(org.joda.time.Interval)}.
      */
     public void testUpdate() {
         final int dimension = 10;

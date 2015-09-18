@@ -1,11 +1,6 @@
-/**
- * 
- */
 package nl.delftelectronics.spaceinvaders.core.entities;
 
 import junit.framework.TestCase;
-import nl.delftelectronics.spaceinvaders.core.entities.Entity;
-import nl.delftelectronics.spaceinvaders.core.entities.EntityDestroyedListener;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
@@ -18,7 +13,7 @@ import static org.mockito.Mockito.verify;
 public class EntityTest extends TestCase {
 
 	/**
-	 * Test method for {@link nl.delftelectronics.spaceinvaders.core.entities.DrawableEntity#destroy()}.
+	 * Test method for DrawableEntity.
 	 */
 	public void testDestroy() {
 		EntityDestroyedListener listener1 = mock(EntityDestroyedListener.class);

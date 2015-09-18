@@ -15,8 +15,11 @@ import nl.delftelectronics.spaceinvaders.core.scenes.PlayScene;
  */
 public abstract class Enemy extends SpriteEntity implements Collidable {
 	protected static final double MOVING_SPEED = 0.120;
-	protected static final Integer MOVE_DOWN_SPEED = 20;
-	private static final Integer MARGIN_FROM_BOTTOM = 100;
+	protected static final int MOVE_DOWN_SPEED = 20;
+	private static final int MARGIN_FROM_BOTTOM = 100;
+	private static final double SHOOTING_CHANCE = 0.0001;
+	private static final double BULLET_WIDTH = 3;
+	private static final double BULLET_HEIGHT = 10;
 
 	private Integer westBoundary;
 	private Integer eastBoundary;
@@ -48,8 +51,9 @@ public abstract class Enemy extends SpriteEntity implements Collidable {
 	 * @param spriteName
 	 *            filename of the sprite.
 	 */
-	public Enemy(Integer positionX, Integer positionY, Integer width, Integer height, Integer westBoundary,
-			Integer eastBoundary, Integer southBoundary, EnemyBlock block, String spriteName) {
+	public Enemy(double positionX, double positionY, double width,
+			double height, int westBoundary, int eastBoundary,
+			int southBoundary, EnemyBlock block, String spriteName) {
 		super(positionX, positionY, width, height, spriteName);
 		this.westBoundary = westBoundary;
 		this.eastBoundary = eastBoundary;
@@ -115,7 +119,7 @@ public abstract class Enemy extends SpriteEntity implements Collidable {
 			playScene.lose();
 		}
 
-		if (block.random.nextDouble() < 0.0001) {
+		if (block.random.nextDouble() < SHOOTING_CHANCE) {
 			fire();
 		}
 	}
@@ -124,7 +128,8 @@ public abstract class Enemy extends SpriteEntity implements Collidable {
 	 * Shoots a bullet
 	 */
 	public void fire() {
-		Bullet enemyBullet = new Bullet(getPositionX(), getPositionY(), 3, 10, false);
+		Bullet enemyBullet = new Bullet(getPositionX(), getPositionY(),
+				BULLET_WIDTH, BULLET_HEIGHT, false);
 		scene.addEntity(enemyBullet);
 	}
 
@@ -135,7 +140,8 @@ public abstract class Enemy extends SpriteEntity implements Collidable {
 	 */
 	public boolean reachedBoundary() {
 		return (getPositionX() <= westBoundary && block.getDirection() == Direction.WEST)
-				|| (getPositionX() + getWidth() >= eastBoundary && block.getDirection() == Direction.EAST);
+				|| (getPositionX() + getWidth() >= eastBoundary
+					&& block.getDirection() == Direction.EAST);
 	}
 
 	/**

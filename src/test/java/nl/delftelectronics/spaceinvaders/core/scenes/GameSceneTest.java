@@ -1,13 +1,10 @@
-/**
- * 
- */
+//CHECKSTYLE:OFF - MagicNumber
 package nl.delftelectronics.spaceinvaders.core.scenes;
 
 import junit.framework.TestCase;
 import nl.delftelectronics.spaceinvaders.core.Collidable;
 import nl.delftelectronics.spaceinvaders.core.entities.DrawableEntity;
 import nl.delftelectronics.spaceinvaders.core.entities.Entity;
-import nl.delftelectronics.spaceinvaders.core.scenes.GameScene;
 import junit.framework.Assert;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
@@ -81,7 +78,7 @@ public class GameSceneTest extends TestCase {
 	}
 	
 	/**
-	 * Test method for {@link nl.delftelectronics.spaceinvaders.core.scenes.GameScene#getCollisions(nl.delftelectronics.spaceinvaders.core.Collidable)}.
+	 * Test method for getCollisions.
 	 */
 	public void testCollisions() {
 		GameScene scene = new GameScene(mock(Scene.class));
@@ -129,8 +126,15 @@ public class GameSceneTest extends TestCase {
 	 *
 	 */
 	static class CollisionEntity extends DrawableEntity implements Collidable {
-
-		public CollisionEntity(Integer positionX, Integer positionY, Integer width, Integer height) {
+		/**
+		 * Creates a new Drawable collision entity for testing
+		 * @param positionX The left offset of the collision box
+		 * @param positionY The top offset of the collision box
+		 * @param width     The width of the collision box
+		 * @param height    The height of the collision box
+		 */
+		public CollisionEntity(double positionX, double positionY,
+				double width, double height) {
 			super(positionX, positionY, width, height);
 		}
 	}

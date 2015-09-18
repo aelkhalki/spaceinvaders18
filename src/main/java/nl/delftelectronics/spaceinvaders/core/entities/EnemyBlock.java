@@ -44,14 +44,18 @@ public class EnemyBlock extends Entity implements PreUpdatable {
 	
 	/**
 	 * Flips the direction of the enemy block if requested
+	 * @param delta  The amount of time between frames
 	 */
 	public void preUpdate(Interval delta) {
 		shouldDrop = false;
 		if (shouldFlip) {
 			shouldFlip = false;
 			shouldDrop = true;
-			movementDirection = movementDirection == Direction.EAST ?
-					Direction.WEST : Direction.EAST;
+			if (movementDirection == Direction.EAST) {
+				movementDirection = Direction.WEST;
+			} else {
+				movementDirection = Direction.EAST;
+			}
 		}
 	}
 }

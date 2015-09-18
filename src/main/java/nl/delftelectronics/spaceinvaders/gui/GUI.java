@@ -67,11 +67,6 @@ public class GUI extends Application {
 
 	/**
 	 * Listen to keyboard button presses.
-	 *
-	 * @param scene
-	 *            current scene.
-	 * @param input
-	 *            collection of input.
 	 */
 	public void listenToKeyInput() {
 		scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -127,8 +122,6 @@ public class GUI extends Application {
 	/**
 	 * Create the animation timer that shows the game to the window.
 	 *
-	 * @param started
-	 *            pointer to a boolean which signals if the game has started
 	 * @param engine
 	 *            the engine containing game logic.
 	 * @param gc
@@ -144,7 +137,7 @@ public class GUI extends Application {
 
 			public void handle(long currentNanoTime) {
 				double elapsedTime = (currentNanoTime - previousNanoTime) / SECOND;
-				if (elapsedTime < 1 / (double)FPS) {
+				if (elapsedTime < 1 / (double) FPS) {
 					previousNanoTime = currentNanoTime;
 					return;
 				}

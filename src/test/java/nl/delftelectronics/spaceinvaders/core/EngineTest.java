@@ -1,3 +1,4 @@
+//CHECKSTYLE.OFF: MagicNumber
 package nl.delftelectronics.spaceinvaders.core;
 
 import junit.framework.Assert;
@@ -13,6 +14,9 @@ import static org.mockito.Mockito.verify;
  */
 public class EngineTest extends TestCase {
 
+	/**
+	 * Tests click hitting
+	 */
 	public void testClick() {
 		GameScene gameScene = mock(GameScene.class);
 		Engine engine = new Engine(gameScene);
@@ -33,6 +37,9 @@ public class EngineTest extends TestCase {
 		assertFalse(engine.wasClicked(none));
 	}
 
+	/**
+	 * Tests changing the scene
+	 */
 	public void testSceneChange() {
 		GameScene gameScene1 = mock(GameScene.class);
 		GameScene gameScene2 = mock(GameScene.class);
@@ -47,6 +54,9 @@ public class EngineTest extends TestCase {
 		verify(gameScene2).update();
 	}
 	
+	/**
+	 * Tests pressing keys
+	 */
 	public void testKeys() {
 		GameScene gameScene = mock(GameScene.class);
 		Engine engine = new Engine(gameScene);
