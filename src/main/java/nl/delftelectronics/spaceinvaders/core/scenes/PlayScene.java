@@ -87,7 +87,7 @@ public class PlayScene extends GameScene {
 		addEntity(ship);
 		
 		//CHECKSTYLE.OFF: MagicNumber - Don't want to layout automatically
-		scoreLabel = new LabelEntity(30,30,0,0, "Score: " + points);
+		scoreLabel = new LabelEntity(30, 30, 0, 0, "Score: " + points);
 		livesLabel = new LabelEntity(400, 30, 0, 0, "Lives: " + ship.getLives());
 		//CHECKSTYLE.ON: MagicNumber
 		
