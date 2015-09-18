@@ -3,7 +3,6 @@ package nl.delftelectronics.spaceinvaders.core.entities;
 import org.joda.time.Interval;
 
 import nl.delftelectronics.spaceinvaders.core.Collidable;
-import nl.delftelectronics.spaceinvaders.core.Direction;
 import nl.delftelectronics.spaceinvaders.core.Engine;
 import nl.delftelectronics.spaceinvaders.core.scenes.PlayScene;
 
@@ -85,7 +84,7 @@ public class Ship extends Actor implements Collidable {
      */
     public Bomb shootBomb() {
         return new Bomb(getPositionX() + getWidth() / 2, getPositionY(), Bomb.WIDTH,
-                Bomb.HEIGHT, Direction.NORTH);
+                Bomb.HEIGHT);
     }
     
     /**

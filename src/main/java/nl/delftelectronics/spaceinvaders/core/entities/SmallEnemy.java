@@ -20,7 +20,7 @@ public class SmallEnemy extends Enemy {
      * @param southBoundary   southernmost boundary of the playing field.
      * @param block 		  the block of enemies it belongs to.
      */
-    public SmallEnemy(Integer positionX, Integer positionY, Integer width, Integer height,
+    public SmallEnemy(double positionX, double positionY, double width, double height,
                       Integer westBoundary, Integer eastBoundary, Integer southBoundary,
                       EnemyBlock block) {
         super(positionX, positionY, width, height, westBoundary, eastBoundary, southBoundary,

@@ -28,11 +28,9 @@ public class Bomb extends Projectile {
 	 *            width of the Bomb.
 	 * @param height
 	 *            height of the Bomb.
-	 * @param direction
-	 *            direction of the Bomb.
 	 */
 	public Bomb(double positionX, double positionY, double width,
-			double height, Direction direction) {
+			double height) {
 		super(positionX, positionY, width, height, FILENAME, true);
 	}
 

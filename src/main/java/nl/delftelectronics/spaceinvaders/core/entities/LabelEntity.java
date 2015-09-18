@@ -70,7 +70,7 @@ public class LabelEntity extends DrawableEntity implements Collidable {
 
 	/**
 	 * Detects clicks
-	 * @param The amount of time elapsed since the last update
+	 * @param delta  The amount of time elapsed since the last update
 	 */
 	@Override
 	public void update(Interval delta) {

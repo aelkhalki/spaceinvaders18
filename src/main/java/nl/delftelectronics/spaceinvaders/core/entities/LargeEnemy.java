@@ -20,7 +20,7 @@ public class LargeEnemy extends Enemy {
      * @param southBoundary   southernmost boundary of the playing field.
      * @param block           the block of enemies this enemy belongs to.
      */
-    public LargeEnemy(Integer positionX, Integer positionY, Integer width, Integer height,
+    public LargeEnemy(double positionX, double positionY, double width, double height,
                       Integer westBoundary, Integer eastBoundary, Integer southBoundary,
                       EnemyBlock block) {
         super(positionX, positionY, width, height, westBoundary, eastBoundary, southBoundary,

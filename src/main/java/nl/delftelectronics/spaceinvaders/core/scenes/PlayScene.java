@@ -30,6 +30,9 @@ public class PlayScene extends GameScene {
 	private static final int UFO_MARGIN_FROM_TOP = 100; // pixels
 	private static final double UFO_CHANCE = 0.002; // ratio
 	private static final int ENTITY_DIMENSION = 100;
+	private static final double COLUMN_WIDTH = 100;
+	private static final double ROW_HEIGHT = 90;
+	private static final double ENEMY_OFFSET_X = 10;
 
 	private int points = 0;
 	public int enemyCount = 0;
@@ -57,30 +60,7 @@ public class PlayScene extends GameScene {
 		int shipPositionX = (int) (fieldWidth * SHIP_MARGIN_FROM_LEFT);
 		int shipPositionY = (int) (fieldHeight * (1 - SHIP_MARGIN_FROM_BOTTOM));
 
-		for (int column = 0; column < ENEMY_COLUMNS; column++) {
-			int currentRow = 0;
-			for (int smallEnemyRow = 0; smallEnemyRow < SMALL_ENEMY_ROWS; smallEnemyRow++) {
-				Enemy smallEnemy = new SmallEnemy(10 + 100 * column, 90 * currentRow,
-						ENTITY_DIMENSION, ENTITY_DIMENSION, 0, fieldWidth, fieldHeight, block);
-				addEntity(smallEnemy);
-				currentRow++;
-				enemyCount++;
-			}
-			for (int mediumEnemyRow = 0; mediumEnemyRow < MEDIUM_ENEMY_ROWS; mediumEnemyRow++) {
-				Enemy mediumEnemy = new MediumEnemy(10 + 100 * column, 90 * currentRow,
-						ENTITY_DIMENSION, ENTITY_DIMENSION, 0, fieldWidth, fieldHeight, block);
-				addEntity(mediumEnemy);
-				currentRow++;
-				enemyCount++;
-			}
-			for (int largeEnemyRow = 0; largeEnemyRow < LARGE_ENEMY_ROWS; largeEnemyRow++) {
-				Enemy largeEnemy = new LargeEnemy(10 + 100 * column, 90 * currentRow,
-						ENTITY_DIMENSION, ENTITY_DIMENSION, 0, fieldWidth, fieldHeight, block);
-				addEntity(largeEnemy);
-				currentRow++;
-				enemyCount++;
-			}
-		}
+		createEnemies(block);
 
 		ship = new Ship(shipPositionX, shipPositionY,
 				ENTITY_DIMENSION, ENTITY_DIMENSION, 0, fieldWidth);
@@ -93,6 +73,40 @@ public class PlayScene extends GameScene {
 		
 		addEntity(scoreLabel);
 		addEntity(livesLabel);
+	}
+
+	/**
+	 * Creates the columns of enemies and adds them to the specified block
+	 * @param block  The block to add the enemies to
+	 */
+	private void createEnemies(EnemyBlock block) {
+		for (int column = 0; column < ENEMY_COLUMNS; column++) {
+			int currentRow = 0;
+			for (int smallEnemyRow = 0; smallEnemyRow < SMALL_ENEMY_ROWS; smallEnemyRow++) {
+				Enemy smallEnemy = new SmallEnemy(ENEMY_OFFSET_X + COLUMN_WIDTH * column,
+						ROW_HEIGHT * currentRow, ENTITY_DIMENSION, ENTITY_DIMENSION, 0,
+						fieldWidth, fieldHeight, block);
+				addEntity(smallEnemy);
+				currentRow++;
+				enemyCount++;
+			}
+			for (int mediumEnemyRow = 0; mediumEnemyRow < MEDIUM_ENEMY_ROWS; mediumEnemyRow++) {
+				Enemy mediumEnemy = new MediumEnemy(ENEMY_OFFSET_X + COLUMN_WIDTH * column,
+						ROW_HEIGHT * currentRow, ENTITY_DIMENSION, ENTITY_DIMENSION, 0,
+						fieldWidth, fieldHeight, block);
+				addEntity(mediumEnemy);
+				currentRow++;
+				enemyCount++;
+			}
+			for (int largeEnemyRow = 0; largeEnemyRow < LARGE_ENEMY_ROWS; largeEnemyRow++) {
+				Enemy largeEnemy = new LargeEnemy(ENEMY_OFFSET_X + COLUMN_WIDTH * column,
+						ROW_HEIGHT * currentRow, ENTITY_DIMENSION, ENTITY_DIMENSION, 0,
+						fieldWidth, fieldHeight, block);
+				addEntity(largeEnemy);
+				currentRow++;
+				enemyCount++;
+			}
+		}
 	}
 
 	/**
@@ -160,7 +174,9 @@ public class PlayScene extends GameScene {
 		}
 
 		finished = true;
+		//CHECKSTYLE.OFF: MagicNumber - Don't want to layout automatically
 		LabelEntity gameOver = new LabelEntity(200, 200, 0, 0, "GAME OVER!");
+		//CHECKSTYLE.ON: MagicNumber
 		addEntity(gameOver);
 	}
 
@@ -173,7 +189,9 @@ public class PlayScene extends GameScene {
 		}
 
 		finished = true;
+		//CHECKSTYLE.OFF: MagicNumber - Don't want to layout automatically
 		LabelEntity wonGame = new LabelEntity(200, 200, 0, 0, "YOU WON!");
+		//CHECKSTYLE.ON: MagicNumber
 		addEntity(wonGame);
 	}
 }
