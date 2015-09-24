@@ -17,7 +17,7 @@ public class Engine {
 	private static Engine instance;
 	private List<String> inputs = new ArrayList<String>();
 	private List<Point> clicks = new ArrayList<Point>();
-	
+
 	private GameScene currentScene;
 
 	/**
