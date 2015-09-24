@@ -14,19 +14,20 @@ import junit.framework.Assert;
 import junit.framework.TestCase;
 
 public class BombTest extends TestCase {
-	
-	public void testBomb(){
+
+	public void testBomb() {
 		final double dimension = 10;
 
-        GameScene scene = mock(GameScene.class);
-        when(scene.getCollisions(any(Collidable.class))).thenReturn(new ArrayList<Entity>());
-        
-        //Speed is in millisecond
-        Bomb bomb = new Bomb(dimension, dimension, dimension, dimension);
-        bomb.initialize(scene);
-        bomb.update(new Interval(0, 1));
-        Assert.assertEquals(dimension - Bomb.MOVING_SPEED, bomb.getPositionY());
-		
+		GameScene scene = mock(GameScene.class);
+		when(scene.getCollisions(any(Collidable.class))).thenReturn(
+				new ArrayList<Entity>());
+
+		// Speed is in millisecond
+		Bomb bomb = new Bomb(dimension, dimension, dimension, dimension);
+		bomb.initialize(scene);
+		bomb.update(new Interval(0, 1));
+		Assert.assertEquals(dimension - Bomb.MOVING_SPEED, bomb.getPositionY());
+
 	}
 
 }
