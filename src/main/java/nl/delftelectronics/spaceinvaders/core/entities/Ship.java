@@ -60,6 +60,7 @@ public class Ship extends Actor implements Collidable {
         	lastBulletFire = currentNanoTime;
             Bullet bullet = shoot();
             scene.addEntity(bullet);
+            Audio.playBulletSound();
         }
     }
     

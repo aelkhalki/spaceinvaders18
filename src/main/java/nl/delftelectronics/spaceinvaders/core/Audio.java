@@ -18,6 +18,10 @@ public class Audio {
     private static String bombSoundFilename = "/bomb_sound.mp3";
     private static String backgroundSoundFilename = "/background_sound.mp3";
 
+    public static void playBulletSound() {
+        playSound(bombSoundFilename);
+    }
+
     public static void playBombSound() {
         playSound(bombSoundFilename);
     }
