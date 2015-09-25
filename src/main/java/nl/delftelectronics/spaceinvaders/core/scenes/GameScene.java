@@ -58,10 +58,7 @@ public class GameScene implements EntityDestroyedListener {
 		Interval delta = new Interval(lastUpdate, now);
 		lastUpdate = now;
 
-		for (Entity e : additions) {
-			entities.add(e);
-		}
-		additions.clear();
+		handleAdditions();
 
 		// Pre updates
 		for (Entity e : entities) {
@@ -75,10 +72,27 @@ public class GameScene implements EntityDestroyedListener {
 			e.update(delta);
 		}
 
+		handleDeletions();
+	}
+
+	/**
+	 * Removes entities scheduled for deletion
+	 */
+	protected void handleDeletions() {
 		for (Entity e : deletes) {
 			entities.remove(e);
 		}
 		deletes.clear();
+	}
+
+	/**
+	 * Adds added entities to the entity list
+	 */
+	protected void handleAdditions() {
+		for (Entity e : additions) {
+			entities.add(e);
+		}
+		additions.clear();
 	}
 
 	/**
@@ -89,10 +103,7 @@ public class GameScene implements EntityDestroyedListener {
 	 */
 	public void draw(GraphicsContext gc) {
 
-		for (Entity e : additions) {
-			entities.add(e);
-		}
-		additions.clear();
+		handleAdditions();
 
 		if (!hasLoadedGraphics) {
 			hasLoadedGraphics = true;
@@ -151,6 +162,16 @@ public class GameScene implements EntityDestroyedListener {
 			}
 		}
 
+		return result;
+	}
+	
+	/**
+	 * Returns a list of all current entities
+	 * @return the list of entities
+	 */
+	public List<Entity> getEntities() {
+		ArrayList<Entity> result = new ArrayList<Entity>();
+		result.addAll(entities);
 		return result;
 	}
 

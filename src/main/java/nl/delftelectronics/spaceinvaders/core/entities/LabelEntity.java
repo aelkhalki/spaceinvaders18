@@ -107,4 +107,12 @@ public class LabelEntity extends DrawableEntity implements Collidable {
 	public void setText(String text) {
 		this.text = text;
 	}
+	
+	/**
+	 * Gets the displayed text
+	 * @return the displayed text
+	 */
+	public String getText() {
+		return text;
+	}
 }

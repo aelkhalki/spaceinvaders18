@@ -52,8 +52,10 @@ public class PlayScene extends GameScene {
 	public PlayScene(Scene scene) {
 		super(scene);
 		
-		fieldWidth = (int) scene.getWidth();
-		fieldHeight = (int) scene.getHeight();
+		if (scene != null) {
+			fieldWidth = (int) scene.getWidth();
+			fieldHeight = (int) scene.getHeight();
+		}
 
 		EnemyBlock block = new EnemyBlock();
 		addEntity(block);
@@ -187,6 +189,8 @@ public class PlayScene extends GameScene {
 	@Override
 	public void update() {
 		if (finished) {
+			handleAdditions();
+			handleDeletions();
 			return;
 		}
 
