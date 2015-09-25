@@ -1,5 +1,8 @@
 package nl.delftelectronics.spaceinvaders.core.entities;
 
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import nl.delftelectronics.spaceinvaders.core.Audio;
 import org.joda.time.Interval;
 
 import nl.delftelectronics.spaceinvaders.core.Collidable;
@@ -105,6 +108,7 @@ public class Ship extends Actor implements Collidable {
         	lastBulletFire = currentNanoTime;
             Bomb bomb = shootBomb();
             scene.addEntity(bomb);
+            Audio.playBombSound();
         }
     }
     
