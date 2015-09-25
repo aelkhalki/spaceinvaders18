@@ -37,5 +37,20 @@ public class ShipTest extends TestCase {
 		ship.hit();
 		Assert.assertEquals(2, ship.getLives());
 	}
-
+	
+	public void testPlayerShootBullet(){
+		Ship ship = new Ship(10, 10, 10, 10, 10, 10);
+		GameScene scene = mock(GameScene.class);
+		ship.initialize(scene);
+		ship.playerShootBullet();
+		verify(scene).addEntity(any(Bullet.class));
+	}
+	
+	public void testPlayerShootBomb(){
+		Ship ship = new Ship(10, 10, 10, 10, 10, 10);
+		GameScene scene = mock(GameScene.class);
+		ship.initialize(scene);
+		ship.playerShootBomb();
+		verify(scene).addEntity(any(Bomb.class));
+	}
 }
