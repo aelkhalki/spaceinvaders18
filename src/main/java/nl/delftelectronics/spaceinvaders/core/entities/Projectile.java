@@ -60,27 +60,28 @@ public abstract class Projectile extends SpriteEntity implements Collidable {
 
 		List<Entity> collisions = scene.getCollisions(impactArea());
 
-		if (isPlayerOwned) {
-			for (Entity e : collisions) {
-				if (e instanceof Enemy) {
-					destroy();
-					Enemy enemy = (Enemy) e;
-					enemy.kill();
-					
-					Logger.info("%s is hit by a %s at (%f, %f)", e.getClass().getSimpleName(),
-							this.getClass().getSimpleName(), getPositionX(), getPositionY());
-				}
-			}
-		} else {
-			for (Entity e : collisions) {
-				if (e instanceof Ship) {
-					destroy();
-					Ship s = (Ship) e;
-					s.hit();
-					
-					Logger.info("%s is hit by a %s at (%f, %f)", s.getClass().getSimpleName(),
-							this.getClass().getSimpleName(), getPositionX(), getPositionY());
-				}
+		for (Entity e : collisions) {
+			if (e instanceof Enemy && isPlayerOwned) {
+				destroy();
+				Enemy enemy = (Enemy) e;
+				enemy.kill();
+
+				Logger.info("%s is hit by a %s at (%f, %f)", e.getClass().getSimpleName(),
+						this.getClass().getSimpleName(), getPositionX(), getPositionY());
+			} else if (e instanceof Ship && !isPlayerOwned) {
+				destroy();
+				Ship s = (Ship) e;
+				s.hit();
+
+				Logger.info("%s is hit by a %s at (%f, %f)", s.getClass().getSimpleName(),
+						this.getClass().getSimpleName(), getPositionX(), getPositionY());
+			} else if (e instanceof Barricade) {
+				destroy();
+				Barricade barricade = (Barricade) e;
+				barricade.hit();
+
+				Logger.info("%s is hit by a %s at (%f, %f)", barricade.getClass().getSimpleName(),
+						this.getClass().getSimpleName(), getPositionX(), getPositionY());
 			}
 		}
 	}

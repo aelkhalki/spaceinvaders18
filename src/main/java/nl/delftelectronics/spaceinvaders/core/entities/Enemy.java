@@ -18,7 +18,7 @@ public abstract class Enemy extends SpriteEntity implements Collidable {
 	protected static final double MOVING_SPEED = 0.120;
 	protected static final int MOVE_DOWN_SPEED = 20;
 	private static final int MARGIN_FROM_BOTTOM = 100;
-	private static final double SHOOTING_CHANCE = 0.0001;
+	private static final double SHOOTING_CHANCE = 0.002 ;
 	private static final double BULLET_WIDTH = 3;
 	private static final double BULLET_HEIGHT = 10;
 

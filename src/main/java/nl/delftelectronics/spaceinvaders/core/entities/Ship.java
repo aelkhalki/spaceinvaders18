@@ -1,5 +1,8 @@
 package nl.delftelectronics.spaceinvaders.core.entities;
 
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import nl.delftelectronics.spaceinvaders.core.Audio;
 import org.joda.time.Interval;
 
 import nl.delftelectronics.spaceinvaders.core.Collidable;
@@ -42,22 +45,34 @@ public class Ship extends Actor implements Collidable {
     public Bullet shoot() {
     	double x = getPositionX() + getWidth() / 2;
         Logger.info("%s fired a Bullet at (%f, %f) in the direction North",
-        		this.getClass().toString(),
-				x, getPositionY());
+                this.getClass().toString(),
+                x, getPositionY());
         return new Bullet(x, getPositionY(), Bullet.WIDTH,
                 Bullet.HEIGHT, true);
     }
-    
+
     /**
      * Order the ship to shoot a bullet.
+     *
+     * @param soundEffect true if a sound effect has to be played.
      */
-    public void playerShootBullet() {
+    public void playerShootBullet(boolean soundEffect) {
         long currentNanoTime = System.nanoTime();
         if (currentNanoTime - lastBulletFire > BULLET_FIRE_TIME_DELAY) {
-        	lastBulletFire = currentNanoTime;
+            lastBulletFire = currentNanoTime;
             Bullet bullet = shoot();
             scene.addEntity(bullet);
+            if (soundEffect) {
+                Audio.playBulletSound();
+            }
         }
+    }
+
+    /**
+     * Order the ship to shoot a bullet, with the sound effect.
+     */
+    public void playerShootBullet() {
+        playerShootBullet(true);
     }
     
     /**
@@ -98,14 +113,23 @@ public class Ship extends Actor implements Collidable {
     
     /**
      * Order the ship to shoot a bomb.
+     *
+     * @param soundEffect true if a soundEffect has to be played.
      */
-    public void playerShootBomb() {
+    public void playerShootBomb(boolean soundEffect) {
         long currentNanoTime = System.nanoTime();
         if (currentNanoTime - lastBulletFire > BULLET_FIRE_TIME_DELAY) {
         	lastBulletFire = currentNanoTime;
             Bomb bomb = shootBomb();
             scene.addEntity(bomb);
+            if (soundEffect) {
+                Audio.playBombSound();
+            }
         }
+    }
+
+    public void playerShootBomb() {
+        playerShootBomb(true);
     }
     
     @Override

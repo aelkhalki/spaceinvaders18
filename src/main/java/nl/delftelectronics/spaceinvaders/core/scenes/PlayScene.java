@@ -6,6 +6,7 @@ package nl.delftelectronics.spaceinvaders.core.scenes;
 import java.util.Random;
 
 import javafx.scene.Scene;
+import nl.delftelectronics.spaceinvaders.core.entities.Barricade;
 import nl.delftelectronics.spaceinvaders.core.entities.Enemy;
 import nl.delftelectronics.spaceinvaders.core.entities.EnemyBlock;
 import nl.delftelectronics.spaceinvaders.core.entities.LabelEntity;
@@ -51,8 +52,10 @@ public class PlayScene extends GameScene {
 	public PlayScene(Scene scene) {
 		super(scene);
 		
-		fieldWidth = (int) scene.getWidth();
-		fieldHeight = (int) scene.getHeight();
+		if (scene != null) {
+			fieldWidth = (int) scene.getWidth();
+			fieldHeight = (int) scene.getHeight();
+		}
 
 		EnemyBlock block = new EnemyBlock();
 		addEntity(block);
@@ -70,7 +73,9 @@ public class PlayScene extends GameScene {
 		scoreLabel = new LabelEntity(30, 30, 0, 0, "Score: " + points);
 		livesLabel = new LabelEntity(400, 30, 0, 0, "Lives: " + ship.getLives());
 		//CHECKSTYLE.ON: MagicNumber
-		
+
+		createBarricades();
+
 		addEntity(scoreLabel);
 		addEntity(livesLabel);
 	}
@@ -107,6 +112,37 @@ public class PlayScene extends GameScene {
 				enemyCount++;
 			}
 		}
+	}
+
+	/**
+	 * Create four barricades in front of the player and add them to the scene.
+	 */
+	public void createBarricades() {
+		//CHECKSTYLE.OFF: MagicNumber - Don't want to layout automatically
+		for (int x = 100; x <= 300; x += 25) {
+			for (int y = 700; y <= 800; y += 25) {
+				addEntity(new Barricade(x, y, 25, 25));
+			}
+		}
+
+		for (int x = 500; x <= 700; x += 25) {
+			for (int y = 700; y <= 800; y += 25) {
+				addEntity(new Barricade(x, y, 25, 25));
+			}
+		}
+
+		for (int x = 900; x <= 1100; x += 25) {
+			for (int y = 700; y <= 800; y += 25) {
+				addEntity(new Barricade(x, y, 25, 25));
+			}
+		}
+
+		for (int x = 1300; x <= 1500; x += 25) {
+			for (int y = 700; y <= 800; y += 25) {
+				addEntity(new Barricade(x, y, 25, 25));
+			}
+		}
+		//CHECKSTYLE.ON: MagicNumber
 	}
 
 	/**
@@ -153,6 +189,8 @@ public class PlayScene extends GameScene {
 	@Override
 	public void update() {
 		if (finished) {
+			handleAdditions();
+			handleDeletions();
 			return;
 		}
 

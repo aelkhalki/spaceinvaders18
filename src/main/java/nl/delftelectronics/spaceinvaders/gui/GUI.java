@@ -10,8 +10,12 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+import nl.delftelectronics.spaceinvaders.core.Audio;
 import nl.delftelectronics.spaceinvaders.core.Engine;
 import nl.delftelectronics.spaceinvaders.core.Logger;
 import nl.delftelectronics.spaceinvaders.core.Logger.LogLevel;
@@ -41,7 +45,6 @@ public class GUI extends Application {
 	 *            command line arguments (not used).
 	 */
 	public static void main(String[] args) {
-		Logger.setLogLevel(LogLevel.Info);
 		launch(args);
 	}
 
@@ -49,6 +52,8 @@ public class GUI extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		setWindowTitle(primaryStage, WINDOW_TITLE);
 		gc = initializeScene(primaryStage, WINDOW_WIDTH, WINDOW_HEIGHT);
+
+		Audio.playBackgroundSound();
 
 		engine = new Engine(new GameScene(scene));
 
