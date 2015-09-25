@@ -42,7 +42,7 @@ public class ShipTest extends TestCase {
 		Ship ship = new Ship(10, 10, 10, 10, 10, 10);
 		GameScene scene = mock(GameScene.class);
 		ship.initialize(scene);
-		ship.playerShootBullet();
+		ship.playerShootBullet(false);
 		verify(scene).addEntity(any(Bullet.class));
 	}
 	
@@ -50,7 +50,7 @@ public class ShipTest extends TestCase {
 		Ship ship = new Ship(10, 10, 10, 10, 10, 10);
 		GameScene scene = mock(GameScene.class);
 		ship.initialize(scene);
-		ship.playerShootBomb();
+		ship.playerShootBomb(false);
 		verify(scene).addEntity(any(Bomb.class));
 	}
 }
