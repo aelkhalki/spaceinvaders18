@@ -37,6 +37,7 @@ public class PlayScene extends GameScene {
 
 	private int points = 0;
 	public int enemyCount = 0;
+	private int currentLevel = 1;
 	private int fieldWidth;
 	private int fieldHeight;
 	private Random random = new Random();
@@ -44,6 +45,7 @@ public class PlayScene extends GameScene {
 	private boolean finished = false;
 	private LabelEntity scoreLabel;
 	private LabelEntity livesLabel;
+	private LabelEntity levelLabel;
 
 	/**
 	 * Builds a new PlayScene
@@ -72,6 +74,7 @@ public class PlayScene extends GameScene {
 		//CHECKSTYLE.OFF: MagicNumber - Don't want to layout automatically
 		scoreLabel = new LabelEntity(30, 30, 0, 0, "Score: " + points);
 		livesLabel = new LabelEntity(400, 30, 0, 0, "Lives: " + ship.getLives());
+		levelLabel = new LabelEntity(700, 30, 0, 0, "Level: " + currentLevel);
 		//CHECKSTYLE.ON: MagicNumber
 
 		createBarricades();
@@ -226,10 +229,19 @@ public class PlayScene extends GameScene {
 			return;
 		}
 
-		finished = true;
-		//CHECKSTYLE.OFF: MagicNumber - Don't want to layout automatically
-		LabelEntity wonGame = new LabelEntity(200, 200, 0, 0, "YOU WON!");
-		//CHECKSTYLE.ON: MagicNumber
-		addEntity(wonGame);
+		levelLabel.setText("Level: " + ++currentLevel);
+
+		EnemyBlock block = new EnemyBlock();
+		addEntity(block);
+
+		createEnemies(block);
+
+		// Remove and add the labels again, so they are drawn in front of the enemies.
+		entityDestroyed(scoreLabel);
+		entityDestroyed(livesLabel);
+
+		addEntity(scoreLabel);
+		addEntity(livesLabel);
+		addEntity(levelLabel);
 	}
 }
