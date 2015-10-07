@@ -1,6 +1,7 @@
 package nl.delftelectronics.spaceinvaders.core;
 
 import javafx.scene.media.Media;
+import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -40,10 +41,14 @@ public final class Audio {
      * @param filename filename of the sound.
      */
     private static void playSound(final String filename) {
-        Media media = new Media(Audio.class.getResource(filename).toString());
-        MediaPlayer mp = new MediaPlayer(media);
-        mp.play();
-        // Add Media Player to Collection so that it doesn't get garbage collected.
-        mps.add(mp);
+        try {
+            Media media = new Media(Audio.class.getResource(filename).toString());
+            MediaPlayer mp = new MediaPlayer(media);
+            mp.play();
+            // Add Media Player to Collection so that it doesn't get garbage collected.
+            mps.add(mp);
+        } catch (MediaException e) {
+            System.err.println("Could not instantiate Media Player");
+        }
     }
 }
