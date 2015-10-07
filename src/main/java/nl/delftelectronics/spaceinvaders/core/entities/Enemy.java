@@ -15,7 +15,7 @@ import nl.delftelectronics.spaceinvaders.core.scenes.PlayScene;
  * which it will move down and start moving the other direction horizontally.
  */
 public abstract class Enemy extends SpriteEntity implements Collidable {
-	protected static final double MOVING_SPEED = 0.120;
+	protected static final double INITIAL_MOVING_SPEED = 0.1;
 	protected static final int MOVE_DOWN_SPEED = 20;
 	private static final int MARGIN_FROM_BOTTOM = 100;
 	private static final double SHOOTING_CHANCE = 0.002 ;
@@ -96,7 +96,7 @@ public abstract class Enemy extends SpriteEntity implements Collidable {
 
 	/**
 	 * Update the position of the Bullet, based on the Direction and the
-	 * MOVING_SPEED.
+	 * currentMovingSpeed.
 	 */
 	@Override
 	public void update(Interval delta) {
@@ -106,7 +106,7 @@ public abstract class Enemy extends SpriteEntity implements Collidable {
 		Direction movingDirection = Direction.NORTH;
 		movingDirection = block.getDirection();
 
-		double movement = MOVING_SPEED * delta.toDurationMillis();
+		double movement = currentSpeed() * delta.toDurationMillis();
 
 		if (block.getShouldDrop()) {
 			moveDown();
@@ -171,6 +171,18 @@ public abstract class Enemy extends SpriteEntity implements Collidable {
 	 */
 	public void moveDown() {
 		setPositionY(getPositionY() + MOVE_DOWN_SPEED);
+	}
+
+	/**
+	 * Return the current speed of the enemy, based on the current level.
+	 * @return the current speed of the enemy
+	 */
+	public double currentSpeed() {
+		if (scene instanceof PlayScene) {
+			return ((PlayScene) scene).getCurrentLevel() * INITIAL_MOVING_SPEED;
+		} else {
+			return 0;
+		}
 	}
 
 	/**

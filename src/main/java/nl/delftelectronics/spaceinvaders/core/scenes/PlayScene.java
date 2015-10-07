@@ -244,4 +244,12 @@ public class PlayScene extends GameScene {
 		addEntity(livesLabel);
 		addEntity(levelLabel);
 	}
+
+	/**
+	 * Return the current level.
+	 * @return the current level
+	 */
+	public int getCurrentLevel() {
+		return currentLevel;
+	}
 }
