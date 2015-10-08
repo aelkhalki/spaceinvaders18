@@ -15,10 +15,12 @@ import nl.delftelectronics.spaceinvaders.core.scenes.PlayScene;
  * bullets up.
  */
 public class Ship extends Actor implements Collidable {
+    public static final int INITIAL_LIVES = 3;
     private static final String FILENAME = "/ship.png";
     //CHECKSTYLE.OFF: MagicNumber
     protected int lives = 3;
     //CHECKSTYLE.ON: MagicNumber
+    private int bombs = 0;
     private long lastBulletFire = 0;
     private static final double BULLET_FIRE_TIME_DELAY = 1000000000.0; // nanoseconds
 
@@ -82,6 +84,10 @@ public class Ship extends Actor implements Collidable {
     public int getLives() {
     	return lives;
     }
+
+    public void setLives(int lives) {
+        this.lives = lives;
+    }
     
     /**
      * Decrements the lives left on the ship
@@ -117,9 +123,13 @@ public class Ship extends Actor implements Collidable {
      * @param soundEffect true if a soundEffect has to be played.
      */
     public void playerShootBomb(boolean soundEffect) {
+        if (bombs == 0) {
+            return;
+        }
         long currentNanoTime = System.nanoTime();
         if (currentNanoTime - lastBulletFire > BULLET_FIRE_TIME_DELAY) {
-        	lastBulletFire = currentNanoTime;
+            bombs--;
+            lastBulletFire = currentNanoTime;
             Bomb bomb = shootBomb();
             scene.addEntity(bomb);
             if (soundEffect) {
@@ -148,7 +158,7 @@ public class Ship extends Actor implements Collidable {
     		moveRight(delta);
     	}
     	if (engine.isKeyPressed("LEFT")) {
-    		moveLeft(delta);
+            moveLeft(delta);
     	}
     }
 
@@ -159,5 +169,12 @@ public class Ship extends Actor implements Collidable {
      */
     public String getSpriteFilename() {
         return FILENAME;
+    }
+
+    public int getBombs() {
+        return bombs;
+    }
+    public void setBombs(int bombs) {
+        this.bombs = bombs;
     }
 }

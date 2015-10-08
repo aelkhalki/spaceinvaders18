@@ -3,18 +3,13 @@
  */
 package nl.delftelectronics.spaceinvaders.core.scenes;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Random;
 
 import javafx.scene.Scene;
-import nl.delftelectronics.spaceinvaders.core.entities.Barricade;
-import nl.delftelectronics.spaceinvaders.core.entities.Enemy;
-import nl.delftelectronics.spaceinvaders.core.entities.EnemyBlock;
-import nl.delftelectronics.spaceinvaders.core.entities.LabelEntity;
-import nl.delftelectronics.spaceinvaders.core.entities.LargeEnemy;
-import nl.delftelectronics.spaceinvaders.core.entities.MediumEnemy;
-import nl.delftelectronics.spaceinvaders.core.entities.Ship;
-import nl.delftelectronics.spaceinvaders.core.entities.SmallEnemy;
-import nl.delftelectronics.spaceinvaders.core.entities.Ufo;
+import nl.delftelectronics.spaceinvaders.core.Engine;
+import nl.delftelectronics.spaceinvaders.core.entities.*;
 
 /**
  * The scene that contains and builds the game
@@ -46,14 +41,22 @@ public class PlayScene extends GameScene {
 	private LabelEntity scoreLabel;
 	private LabelEntity livesLabel;
 	private LabelEntity levelLabel;
+	private Collection<Entity> barricades = new ArrayList<Entity>();
 
 	/**
 	 * Builds a new PlayScene
 	 * @param scene The javaFX scene to attach to
 	 */
 	public PlayScene(Scene scene) {
+		this(scene, Ship.INITIAL_LIVES, 0, 0, 1, null);
+	}
+
+	public PlayScene(Scene scene, int lives, int bombs, int points, int level,
+					 Collection<Entity> barricades) {
 		super(scene);
-		
+		this.points = points;
+		this.currentLevel = level;
+
 		if (scene != null) {
 			fieldWidth = (int) scene.getWidth();
 			fieldHeight = (int) scene.getHeight();
@@ -70,17 +73,27 @@ public class PlayScene extends GameScene {
 		ship = new Ship(shipPositionX, shipPositionY,
 				ENTITY_DIMENSION, ENTITY_DIMENSION, 0, fieldWidth);
 		addEntity(ship);
-		
+		ship.setLives(lives);
+		ship.setBombs(bombs);
+
 		//CHECKSTYLE.OFF: MagicNumber - Don't want to layout automatically
 		scoreLabel = new LabelEntity(30, 30, 0, 0, "Score: " + points);
 		livesLabel = new LabelEntity(400, 30, 0, 0, "Lives: " + ship.getLives());
 		levelLabel = new LabelEntity(700, 30, 0, 0, "Level: " + currentLevel);
 		//CHECKSTYLE.ON: MagicNumber
 
-		createBarricades();
+		if (barricades == null) {
+			createBarricades();
+		} else {
+			for (Entity e : barricades) {
+				addEntity(e);
+				barricades.add(e);
+			}
+		}
 
 		addEntity(scoreLabel);
 		addEntity(livesLabel);
+		addEntity(levelLabel);
 	}
 
 	/**
@@ -124,25 +137,33 @@ public class PlayScene extends GameScene {
 		//CHECKSTYLE.OFF: MagicNumber - Don't want to layout automatically
 		for (int x = 100; x <= 300; x += 25) {
 			for (int y = 700; y <= 800; y += 25) {
-				addEntity(new Barricade(x, y, 25, 25));
+				Barricade b = new Barricade(x, y, 25, 25);
+				addEntity(b);
+				barricades.add(b);
 			}
 		}
 
 		for (int x = 500; x <= 700; x += 25) {
 			for (int y = 700; y <= 800; y += 25) {
-				addEntity(new Barricade(x, y, 25, 25));
+				Barricade b = new Barricade(x, y, 25, 25);
+				addEntity(b);
+				barricades.add(b);
 			}
 		}
 
 		for (int x = 900; x <= 1100; x += 25) {
 			for (int y = 700; y <= 800; y += 25) {
-				addEntity(new Barricade(x, y, 25, 25));
+				Barricade b = new Barricade(x, y, 25, 25);
+				addEntity(b);
+				barricades.add(b);
 			}
 		}
 
 		for (int x = 1300; x <= 1500; x += 25) {
 			for (int y = 700; y <= 800; y += 25) {
-				addEntity(new Barricade(x, y, 25, 25));
+				Barricade b = new Barricade(x, y, 25, 25);
+				addEntity(b);
+				barricades.add(b);
 			}
 		}
 		//CHECKSTYLE.ON: MagicNumber
@@ -227,22 +248,11 @@ public class PlayScene extends GameScene {
 	public void win() {
 		if (finished) {
 			return;
+		} else {
+			GameScene gs = new StoreScene(scene, ship.getLives(), getPoints(), ship.getBombs(),
+					currentLevel, barricades);
+			Engine.getInstance().setScene(gs);
 		}
-
-		levelLabel.setText("Level: " + ++currentLevel);
-
-		EnemyBlock block = new EnemyBlock();
-		addEntity(block);
-
-		createEnemies(block);
-
-		// Remove and add the labels again, so they are drawn in front of the enemies.
-		entityDestroyed(scoreLabel);
-		entityDestroyed(livesLabel);
-
-		addEntity(scoreLabel);
-		addEntity(livesLabel);
-		addEntity(levelLabel);
 	}
 
 	/**
