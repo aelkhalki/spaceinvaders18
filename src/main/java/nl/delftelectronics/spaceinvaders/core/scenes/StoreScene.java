@@ -66,9 +66,14 @@ public class StoreScene extends GameScene implements LabelClickedListener {
             barricadeLabel.setText("Restore barricades (500 points). Done!");
             points -= 500;
         } else if (continueLabel.equals(label)) {
-            GameScene gs = new PlayScene(scene, lives, bombs, points, level + 1, barricades);
-            Engine.getInstance().setScene(gs);
+            continueGame();
         }
         pointsLabel.setText("Points: " + points);
     }
+
+    public void continueGame() {
+        GameScene gs = new PlayScene(scene, lives, bombs, points, level + 1, barricades);
+        Engine.getInstance().setScene(gs);
+    }
+
 }

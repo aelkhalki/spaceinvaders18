@@ -87,7 +87,7 @@ public class PlayScene extends GameScene {
 		} else {
 			for (Entity e : barricades) {
 				addEntity(e);
-				barricades.add(e);
+				this.barricades.add(e);
 			}
 		}
 

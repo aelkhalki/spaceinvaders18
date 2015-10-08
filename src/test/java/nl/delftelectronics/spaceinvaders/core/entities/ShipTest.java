@@ -48,6 +48,7 @@ public class ShipTest extends TestCase {
 	
 	public void testPlayerShootBomb(){
 		Ship ship = new Ship(10, 10, 10, 10, 10, 10);
+		ship.setBombs(1);
 		GameScene scene = mock(GameScene.class);
 		ship.initialize(scene);
 		ship.playerShootBomb(false);

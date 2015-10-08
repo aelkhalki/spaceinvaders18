@@ -5,6 +5,7 @@ import junit.framework.TestCase;
 import static org.mockito.Mockito.mock;
 
 import javafx.scene.Scene;
+import nl.delftelectronics.spaceinvaders.core.Engine;
 
 /**
  * Tests the PlayScene class
@@ -25,8 +26,11 @@ public class PlaySceneTest extends TestCase {
      */
     public void testLevelIncrease() {
         PlayScene playScene = new PlayScene(mock(Scene.class));
+        new Engine(playScene);
         playScene.win();
-        playScene.win();
-        assertEquals(3, playScene.getCurrentLevel());
+        StoreScene ss = (StoreScene) Engine.getInstance().getScene();
+        ss.continueGame();
+        PlayScene nextPlayScene = (PlayScene) Engine.getInstance().getScene();
+        assertEquals(2, nextPlayScene.getCurrentLevel());
     }
 }
