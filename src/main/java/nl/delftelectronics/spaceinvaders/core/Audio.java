@@ -2,6 +2,7 @@ package nl.delftelectronics.spaceinvaders.core;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -13,6 +14,9 @@ public final class Audio {
 
     private static String bombSoundFilename = "/bomb_sound.mp3";
     private static String backgroundSoundFilename = "/background_sound.mp3";
+
+    private Audio() {
+    }
 
     /**
      * Play the bullet sound effect.
@@ -37,6 +41,7 @@ public final class Audio {
 
     /**
      * Play a sound from a file.
+     *
      * @param filename filename of the sound.
      */
     private static void playSound(final String filename) {

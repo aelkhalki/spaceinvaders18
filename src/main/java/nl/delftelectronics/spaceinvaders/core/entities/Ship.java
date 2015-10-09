@@ -1,7 +1,5 @@
 package nl.delftelectronics.spaceinvaders.core.entities;
 
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import nl.delftelectronics.spaceinvaders.core.Audio;
 import org.joda.time.Interval;
 
@@ -45,7 +43,7 @@ public class Ship extends Actor implements Collidable {
      * @return a new bullet in the position of the ship, facing up.
      */
     public Bullet shoot() {
-    	double x = getPositionX() + getWidth() / 2;
+        double x = getPositionX() + getWidth() / 2;
         Logger.info("%s fired a Bullet at (%f, %f) in the direction North",
                 this.getClass().toString(),
                 x, getPositionY());
@@ -76,31 +74,37 @@ public class Ship extends Actor implements Collidable {
     public void playerShootBullet() {
         playerShootBullet(true);
     }
-    
+
     /**
      * Gets the current amount of lives of the ship
+     *
      * @return the amount of lives
      */
     public int getLives() {
-    	return lives;
+        return lives;
     }
 
+    /**
+     * Sets the amount of lives of the player.
+     *
+     * @param lives the amount of lives
+     */
     public void setLives(int lives) {
         this.lives = lives;
     }
-    
+
     /**
      * Decrements the lives left on the ship
      */
     public void hit() {
-    	if (lives > 0) {
-    		lives--;
-    	}
-    	
-    	if (lives == 0 && scene instanceof PlayScene) {
-    		PlayScene s = (PlayScene) scene;
-    		s.lose();
-    	}
+        if (lives > 0) {
+            lives--;
+        }
+
+        if (lives == 0 && scene instanceof PlayScene) {
+            PlayScene s = (PlayScene) scene;
+            s.lose();
+        }
     }
 
     /**
@@ -109,14 +113,14 @@ public class Ship extends Actor implements Collidable {
      * @return a new bomb in the position of the ship, facing upwards.
      */
     public Bomb shootBomb() {
-    	double x = getPositionX() + getWidth() / 2;
+        double x = getPositionX() + getWidth() / 2;
         Logger.info("%s fired a Bomb at (%f, %f) in the direction North",
-        		this.getClass().toString(),
-				x, getPositionY());
+                this.getClass().toString(),
+                x, getPositionY());
         return new Bomb(x, getPositionY(), Bomb.WIDTH,
                 Bomb.HEIGHT);
     }
-    
+
     /**
      * Order the ship to shoot a bomb.
      *
@@ -138,28 +142,31 @@ public class Ship extends Actor implements Collidable {
         }
     }
 
+    /**
+     * Order the ship to shoot a bomb, without sounds effects.
+     */
     public void playerShootBomb() {
         playerShootBomb(true);
     }
-    
+
     @Override
     public void update(Interval delta) {
-    	super.update(delta);
-    	
-    	Engine engine = Engine.getInstance();
-    	if (engine.isKeyPressed("SPACE")) {
-    		playerShootBullet();
-    	}
-    	if (engine.isKeyPressed("X")) {
-    		playerShootBomb();
-    	}
-    	
-    	if (engine.isKeyPressed("RIGHT")) {
-    		moveRight(delta);
-    	}
-    	if (engine.isKeyPressed("LEFT")) {
+        super.update(delta);
+
+        Engine engine = Engine.getInstance();
+        if (engine.isKeyPressed("SPACE")) {
+            playerShootBullet();
+        }
+        if (engine.isKeyPressed("X")) {
+            playerShootBomb();
+        }
+
+        if (engine.isKeyPressed("RIGHT")) {
+            moveRight(delta);
+        }
+        if (engine.isKeyPressed("LEFT")) {
             moveLeft(delta);
-    	}
+        }
     }
 
     /**
@@ -171,9 +178,20 @@ public class Ship extends Actor implements Collidable {
         return FILENAME;
     }
 
+    /**
+     * Returns the current number of bombs the player has.
+     *
+     * @return the current number of bombs the player has.
+     */
     public int getBombs() {
         return bombs;
     }
+
+    /**
+     * Sets the number of bombs the player should have.
+     *
+     * @param bombs the number of bombs the player should have.
+     */
     public void setBombs(int bombs) {
         this.bombs = bombs;
     }

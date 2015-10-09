@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package nl.delftelectronics.spaceinvaders.core.scenes;
 
@@ -9,7 +9,16 @@ import java.util.Random;
 
 import javafx.scene.Scene;
 import nl.delftelectronics.spaceinvaders.core.Engine;
-import nl.delftelectronics.spaceinvaders.core.entities.*;
+import nl.delftelectronics.spaceinvaders.core.entities.Barricade;
+import nl.delftelectronics.spaceinvaders.core.entities.Enemy;
+import nl.delftelectronics.spaceinvaders.core.entities.EnemyBlock;
+import nl.delftelectronics.spaceinvaders.core.entities.Entity;
+import nl.delftelectronics.spaceinvaders.core.entities.LabelEntity;
+import nl.delftelectronics.spaceinvaders.core.entities.LargeEnemy;
+import nl.delftelectronics.spaceinvaders.core.entities.MediumEnemy;
+import nl.delftelectronics.spaceinvaders.core.entities.Ship;
+import nl.delftelectronics.spaceinvaders.core.entities.SmallEnemy;
+import nl.delftelectronics.spaceinvaders.core.entities.Ufo;
 
 /**
  * The scene that contains and builds the game
@@ -51,6 +60,18 @@ public class PlayScene extends GameScene {
 		this(scene, Ship.INITIAL_LIVES, 0, 0, 1, null);
 	}
 
+	/**
+	 * Create a new PlayScene. The PlayScene is the scene where the player can play Space Invaders.
+	 *
+	 * @param scene the JavaFX scene
+	 * @param lives the number of lives the player initially has.
+	 * @param bombs the number of bombs the player initially has.
+	 * @param points the number of points the player initially has.
+	 * @param level the current level.
+	 * @param barricades remnants of barricade units of previous levels. If the game should
+	 *                      create barricades in their initial state, then this param should be
+	 *                      null.
+	 */
 	public PlayScene(Scene scene, int lives, int bombs, int points, int level,
 					 Collection<Entity> barricades) {
 		super(scene);
@@ -206,7 +227,7 @@ public class PlayScene extends GameScene {
 			return;
 		}
 		this.points += points;
-		
+
 		scoreLabel.setText("Score: " + this.points);
 	}
 
@@ -223,7 +244,7 @@ public class PlayScene extends GameScene {
 		if (random.nextDouble() < UFO_CHANCE) {
 			createUfo();
 		}
-		
+
 		livesLabel.setText("Lives: " + ship.getLives());
 	}
 
