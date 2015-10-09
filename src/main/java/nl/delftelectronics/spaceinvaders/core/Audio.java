@@ -48,7 +48,7 @@ public final class Audio {
             // Add Media Player to Collection so that it doesn't get garbage collected.
             mps.add(mp);
         } catch (MediaException e) {
-            System.err.println("Could not instantiate Media Player");
+            Logger.warning("Could not instantiate Media Player");
         }
     }
 }
