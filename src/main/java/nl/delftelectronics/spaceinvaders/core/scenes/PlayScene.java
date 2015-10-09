@@ -3,6 +3,7 @@
  */
 package nl.delftelectronics.spaceinvaders.core.scenes;
 
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Random;
@@ -12,12 +13,10 @@ import nl.delftelectronics.spaceinvaders.core.Engine;
 import nl.delftelectronics.spaceinvaders.core.entities.Barricade;
 import nl.delftelectronics.spaceinvaders.core.entities.Enemy;
 import nl.delftelectronics.spaceinvaders.core.entities.EnemyBlock;
+import nl.delftelectronics.spaceinvaders.core.entities.EnemyFactory;
 import nl.delftelectronics.spaceinvaders.core.entities.Entity;
 import nl.delftelectronics.spaceinvaders.core.entities.LabelEntity;
-import nl.delftelectronics.spaceinvaders.core.entities.LargeEnemy;
-import nl.delftelectronics.spaceinvaders.core.entities.MediumEnemy;
 import nl.delftelectronics.spaceinvaders.core.entities.Ship;
-import nl.delftelectronics.spaceinvaders.core.entities.SmallEnemy;
 import nl.delftelectronics.spaceinvaders.core.entities.Ufo;
 
 /**
@@ -26,18 +25,11 @@ import nl.delftelectronics.spaceinvaders.core.entities.Ufo;
  *
  */
 public class PlayScene extends GameScene {
-	private static final int SMALL_ENEMY_ROWS = 1;
-	private static final int MEDIUM_ENEMY_ROWS = 2;
-	private static final int LARGE_ENEMY_ROWS = 2;
-	private static final int ENEMY_COLUMNS = 12;
 	private static final double SHIP_MARGIN_FROM_LEFT = 0.05; // ratio
 	private static final double SHIP_MARGIN_FROM_BOTTOM = 0.1; // ratio
 	private static final int UFO_MARGIN_FROM_TOP = 100; // pixels
 	private static final double UFO_CHANCE = 0.002; // ratio
 	private static final int ENTITY_DIMENSION = 100;
-	private static final double COLUMN_WIDTH = 100;
-	private static final double ROW_HEIGHT = 90;
-	private static final double ENEMY_OFFSET_X = 10;
 
 	private int points = 0;
 	public int enemyCount = 0;
@@ -89,7 +81,12 @@ public class PlayScene extends GameScene {
 		int shipPositionX = (int) (fieldWidth * SHIP_MARGIN_FROM_LEFT);
 		int shipPositionY = (int) (fieldHeight * (1 - SHIP_MARGIN_FROM_BOTTOM));
 
-		createEnemies(block);
+		EnemyFactory f = new EnemyFactory(block, fieldWidth, fieldHeight);
+		List<Enemy> enemies = f.createBlock();
+		enemyCount = enemies.size();
+		for (Enemy e : enemies) {
+			addEntity(e);
+		}
 
 		ship = new Ship(shipPositionX, shipPositionY,
 				ENTITY_DIMENSION, ENTITY_DIMENSION, 0, fieldWidth);
@@ -115,40 +112,6 @@ public class PlayScene extends GameScene {
 		addEntity(scoreLabel);
 		addEntity(livesLabel);
 		addEntity(levelLabel);
-	}
-
-	/**
-	 * Creates the columns of enemies and adds them to the specified block
-	 * @param block  The block to add the enemies to
-	 */
-	private void createEnemies(EnemyBlock block) {
-		for (int column = 0; column < ENEMY_COLUMNS; column++) {
-			int currentRow = 0;
-			for (int smallEnemyRow = 0; smallEnemyRow < SMALL_ENEMY_ROWS; smallEnemyRow++) {
-				Enemy smallEnemy = new SmallEnemy(ENEMY_OFFSET_X + COLUMN_WIDTH * column,
-						ROW_HEIGHT * currentRow, ENTITY_DIMENSION, ENTITY_DIMENSION, 0,
-						fieldWidth, fieldHeight, block);
-				addEntity(smallEnemy);
-				currentRow++;
-				enemyCount++;
-			}
-			for (int mediumEnemyRow = 0; mediumEnemyRow < MEDIUM_ENEMY_ROWS; mediumEnemyRow++) {
-				Enemy mediumEnemy = new MediumEnemy(ENEMY_OFFSET_X + COLUMN_WIDTH * column,
-						ROW_HEIGHT * currentRow, ENTITY_DIMENSION, ENTITY_DIMENSION, 0,
-						fieldWidth, fieldHeight, block);
-				addEntity(mediumEnemy);
-				currentRow++;
-				enemyCount++;
-			}
-			for (int largeEnemyRow = 0; largeEnemyRow < LARGE_ENEMY_ROWS; largeEnemyRow++) {
-				Enemy largeEnemy = new LargeEnemy(ENEMY_OFFSET_X + COLUMN_WIDTH * column,
-						ROW_HEIGHT * currentRow, ENTITY_DIMENSION, ENTITY_DIMENSION, 0,
-						fieldWidth, fieldHeight, block);
-				addEntity(largeEnemy);
-				currentRow++;
-				enemyCount++;
-			}
-		}
 	}
 
 	/**

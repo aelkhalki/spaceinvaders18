@@ -12,12 +12,12 @@ import org.joda.time.Interval;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import nl.delftelectronics.spaceinvaders.core.Collidable;
+import nl.delftelectronics.spaceinvaders.core.collisions.CollisionStrategy;
+import nl.delftelectronics.spaceinvaders.core.collisions.SortedCollisionAlgorithm;
 import nl.delftelectronics.spaceinvaders.core.entities.DrawableEntity;
 import nl.delftelectronics.spaceinvaders.core.entities.Entity;
 import nl.delftelectronics.spaceinvaders.core.entities.EntityDestroyedListener;
 import nl.delftelectronics.spaceinvaders.core.entities.PreUpdatable;
-
-import java.awt.Rectangle;
 
 /**
  * Manages a set of entities
@@ -33,6 +33,7 @@ public class GameScene implements EntityDestroyedListener {
 	private Instant lastDraw;
 	private boolean hasLoadedGraphics = false;
 	private GraphicsContext graphicsContext;
+	private CollisionStrategy collisionStrategy;
 	public Scene scene;
 
 	/**
@@ -43,6 +44,16 @@ public class GameScene implements EntityDestroyedListener {
 	 */
 	public GameScene(Scene scene) {
 		this.scene = scene;
+		collisionStrategy = new SortedCollisionAlgorithm();
+	}
+	
+	/**
+	 * Sets the algorithm used to compute collisions
+	 * @param algorithm
+	 *            The algorithm to use
+	 */
+	public void setCollisionAlgorithm(CollisionStrategy algorithm) {
+		this.collisionStrategy = algorithm;
 	}
 
 	/**
@@ -73,6 +84,8 @@ public class GameScene implements EntityDestroyedListener {
 		}
 
 		handleDeletions();
+		
+		collisionStrategy.update(entities);
 	}
 
 	/**
@@ -138,31 +151,7 @@ public class GameScene implements EntityDestroyedListener {
 	 * @return The list of Entities it collides with
 	 */
 	public List<Entity> getCollisions(Collidable collidee) {
-		ArrayList<Entity> result = new ArrayList<Entity>();
-
-		Rectangle referenceRectangle = new Rectangle(
-				(int) collidee.getPositionX(),
-				(int) collidee.getPositionY(),
-				(int) collidee.getWidth(),
-				(int) collidee.getHeight());
-
-		for (Entity candidate : entities) {
-			if (candidate == collidee) {
-				continue;
-			}
-			if (candidate instanceof Collidable) {
-				Collidable c = (Collidable) candidate;
-				Rectangle testRectangle = new Rectangle(
-						(int) c.getPositionX(), (int) c.getPositionY(),
-						(int) c.getWidth(), (int) c.getHeight());
-
-				if (referenceRectangle.intersects(testRectangle)) {
-					result.add(candidate);
-				}
-			}
-		}
-
-		return result;
+		return collisionStrategy.getCollisions(collidee);
 	}
 	
 	/**
