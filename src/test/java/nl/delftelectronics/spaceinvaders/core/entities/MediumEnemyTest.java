@@ -1,13 +1,20 @@
+//CHECKSTYLE.OFF: MagicNumber
 package nl.delftelectronics.spaceinvaders.core.entities;
 
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
+/**
+ * Test cases for the MediumEnemy class.
+ */
 public class MediumEnemyTest extends TestCase {
 
     MediumEnemy enemy = new MediumEnemy(10, 10, 10, 10, 10, 10, 0, null);
     int speed = enemy.MOVE_DOWN_SPEED;
 
+    /**
+     * Test if the enemy's initial position is correct.
+     */
     public void testmediumEnemy() {
 
         MediumEnemy mediumenemy = new MediumEnemy(10, 10, 10, 10, 10, 10, 0, null);
@@ -19,6 +26,9 @@ public class MediumEnemyTest extends TestCase {
 
     }
 
+    /**
+     * Test if the enemy moves correctly.
+     */
     public void testmediumEnemyMovement() {
 
         MediumEnemy mediumenemy = new MediumEnemy(10, speed * 2, 10, 10, 10, 10, 0, null);
@@ -31,6 +41,9 @@ public class MediumEnemyTest extends TestCase {
 
     }
 
+    /**
+     * Test if the enemy dies correctly.
+     */
     public void testmediumEnemyKill() {
 
         MediumEnemy mediumenemy = new MediumEnemy(10, 10, 10, 10, 10, 10, 0, null);
@@ -41,6 +54,9 @@ public class MediumEnemyTest extends TestCase {
 
     }
 
+    /**
+     * Test if the enemy knows when it has reached the bottom.
+     */
     public void testmediumEnemyReachedBottom() {
 
         MediumEnemy mediumenemy = new MediumEnemy(0, 40, 10, 10, 10, 10, 180, null);
