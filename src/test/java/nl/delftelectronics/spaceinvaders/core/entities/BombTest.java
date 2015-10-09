@@ -13,8 +13,14 @@ import nl.delftelectronics.spaceinvaders.core.scenes.GameScene;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
+/**
+ * Test cases for the Bomb class.
+ */
 public class BombTest extends TestCase {
 
+    /**
+     * Test if the Bomb is created and moves correctly.
+     */
 	public void testBomb() {
 		final double dimension = 10;
 
