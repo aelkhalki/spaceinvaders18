@@ -58,7 +58,7 @@ public class PlayScene extends GameScene {
 		EnemyFactory f = new EnemyFactory(block, fieldWidth, fieldHeight);
 		List<Enemy> enemies = f.createBlock();
 		enemyCount = enemies.size();
-		for(Enemy e : enemies) {
+		for (Enemy e : enemies) {
 			addEntity(e);
 		}
 

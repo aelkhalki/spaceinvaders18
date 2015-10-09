@@ -3,6 +3,8 @@ package nl.delftelectronics.spaceinvaders.core.scenes;
 
 import junit.framework.TestCase;
 import nl.delftelectronics.spaceinvaders.core.Collidable;
+import nl.delftelectronics.spaceinvaders.core.collisions.NaiveCollisionAlgorithm;
+import nl.delftelectronics.spaceinvaders.core.collisions.SortedCollisionAlgorithm;
 import nl.delftelectronics.spaceinvaders.core.entities.DrawableEntity;
 import nl.delftelectronics.spaceinvaders.core.entities.Entity;
 import junit.framework.Assert;
@@ -78,12 +80,31 @@ public class GameSceneTest extends TestCase {
 	}
 	
 	/**
-	 * Test method for getCollisions.
+	 * Test method for getCollisions using naive collision detection.
 	 */
-	public void testCollisions() {
+	public void testNaiveCollisions() {
 		GameScene scene = new GameScene(mock(Scene.class));
+		scene.setCollisionAlgorithm(new NaiveCollisionAlgorithm());
+		assertCollisions(scene);
+	}
+	
+	/**
+	 * Test method for getCollisions using sorted collision detection.
+	 */
+	public void testSortedCollisions() {
+		GameScene scene = new GameScene(mock(Scene.class));
+		scene.setCollisionAlgorithm(new SortedCollisionAlgorithm());
+		assertCollisions(scene);
+	}
+	
+	/**
+	 * Asserts collisions are working correctly for a given collision algorithm
+	 * @param scene The scene to use for checking collisions
+	 */
+	private void assertCollisions(GameScene scene) {
 		CollisionEntity first = new CollisionEntity(0, 0, 10, 10);
 		scene.addEntity(first);
+		scene.update();
 		
 		Assert.assertEquals(0, scene.getCollisions(first).size());
 		
