@@ -28,8 +28,8 @@ public class EnemyBlock extends Entity implements PreUpdatable {
 	}
 	
 	/**
-	 * Determine wether the whole block should drop this update
-	 * @return wether the whole block should drop
+	 * Determine whether the whole block should drop this update
+	 * @return whether the whole block should drop
 	 */
 	public boolean getShouldDrop() {
 		return shouldDrop;

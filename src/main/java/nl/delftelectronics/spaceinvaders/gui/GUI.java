@@ -10,15 +10,10 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import nl.delftelectronics.spaceinvaders.core.Audio;
 import nl.delftelectronics.spaceinvaders.core.Engine;
-import nl.delftelectronics.spaceinvaders.core.Logger;
-import nl.delftelectronics.spaceinvaders.core.Logger.LogLevel;
 import nl.delftelectronics.spaceinvaders.core.scenes.GameScene;
 import nl.delftelectronics.spaceinvaders.core.scenes.MenuScene;
 
