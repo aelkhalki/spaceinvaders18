@@ -1,11 +1,8 @@
 package nl.delftelectronics.spaceinvaders.core.entities;
 
-import nl.delftelectronics.spaceinvaders.core.Audio;
+import nl.delftelectronics.spaceinvaders.core.*;
 import org.joda.time.Interval;
 
-import nl.delftelectronics.spaceinvaders.core.Collidable;
-import nl.delftelectronics.spaceinvaders.core.Engine;
-import nl.delftelectronics.spaceinvaders.core.Logger;
 import nl.delftelectronics.spaceinvaders.core.scenes.PlayScene;
 
 /**
@@ -15,10 +12,7 @@ import nl.delftelectronics.spaceinvaders.core.scenes.PlayScene;
 public class Ship extends Actor implements Collidable {
     public static final int INITIAL_LIVES = 3;
     private static final String FILENAME = "/ship.png";
-    //CHECKSTYLE.OFF: MagicNumber
-    protected int lives = 3;
-    //CHECKSTYLE.ON: MagicNumber
-    private int bombs = 0;
+    private GameInformation gameInformation;
     private long lastBulletFire = 0;
     private static final double BULLET_FIRE_TIME_DELAY = 1000000000.0; // nanoseconds
 
@@ -33,8 +27,9 @@ public class Ship extends Actor implements Collidable {
      * @param eastBoundary easternmost boundary of the playing field.
      */
     public Ship(int positionX, int positionY, int width, int height,
-                int westBoundary, int eastBoundary) {
+                int westBoundary, int eastBoundary, GameInformation gameInformation) {
         super(positionX, positionY, width, height, FILENAME, westBoundary, eastBoundary);
+        this.gameInformation = gameInformation;
     }
 
     /**
@@ -76,32 +71,14 @@ public class Ship extends Actor implements Collidable {
     }
 
     /**
-     * Gets the current amount of lives of the ship
-     *
-     * @return the amount of lives
-     */
-    public int getLives() {
-        return lives;
-    }
-
-    /**
-     * Sets the amount of lives of the player.
-     *
-     * @param lives the amount of lives
-     */
-    public void setLives(int lives) {
-        this.lives = lives;
-    }
-
-    /**
      * Decrements the lives left on the ship
      */
     public void hit() {
-        if (lives > 0) {
-            lives--;
+        if (gameInformation.hasLives()) {
+            gameInformation.decrementLives();
         }
 
-        if (lives == 0 && scene instanceof PlayScene) {
+        if (!gameInformation.hasLives() && scene instanceof PlayScene) {
             PlayScene s = (PlayScene) scene;
             s.lose();
         }
@@ -127,12 +104,12 @@ public class Ship extends Actor implements Collidable {
      * @param soundEffect true if a soundEffect has to be played.
      */
     public void playerShootBomb(boolean soundEffect) {
-        if (bombs == 0) {
+        if (!gameInformation.hasBombs()) {
             return;
         }
         long currentNanoTime = System.nanoTime();
         if (currentNanoTime - lastBulletFire > BULLET_FIRE_TIME_DELAY) {
-            bombs--;
+            gameInformation.decrementBombs();
             lastBulletFire = currentNanoTime;
             Bomb bomb = shootBomb();
             scene.addEntity(bomb);
@@ -176,23 +153,5 @@ public class Ship extends Actor implements Collidable {
      */
     public String getSpriteFilename() {
         return FILENAME;
-    }
-
-    /**
-     * Returns the current number of bombs the player has.
-     *
-     * @return the current number of bombs the player has.
-     */
-    public int getBombs() {
-        return bombs;
-    }
-
-    /**
-     * Sets the number of bombs the player should have.
-     *
-     * @param bombs the number of bombs the player should have.
-     */
-    public void setBombs(int bombs) {
-        this.bombs = bombs;
     }
 }

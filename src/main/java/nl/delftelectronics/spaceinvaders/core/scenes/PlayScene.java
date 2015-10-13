@@ -10,6 +10,7 @@ import java.util.Random;
 
 import javafx.scene.Scene;
 import nl.delftelectronics.spaceinvaders.core.Engine;
+import nl.delftelectronics.spaceinvaders.core.GameInformation;
 import nl.delftelectronics.spaceinvaders.core.entities.Barricade;
 import nl.delftelectronics.spaceinvaders.core.entities.Enemy;
 import nl.delftelectronics.spaceinvaders.core.entities.EnemyBlock;
@@ -21,8 +22,8 @@ import nl.delftelectronics.spaceinvaders.core.entities.Ufo;
 
 /**
  * The scene that contains and builds the game
- * @author Max
  *
+ * @author Max
  */
 public class PlayScene extends GameScene {
 	private static final double SHIP_MARGIN_FROM_LEFT = 0.05; // ratio
@@ -31,9 +32,8 @@ public class PlayScene extends GameScene {
 	private static final double UFO_CHANCE = 0.002; // ratio
 	private static final int ENTITY_DIMENSION = 100;
 
-	private int points = 0;
 	public int enemyCount = 0;
-	private int currentLevel = 1;
+	private GameInformation gameInformation;
 	private int fieldWidth;
 	private int fieldHeight;
 	private Random random = new Random();
@@ -42,33 +42,27 @@ public class PlayScene extends GameScene {
 	private LabelEntity scoreLabel;
 	private LabelEntity livesLabel;
 	private LabelEntity levelLabel;
-	private Collection<Entity> barricades = new ArrayList<Entity>();
+	private LabelEntity bombsLabel;
 
 	/**
 	 * Builds a new PlayScene
+	 *
 	 * @param scene The javaFX scene to attach to
 	 */
 	public PlayScene(Scene scene) {
-		this(scene, Ship.INITIAL_LIVES, 0, 0, 1, null);
+		this(scene, new GameInformation(0, Ship.INITIAL_LIVES, 0, 1, createBarricades()));
 	}
 
 	/**
 	 * Create a new PlayScene. The PlayScene is the scene where the player can play Space Invaders.
 	 *
 	 * @param scene the JavaFX scene
-	 * @param lives the number of lives the player initially has.
-	 * @param bombs the number of bombs the player initially has.
-	 * @param points the number of points the player initially has.
-	 * @param level the current level.
-	 * @param barricades remnants of barricade units of previous levels. If the game should
-	 *                      create barricades in their initial state, then this param should be
-	 *                      null.
+	 * @param gameInformation the information and values about the current game
 	 */
-	public PlayScene(Scene scene, int lives, int bombs, int points, int level,
-					 Collection<Entity> barricades) {
+	public PlayScene(Scene scene, GameInformation gameInformation) {
 		super(scene);
-		this.points = points;
-		this.currentLevel = level;
+
+		this.gameInformation = gameInformation;
 
 		if (scene != null) {
 			fieldWidth = (int) scene.getWidth();
@@ -89,40 +83,37 @@ public class PlayScene extends GameScene {
 		}
 
 		ship = new Ship(shipPositionX, shipPositionY,
-				ENTITY_DIMENSION, ENTITY_DIMENSION, 0, fieldWidth);
+				ENTITY_DIMENSION, ENTITY_DIMENSION, 0, fieldWidth, gameInformation);
 		addEntity(ship);
-		ship.setLives(lives);
-		ship.setBombs(bombs);
 
 		//CHECKSTYLE.OFF: MagicNumber - Don't want to layout automatically
-		scoreLabel = new LabelEntity(30, 30, 0, 0, "Score: " + points);
-		livesLabel = new LabelEntity(400, 30, 0, 0, "Lives: " + ship.getLives());
-		levelLabel = new LabelEntity(700, 30, 0, 0, "Level: " + currentLevel);
+		scoreLabel = new LabelEntity(30, 30, 0, 0, "Score: " + gameInformation.getPoints());
+		livesLabel = new LabelEntity(400, 30, 0, 0, "Lives: " + gameInformation.getLives());
+		levelLabel = new LabelEntity(700, 30, 0, 0, "Level: " + gameInformation.getLevel());
+		bombsLabel = new LabelEntity(1000, 30, 0, 0, "Bombs: " + gameInformation.getBombs());
 		//CHECKSTYLE.ON: MagicNumber
 
-		if (barricades == null) {
-			createBarricades();
-		} else {
-			for (Entity e : barricades) {
-				addEntity(e);
-				this.barricades.add(e);
-			}
+		for (Entity e : gameInformation.getSavedEntities()) {
+			addEntity(e);
 		}
 
 		addEntity(scoreLabel);
 		addEntity(livesLabel);
 		addEntity(levelLabel);
+		addEntity(bombsLabel);
 	}
 
 	/**
-	 * Create four barricades in front of the player and add them to the scene.
+	 * Create four barricades in front of the player.
+	 *
+	 * @return the created barricades
 	 */
-	public void createBarricades() {
+	public static Collection<Entity> createBarricades() {
+		Collection<Entity> barricades = new ArrayList<Entity>();
 		//CHECKSTYLE.OFF: MagicNumber - Don't want to layout automatically
 		for (int x = 100; x <= 300; x += 25) {
 			for (int y = 700; y <= 800; y += 25) {
 				Barricade b = new Barricade(x, y, 25, 25);
-				addEntity(b);
 				barricades.add(b);
 			}
 		}
@@ -130,7 +121,6 @@ public class PlayScene extends GameScene {
 		for (int x = 500; x <= 700; x += 25) {
 			for (int y = 700; y <= 800; y += 25) {
 				Barricade b = new Barricade(x, y, 25, 25);
-				addEntity(b);
 				barricades.add(b);
 			}
 		}
@@ -138,7 +128,6 @@ public class PlayScene extends GameScene {
 		for (int x = 900; x <= 1100; x += 25) {
 			for (int y = 700; y <= 800; y += 25) {
 				Barricade b = new Barricade(x, y, 25, 25);
-				addEntity(b);
 				barricades.add(b);
 			}
 		}
@@ -146,11 +135,11 @@ public class PlayScene extends GameScene {
 		for (int x = 1300; x <= 1500; x += 25) {
 			for (int y = 700; y <= 800; y += 25) {
 				Barricade b = new Barricade(x, y, 25, 25);
-				addEntity(b);
 				barricades.add(b);
 			}
 		}
 		//CHECKSTYLE.ON: MagicNumber
+		return barricades;
 	}
 
 	/**
@@ -175,23 +164,25 @@ public class PlayScene extends GameScene {
 
 	/**
 	 * Gets the current score for the player
+	 *
 	 * @return The amount of points scored
 	 */
 	public int getPoints() {
-		return points;
+		return gameInformation.getPoints();
 	}
 
 	/**
 	 * Adds a positive amount of points to the player score
-	 * @param points  The amount of points the player scored
+	 *
+	 * @param points The amount of points the player scored
 	 */
 	public void addPoints(int points) {
 		if (points < 0) {
 			return;
 		}
-		this.points += points;
+		gameInformation.addPoints(points);
 
-		scoreLabel.setText("Score: " + this.points);
+		scoreLabel.setText("Score: " + gameInformation.getPoints());
 	}
 
 	@Override
@@ -208,7 +199,8 @@ public class PlayScene extends GameScene {
 			createUfo();
 		}
 
-		livesLabel.setText("Lives: " + ship.getLives());
+		livesLabel.setText("Lives: " + gameInformation.getLives());
+		bombsLabel.setText("Bombs: " + gameInformation.getBombs());
 	}
 
 	/**
@@ -233,17 +225,17 @@ public class PlayScene extends GameScene {
 		if (finished) {
 			return;
 		} else {
-			GameScene gs = new StoreScene(scene, ship.getLives(), getPoints(), ship.getBombs(),
-					currentLevel, barricades);
+			GameScene gs = new StoreScene(scene, gameInformation);
 			Engine.getInstance().setScene(gs);
 		}
 	}
 
 	/**
 	 * Return the current level.
+	 *
 	 * @return the current level
 	 */
 	public int getCurrentLevel() {
-		return currentLevel;
+		return gameInformation.getLevel();
 	}
 }
