@@ -3,11 +3,8 @@ package nl.delftelectronics.spaceinvaders.core.scenes;
 import javafx.scene.Scene;
 import nl.delftelectronics.spaceinvaders.core.Engine;
 import nl.delftelectronics.spaceinvaders.core.GameInformation;
-import nl.delftelectronics.spaceinvaders.core.entities.Entity;
 import nl.delftelectronics.spaceinvaders.core.entities.LabelClickedListener;
 import nl.delftelectronics.spaceinvaders.core.entities.LabelEntity;
-
-import java.util.Collection;
 
 /**
  * The scene that contains the store.
@@ -20,6 +17,7 @@ public class StoreScene extends GameScene implements LabelClickedListener {
     private LabelEntity lifeLabel;
     private LabelEntity bombLabel;
     private LabelEntity barricadeLabel;
+    private LabelEntity saveGameLabel;
     private LabelEntity continueLabel;
     private GameInformation gameInformation;
 
@@ -45,7 +43,10 @@ public class StoreScene extends GameScene implements LabelClickedListener {
         barricadeLabel = new LabelEntity(50, 350, 1000, 100, "Restore barricades (500 points).");
         barricadeLabel.addClickedListener(this);
         addEntity(barricadeLabel);
-        continueLabel = new LabelEntity(50, 450, 1000, 100, "Continue");
+        saveGameLabel = new LabelEntity(50, 450, 1000, 100, "Save game.");
+        saveGameLabel.addClickedListener(this);
+        addEntity(saveGameLabel);
+        continueLabel = new LabelEntity(50, 650, 1000, 100, "Continue");
         continueLabel.addClickedListener(this);
         addEntity(continueLabel);
         //CHECKSTYLE.ON: MagicNumber
@@ -68,9 +69,12 @@ public class StoreScene extends GameScene implements LabelClickedListener {
                     gameInformation.getBombs());
             gameInformation.subtractPoints(BOMB_COST);
         } else if (barricadeLabel.equals(label) && gameInformation.getPoints() >= BARRICADE_COST) {
-            gameInformation.setSavedEntities(PlayScene.createBarricades());
+            gameInformation.setBarricadeRectangles(PlayScene.createBarricades());
             barricadeLabel.setText("Restore barricades (500 points). Done!");
             gameInformation.subtractPoints(BARRICADE_COST);
+        } else if (saveGameLabel.equals(label)) {
+            gameInformation.save();
+            saveGameLabel.setText("Save game. Done!");
         } else if (continueLabel.equals(label)) {
             continueGame();
         }

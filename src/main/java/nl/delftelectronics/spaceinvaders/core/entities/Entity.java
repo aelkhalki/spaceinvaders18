@@ -83,4 +83,8 @@ public class Entity {
 			}
 		}
 	}
+
+	public boolean isDestroyed() {
+		return destroyed;
+	}
 }
