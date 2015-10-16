@@ -3,6 +3,7 @@ package nl.delftelectronics.spaceinvaders.core;
 import nl.delftelectronics.spaceinvaders.core.entities.Barricade;
 import nl.delftelectronics.spaceinvaders.core.entities.BarricadeDestroyedListener;
 
+import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -26,7 +27,7 @@ public class GameInformation implements BarricadeDestroyedListener, Serializable
     private int lives;
     private int bombs;
     private int level;
-    private Collection<Rectangle> barricadeRectangles;
+    private Collection<Rectangle2D> barricadeRectangles;
 
     /**
      * Create a GameInformation object.
@@ -38,7 +39,7 @@ public class GameInformation implements BarricadeDestroyedListener, Serializable
      * @param barricadeRectangles a collection of rectangles of the barricades
      */
     public GameInformation(int points, int lives, int bombs, int level,
-                           Collection<Rectangle> barricadeRectangles) {
+                           Collection<Rectangle2D> barricadeRectangles) {
         this.points = points;
         this.lives = lives;
         this.bombs = bombs;
@@ -244,7 +245,7 @@ public class GameInformation implements BarricadeDestroyedListener, Serializable
      *
      * @return the collection of rectangles of the barricades
      */
-    public Collection<Rectangle> getBarricadeRectangles() {
+    public Collection<Rectangle2D> getBarricadeRectangles() {
         return barricadeRectangles;
     }
 
@@ -253,7 +254,7 @@ public class GameInformation implements BarricadeDestroyedListener, Serializable
      *
      * @param barricadeRectangles collection of rectangles of the barricades
      */
-    public void setBarricadeRectangles(Collection<Rectangle> barricadeRectangles) {
+    public void setBarricadeRectangles(Collection<Rectangle2D> barricadeRectangles) {
         this.barricadeRectangles = barricadeRectangles;
     }
 
@@ -263,8 +264,8 @@ public class GameInformation implements BarricadeDestroyedListener, Serializable
      * @param barricade barricade that is destroyed.
      */
     public void barricadeDestroyed(Barricade barricade) {
-        Rectangle rectangle = new Rectangle(barricade.getPositionX(), barricade.getPositionY(),
-                barricade.getWidth(), barricade.getHeight());
+        Rectangle2D rectangle = new Rectangle2D.Double(barricade.getPositionX(),
+                barricade.getPositionY(), barricade.getWidth(), barricade.getHeight());
         barricadeRectangles.remove(rectangle);
     }
 

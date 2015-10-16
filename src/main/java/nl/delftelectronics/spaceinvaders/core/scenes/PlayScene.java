@@ -3,6 +3,7 @@
  */
 package nl.delftelectronics.spaceinvaders.core.scenes;
 
+import java.awt.geom.Rectangle2D;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -11,7 +12,6 @@ import java.util.Random;
 import javafx.scene.Scene;
 import nl.delftelectronics.spaceinvaders.core.Engine;
 import nl.delftelectronics.spaceinvaders.core.GameInformation;
-import nl.delftelectronics.spaceinvaders.core.Rectangle;
 import nl.delftelectronics.spaceinvaders.core.entities.Barricade;
 import nl.delftelectronics.spaceinvaders.core.entities.Enemy;
 import nl.delftelectronics.spaceinvaders.core.entities.EnemyBlock;
@@ -97,7 +97,7 @@ public class PlayScene extends GameScene implements LabelClickedListener {
 		gameOver = new LabelEntity(550, 500, 400, 100, "BACK TO MAIN MENU");
 		//CHECKSTYLE.ON: MagicNumber
 
-		for (Rectangle r : gameInformation.getBarricadeRectangles()) {
+		for (Rectangle2D r : gameInformation.getBarricadeRectangles()) {
 			Barricade b = new Barricade(r.getX(), r.getY(), r.getWidth(), r.getHeight());
 			b.addDestroyedListener(gameInformation);
 			addEntity(b);
@@ -114,30 +114,30 @@ public class PlayScene extends GameScene implements LabelClickedListener {
 	 *
 	 * @return the created barricades
 	 */
-	public static Collection<Rectangle> createBarricades() {
-		Collection<Rectangle> barricades = new ArrayList<Rectangle>();
+	public static Collection<Rectangle2D> createBarricades() {
+		Collection<Rectangle2D> barricades = new ArrayList<Rectangle2D>();
 		//CHECKSTYLE.OFF: MagicNumber - Don't want to layout automatically
 		for (int x = 100; x <= 300; x += 25) {
 			for (int y = 700; y <= 800; y += 25) {
-				barricades.add(new Rectangle(x, y, 25, 25));
+				barricades.add(new Rectangle2D.Double(x, y, 25, 25));
 			}
 		}
 
 		for (int x = 500; x <= 700; x += 25) {
 			for (int y = 700; y <= 800; y += 25) {
-				barricades.add(new Rectangle(x, y, 25, 25));
+				barricades.add(new Rectangle2D.Double(x, y, 25, 25));
 			}
 		}
 
 		for (int x = 900; x <= 1100; x += 25) {
 			for (int y = 700; y <= 800; y += 25) {
-				barricades.add(new Rectangle(x, y, 25, 25));
+				barricades.add(new Rectangle2D.Double(x, y, 25, 25));
 			}
 		}
 
 		for (int x = 1300; x <= 1500; x += 25) {
 			for (int y = 700; y <= 800; y += 25) {
-				barricades.add(new Rectangle(x, y, 25, 25));
+				barricades.add(new Rectangle2D.Double(x, y, 25, 25));
 			}
 		}
 		//CHECKSTYLE.ON: MagicNumber

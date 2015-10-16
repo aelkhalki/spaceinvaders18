@@ -1,19 +1,19 @@
 //CHECKSTYLE.OFF: MagicNumber
 package nl.delftelectronics.spaceinvaders.core.entities;
 
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.util.ArrayList;
-
-import nl.delftelectronics.spaceinvaders.core.Collidable;
-import nl.delftelectronics.spaceinvaders.core.GameInformation;
-import nl.delftelectronics.spaceinvaders.core.Rectangle;
-import nl.delftelectronics.spaceinvaders.core.scenes.GameScene;
 import junit.framework.Assert;
 import junit.framework.TestCase;
+import nl.delftelectronics.spaceinvaders.core.Collidable;
+import nl.delftelectronics.spaceinvaders.core.GameInformation;
+import nl.delftelectronics.spaceinvaders.core.scenes.GameScene;
+
+import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
+
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 /**
  * Test cases for the Ship class.
@@ -26,7 +26,7 @@ public class ShipTest extends TestCase {
     public void testShipExist() {
         final double dimension = 10;
         GameInformation gameInformation = new GameInformation(0, 3, 0, 1,
-                new ArrayList<Rectangle>());
+                new ArrayList<Rectangle2D>());
         Ship ship = new Ship(10, 10, 10, 10, 10, 10, gameInformation);
         GameScene scene = mock(GameScene.class);
         when(scene.getCollisions(any(Collidable.class))).thenReturn(
@@ -42,7 +42,7 @@ public class ShipTest extends TestCase {
      */
     public void testShipHit() {
         GameInformation gameInformation = new GameInformation(0, 3, 0, 1,
-                new ArrayList<Rectangle>());
+                new ArrayList<Rectangle2D>());
         Ship ship = new Ship(10, 10, 10, 10, 10, 10, gameInformation);
         GameScene scene = mock(GameScene.class);
         when(scene.getCollisions(any(Collidable.class))).thenReturn(
@@ -58,7 +58,7 @@ public class ShipTest extends TestCase {
      */
     public void testPlayerShootBullet() {
         GameInformation gameInformation = new GameInformation(0, 3, 0, 1,
-                new ArrayList<Rectangle>());
+                new ArrayList<Rectangle2D>());
         Ship ship = new Ship(10, 10, 10, 10, 10, 10, gameInformation);
         GameScene scene = mock(GameScene.class);
         ship.initialize(scene);
@@ -71,7 +71,7 @@ public class ShipTest extends TestCase {
      */
     public void testPlayerShootBomb() {
         GameInformation gameInformation = new GameInformation(0, 3, 1, 1,
-                new ArrayList<Rectangle>());
+                new ArrayList<Rectangle2D>());
         Ship ship = new Ship(10, 10, 10, 10, 10, 10, gameInformation);
         GameScene scene = mock(GameScene.class);
         ship.initialize(scene);

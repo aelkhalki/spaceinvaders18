@@ -5,6 +5,7 @@ import junit.framework.TestCase;
 import nl.delftelectronics.spaceinvaders.core.entities.Barricade;
 import org.junit.Test;
 
+import java.awt.geom.Rectangle2D;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -21,7 +22,7 @@ import static org.mockito.Mockito.when;
  */
 public class GameInformationTest extends TestCase {
     public void testSaveAndLoad() {
-        Collection<Rectangle> rectangles = new ArrayList<Rectangle>();
+        Collection<Rectangle2D> rectangles = new ArrayList<Rectangle2D>();
         GameInformation gi = new GameInformation(10, 20, 30, 40, rectangles);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         gi.save(baos);
@@ -31,9 +32,9 @@ public class GameInformationTest extends TestCase {
     }
 
     public void testBarricadeDestroyed() {
-        Rectangle r = new Rectangle(1, 2, 3, 4);
+        Rectangle2D r = new Rectangle2D.Double(1, 2, 3, 4);
         Barricade b = mock(Barricade.class);
-        Collection<Rectangle> rectangles = new ArrayList<Rectangle>();
+        Collection<Rectangle2D> rectangles = new ArrayList<Rectangle2D>();
         rectangles.add(r);
         GameInformation gi = new GameInformation(10, 20, 30, 40, rectangles);
 
@@ -46,12 +47,12 @@ public class GameInformationTest extends TestCase {
     }
 
     public void testEquals() {
-        Rectangle r = mock(Rectangle.class);
-        Collection<Rectangle> rectangles = new ArrayList<Rectangle>();
+        Rectangle2D r = mock(Rectangle2D.class);
+        Collection<Rectangle2D> rectangles = new ArrayList<Rectangle2D>();
         rectangles.add(r);
         GameInformation gi = new GameInformation(10, 20, 30, 40, rectangles);
 
-        Collection<Rectangle> rectangles2 = new ArrayList<Rectangle>();
+        Collection<Rectangle2D> rectangles2 = new ArrayList<Rectangle2D>();
         rectangles2.add(r);
         GameInformation gi2 = new GameInformation(10, 20, 30, 40, rectangles2);
 
@@ -59,13 +60,13 @@ public class GameInformationTest extends TestCase {
     }
 
     public void testEqualsDifferingPoints() {
-        Rectangle r = mock(Rectangle.class);
-        Collection<Rectangle> rectangles = new ArrayList<Rectangle>();
+        Rectangle2D r = mock(Rectangle2D.class);
+        Collection<Rectangle2D> rectangles = new ArrayList<Rectangle2D>();
         rectangles.add(r);
         GameInformation gi = new GameInformation(10, 20, 30, 40, rectangles);
 
-        Rectangle r2 = mock(Rectangle.class);
-        Collection<Rectangle> rectangles2 = new ArrayList<Rectangle>();
+        Rectangle2D r2 = mock(Rectangle2D.class);
+        Collection<Rectangle2D> rectangles2 = new ArrayList<Rectangle2D>();
         rectangles2.add(r2);
         GameInformation gi2 = new GameInformation(15, 20, 30, 40, rectangles2);
 
@@ -73,13 +74,13 @@ public class GameInformationTest extends TestCase {
     }
 
     public void testEqualsDifferingLives() {
-        Rectangle r = mock(Rectangle.class);
-        Collection<Rectangle> rectangles = new ArrayList<Rectangle>();
+        Rectangle2D r = mock(Rectangle2D.class);
+        Collection<Rectangle2D> rectangles = new ArrayList<Rectangle2D>();
         rectangles.add(r);
         GameInformation gi = new GameInformation(10, 20, 30, 40, rectangles);
 
-        Rectangle r2 = mock(Rectangle.class);
-        Collection<Rectangle> rectangles2 = new ArrayList<Rectangle>();
+        Rectangle2D r2 = mock(Rectangle2D.class);
+        Collection<Rectangle2D> rectangles2 = new ArrayList<Rectangle2D>();
         rectangles2.add(r2);
         GameInformation gi2 = new GameInformation(10, 25, 30, 40, rectangles2);
 
@@ -87,13 +88,13 @@ public class GameInformationTest extends TestCase {
     }
 
     public void testEqualsDifferingBombs() {
-        Rectangle r = mock(Rectangle.class);
-        Collection<Rectangle> rectangles = new ArrayList<Rectangle>();
+        Rectangle2D r = mock(Rectangle2D.class);
+        Collection<Rectangle2D> rectangles = new ArrayList<Rectangle2D>();
         rectangles.add(r);
         GameInformation gi = new GameInformation(10, 20, 30, 40, rectangles);
 
-        Rectangle r2 = mock(Rectangle.class);
-        Collection<Rectangle> rectangles2 = new ArrayList<Rectangle>();
+        Rectangle2D r2 = mock(Rectangle2D.class);
+        Collection<Rectangle2D> rectangles2 = new ArrayList<Rectangle2D>();
         rectangles2.add(r2);
         GameInformation gi2 = new GameInformation(10, 20, 35, 40, rectangles2);
 
@@ -101,13 +102,13 @@ public class GameInformationTest extends TestCase {
     }
 
     public void testEqualsDifferingLevel() {
-        Rectangle r = mock(Rectangle.class);
-        Collection<Rectangle> rectangles = new ArrayList<Rectangle>();
+        Rectangle2D r = mock(Rectangle2D.class);
+        Collection<Rectangle2D> rectangles = new ArrayList<Rectangle2D>();
         rectangles.add(r);
         GameInformation gi = new GameInformation(10, 20, 30, 40, rectangles);
 
-        Rectangle r2 = mock(Rectangle.class);
-        Collection<Rectangle> rectangles2 = new ArrayList<Rectangle>();
+        Rectangle2D r2 = mock(Rectangle2D.class);
+        Collection<Rectangle2D> rectangles2 = new ArrayList<Rectangle2D>();
         rectangles2.add(r2);
         GameInformation gi2 = new GameInformation(10, 20, 30, 45, rectangles2);
 
@@ -115,7 +116,7 @@ public class GameInformationTest extends TestCase {
     }
 
     public void testHashCode() {
-        Collection<Rectangle> rectangles = new ArrayList<Rectangle>();
+        Collection<Rectangle2D> rectangles = new ArrayList<Rectangle2D>();
         GameInformation gi = new GameInformation(10, 20, 30, 40, rectangles);
 
         GameInformation gi2 = new GameInformation(10, 20, 30, 40, rectangles);
@@ -125,7 +126,7 @@ public class GameInformationTest extends TestCase {
 
     @Test(expected=IOException.class)
     public void testSaveErrorWhenWrongFilename() {
-        Collection<Rectangle> rectangles = new ArrayList<Rectangle>();
+        Collection<Rectangle2D> rectangles = new ArrayList<Rectangle2D>();
         GameInformation gi = new GameInformation(10, 20, 30, 40, rectangles);
 
         gi.save("");
@@ -133,7 +134,7 @@ public class GameInformationTest extends TestCase {
 
     @Test(expected=IOException.class)
     public void testLoadErrorWhenWrongFilename() {
-        Collection<Rectangle> rectangles = new ArrayList<Rectangle>();
+        Collection<Rectangle2D> rectangles = new ArrayList<Rectangle2D>();
         GameInformation gi = new GameInformation(10, 20, 30, 40, rectangles);
 
         gi.load("");
