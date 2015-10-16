@@ -1,5 +1,7 @@
 package nl.delftelectronics.spaceinvaders.core.entities;
 
+import java.awt.geom.Rectangle2D;
+
 import org.joda.time.Interval;
 
 /**
@@ -14,14 +16,8 @@ public abstract class Actor extends SpriteEntity {
 	/**
 	 * Create an Actor with a given position and size.
 	 *
-	 * @param positionX
-	 *            x-position of the Actor.
-	 * @param positionY
-	 *            y-position of the Actor.
-	 * @param width
-	 *            width of the Actor.
-	 * @param height
-	 *            height of the Actor.
+	 * @param position
+	 * 			  position of the sprite
 	 * @param spriteName
 	 *            filename of the sprite.
 	 * @param westBoundary
@@ -29,9 +25,9 @@ public abstract class Actor extends SpriteEntity {
 	 * @param eastBoundary
 	 *            easternmost boundary of the playing field.
 	 */
-	public Actor(double positionX, double positionY, double width, double height, String spriteName,
+	public Actor(Rectangle2D position, String spriteName,
 			double westBoundary, double eastBoundary) {
-		super(positionX, positionY, width, height, spriteName);
+		super(position, spriteName);
 		this.westBoundary = westBoundary;
 		this.eastBoundary = eastBoundary;
 	}

@@ -6,6 +6,8 @@ import nl.delftelectronics.spaceinvaders.core.GameInformation;
 import nl.delftelectronics.spaceinvaders.core.entities.LabelClickedListener;
 import nl.delftelectronics.spaceinvaders.core.entities.LabelEntity;
 
+import java.awt.geom.Rectangle2D;
+
 /**
  * The scene that contains the store.
  */
@@ -32,23 +34,30 @@ public class StoreScene extends GameScene implements LabelClickedListener {
         this.gameInformation = gameInformation;
 
         //CHECKSTYLE.OFF: MagicNumber
-        pointsLabel = new LabelEntity(50, 50, 1000, 100, "Points: " + gameInformation.getPoints());
+        pointsLabel = new LabelEntity(new Rectangle2D.Double(50, 50, 1000, 100),
+        		"Points: " + gameInformation.getPoints());
         addEntity(pointsLabel);
-        lifeLabel = new LabelEntity(50, 150, 1000, 100, "Get a life (1000 points). Current lives: "
+        lifeLabel = new LabelEntity(new Rectangle2D.Double(50, 150, 1000, 100),
+"Get a life (1000 points). Current lives: "
                 + gameInformation.getLives());
         lifeLabel.addClickedListener(this);
         addEntity(lifeLabel);
-        bombLabel = new LabelEntity(50, 250, 1000, 100, "Get a bomb (250 points). Current bombs: "
+        bombLabel = new LabelEntity(new Rectangle2D.Double(50, 250, 1000, 100),
+        		"Get a bomb (250 points). Current bombs: "
                 + gameInformation.getBombs());
+
         bombLabel.addClickedListener(this);
         addEntity(bombLabel);
-        barricadeLabel = new LabelEntity(50, 350, 1000, 100, "Restore barricades (500 points).");
+        barricadeLabel = new LabelEntity(new Rectangle2D.Double(50, 350, 1000, 100),
+        		"Restore barricades (500 points).");
         barricadeLabel.addClickedListener(this);
         addEntity(barricadeLabel);
-        saveGameLabel = new LabelEntity(50, 450, 1000, 100, "Save game.");
+        saveGameLabel = new LabelEntity(new Rectangle2D.Double(50, 450, 1000, 100),
+        		"Save game.");
         saveGameLabel.addClickedListener(this);
         addEntity(saveGameLabel);
-        continueLabel = new LabelEntity(50, 650, 1000, 100, "Continue");
+        continueLabel = new LabelEntity(new Rectangle2D.Double(50, 650, 1000, 100),
+        		"Continue");
         continueLabel.addClickedListener(this);
         addEntity(continueLabel);
         //CHECKSTYLE.ON: MagicNumber

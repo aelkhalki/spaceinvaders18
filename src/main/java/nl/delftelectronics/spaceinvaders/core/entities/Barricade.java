@@ -1,5 +1,7 @@
 package nl.delftelectronics.spaceinvaders.core.entities;
 
+import java.awt.geom.Rectangle2D;
+
 import nl.delftelectronics.spaceinvaders.core.Collidable;
 
 /**
@@ -12,27 +14,21 @@ public class Barricade extends SpriteEntity implements Collidable {
     /**
      * Create a Barricade at the specified position.
      *
-     * @param positionX  the x-coordinate of the position of the barricade.
-     * @param positionY  the y-coordinate of the position of the barricade.
-     * @param width      the width of the barricade.
-     * @param height     the height of the barricade.
+     * @param position the position of the sprite
      * @param spriteName the filename of the sprite.
      */
-    public Barricade(double positionX, double positionY, double width, double height,
+    public Barricade(Rectangle2D position,
                      String spriteName) {
-        super(positionX, positionY, width, height, spriteName);
+        super(position, spriteName);
     }
 
     /**
      * Create a Barricade at the specified position.
      *
-     * @param positionX the x-coordinate of the position of the barricade.
-     * @param positionY the y-coordinate of the position of the barricade.
-     * @param width     the width of the barricade.
-     * @param height    the height of the barricade.
+     * @param position  the position of the sprite
      */
-    public Barricade(double positionX, double positionY, double width, double height) {
-        super(positionX, positionY, width, height, FILENAME);
+    public Barricade(Rectangle2D position) {
+        super(position, FILENAME);
     }
 
     /**

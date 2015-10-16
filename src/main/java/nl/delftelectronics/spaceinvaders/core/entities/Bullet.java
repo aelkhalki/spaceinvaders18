@@ -1,5 +1,7 @@
 package nl.delftelectronics.spaceinvaders.core.entities;
 
+import java.awt.geom.Rectangle2D;
+
 import org.joda.time.Interval;
 
 import nl.delftelectronics.spaceinvaders.core.Collidable;
@@ -21,20 +23,13 @@ public class Bullet extends Projectile {
 	/**
 	 * Creates a new bullet at a specified location
 	 *
-	 * @param positionX
-	 *            The x position to place the bullet
-	 * @param positionY
-	 *            The y position to place the bullet
-	 * @param width
-	 *            The width of the bullet
-	 * @param height
-	 *            The height of the bullet
+	 * @param position
+	 * 			  position of the sprite
 	 * @param isPlayerOwned
 	 *            Whether this is an enemy bullet or a player owned one
 	 */
-	public Bullet(double positionX, double positionY, double width,
-			double height, boolean isPlayerOwned) {
-		super(positionX, positionY, width, height, FILENAME, isPlayerOwned);
+	public Bullet(Rectangle2D position, boolean isPlayerOwned) {
+		super(position, FILENAME, isPlayerOwned);
 	}
 
 	/**

@@ -3,6 +3,7 @@
  */
 package nl.delftelectronics.spaceinvaders.core.entities;
 
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,9 +51,7 @@ public class EnemyFactory {
 	 * @return A small enemy
 	 */
 	public Enemy createSmall(int column, int row) {
-		return new SmallEnemy(ENEMY_OFFSET_X + COLUMN_WIDTH * column,
-				ROW_HEIGHT * row, ENTITY_DIMENSION,
-				ENTITY_DIMENSION, 0, fieldWidth, fieldHeight, block);
+		return new SmallEnemy(calculatePosition(column, row), 0, fieldWidth, fieldHeight, block);
 	}
 
 	/**
@@ -65,9 +64,7 @@ public class EnemyFactory {
 	 * @return A small enemy
 	 */
 	public Enemy createMedium(int column, int row) {
-		return new MediumEnemy(ENEMY_OFFSET_X + COLUMN_WIDTH * column,
-				ROW_HEIGHT * row, ENTITY_DIMENSION,
-				ENTITY_DIMENSION, 0, fieldWidth, fieldHeight, block);
+		return new MediumEnemy(calculatePosition(column, row), 0, fieldWidth, fieldHeight, block);
 	}
 
 	/**
@@ -80,10 +77,13 @@ public class EnemyFactory {
 	 * @return A small enemy
 	 */
 	public Enemy createLarge(int column, int row) {
-		return new LargeEnemy(ENEMY_OFFSET_X + COLUMN_WIDTH * column,
+		return new LargeEnemy(calculatePosition(column, row), 0, fieldWidth, fieldHeight, block);
+	}
+	
+	private Rectangle2D calculatePosition(int column, int row) {
+		return new Rectangle2D.Double(ENEMY_OFFSET_X + COLUMN_WIDTH * column,
 				ROW_HEIGHT * row, ENTITY_DIMENSION,
-				ENTITY_DIMENSION, 0, fieldWidth, fieldHeight, block);
-
+				ENTITY_DIMENSION);
 	}
 
 	/**

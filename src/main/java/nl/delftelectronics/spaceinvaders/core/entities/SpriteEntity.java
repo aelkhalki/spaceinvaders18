@@ -3,6 +3,8 @@
  */
 package nl.delftelectronics.spaceinvaders.core.entities;
 
+import java.awt.geom.Rectangle2D;
+
 import org.joda.time.Interval;
 
 import javafx.scene.canvas.GraphicsContext;
@@ -16,15 +18,11 @@ public abstract class SpriteEntity extends DrawableEntity {
 	protected String spriteName;
 	
 	/**
-     * @param positionX  the x-coordinate of the position of the sprite entity.
-     * @param positionY  the y-coordinate of the position of the sprite entity.
-     * @param width      the width of the sprite entity.
-     * @param height     the height of the sprite entity.
+     * @param position   the position of the sprite
      * @param spriteName the filename of the sprite.
      */
-	public SpriteEntity(double positionX, double positionY, double width,
-			double height, String spriteName) {
-		super(positionX, positionY, width, height);
+	public SpriteEntity(Rectangle2D position, String spriteName) {
+		super(position);
 		
 		this.spriteName = spriteName;
 	}

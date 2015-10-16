@@ -1,5 +1,6 @@
 package nl.delftelectronics.spaceinvaders.core.entities;
 
+import java.awt.geom.Rectangle2D;
 import java.util.Random;
 
 import org.joda.time.Interval;
@@ -29,7 +30,8 @@ public class Ufo extends Enemy {
      */
     public Ufo(double positionX, double positionY, int westBoundary, int eastBoundary,
                EnemyBlock block) {
-        super(positionX, positionY, WIDTH, HEIGHT, westBoundary, eastBoundary, Integer.MAX_VALUE,
+        super(new Rectangle2D.Double(positionX, positionY,
+        		WIDTH, HEIGHT), westBoundary, eastBoundary, Integer.MAX_VALUE,
                 block, FILENAME);
         this.random = new Random();
     }

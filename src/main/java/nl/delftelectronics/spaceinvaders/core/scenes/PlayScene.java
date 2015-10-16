@@ -71,12 +71,46 @@ public class PlayScene extends GameScene implements LabelClickedListener {
 			fieldWidth = (int) scene.getWidth();
 			fieldHeight = (int) scene.getHeight();
 		}
-
-		EnemyBlock block = new EnemyBlock();
-		addEntity(block);
-
+		
 		int shipPositionX = (int) (fieldWidth * SHIP_MARGIN_FROM_LEFT);
 		int shipPositionY = (int) (fieldHeight * (1 - SHIP_MARGIN_FROM_BOTTOM));
+		
+		addEnemies();
+
+		ship = new Ship(new Rectangle2D.Double(shipPositionX, shipPositionY,
+				ENTITY_DIMENSION, ENTITY_DIMENSION), 0, fieldWidth, gameInformation);
+		addEntity(ship);
+
+		//CHECKSTYLE.OFF: MagicNumber - Don't want to layout automatically
+		scoreLabel = new LabelEntity(new Rectangle2D.Double(30, 30, 0, 0),
+				"Score: " + gameInformation.getPoints());
+		livesLabel = new LabelEntity(new Rectangle2D.Double(400, 30, 0, 0),
+				"Lives: " + gameInformation.getLives());
+		levelLabel = new LabelEntity(new Rectangle2D.Double(700, 30, 0, 0),
+				"Level: " + gameInformation.getLevel());
+		bombsLabel = new LabelEntity(new Rectangle2D.Double(1000, 30, 0, 0),
+				"Bombs: " + gameInformation.getBombs());
+		gameOver = new LabelEntity(new Rectangle2D.Double(550, 500, 400, 100),
+				"BACK TO MAIN MENU");
+		//CHECKSTYLE.ON: MagicNumber
+
+		for (Rectangle2D r : gameInformation.getBarricadeRectangles()) {
+			Barricade b = new Barricade(r);
+			b.addDestroyedListener(gameInformation);
+			addEntity(b);
+		}
+		addEntity(scoreLabel);
+		addEntity(livesLabel);
+		addEntity(levelLabel);
+		addEntity(bombsLabel);
+	}
+	
+	/**
+	 * Adds enemy entities to the scene
+	 */
+	private void addEnemies() {
+		EnemyBlock block = new EnemyBlock();
+		addEntity(block);
 
 		EnemyFactory f = new EnemyFactory(block, fieldWidth, fieldHeight);
 		List<Enemy> enemies = f.createBlock();
@@ -84,29 +118,6 @@ public class PlayScene extends GameScene implements LabelClickedListener {
 		for (Enemy e : enemies) {
 			addEntity(e);
 		}
-
-		ship = new Ship(shipPositionX, shipPositionY,
-				ENTITY_DIMENSION, ENTITY_DIMENSION, 0, fieldWidth, gameInformation);
-		addEntity(ship);
-
-		//CHECKSTYLE.OFF: MagicNumber - Don't want to layout automatically
-		scoreLabel = new LabelEntity(30, 30, 0, 0, "Score: " + gameInformation.getPoints());
-		livesLabel = new LabelEntity(400, 30, 0, 0, "Lives: " + gameInformation.getLives());
-		levelLabel = new LabelEntity(700, 30, 0, 0, "Level: " + gameInformation.getLevel());
-		bombsLabel = new LabelEntity(1000, 30, 0, 0, "Bombs: " + gameInformation.getBombs());
-		gameOver = new LabelEntity(550, 500, 400, 100, "BACK TO MAIN MENU");
-		//CHECKSTYLE.ON: MagicNumber
-
-		for (Rectangle2D r : gameInformation.getBarricadeRectangles()) {
-			Barricade b = new Barricade(r.getX(), r.getY(), r.getWidth(), r.getHeight());
-			b.addDestroyedListener(gameInformation);
-			addEntity(b);
-		}
-
-		addEntity(scoreLabel);
-		addEntity(livesLabel);
-		addEntity(levelLabel);
-		addEntity(bombsLabel);
 	}
 
 	/**

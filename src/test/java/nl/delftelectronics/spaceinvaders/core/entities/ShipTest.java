@@ -27,7 +27,8 @@ public class ShipTest extends TestCase {
         final double dimension = 10;
         GameInformation gameInformation = new GameInformation(0, 3, 0, 1,
                 new ArrayList<Rectangle2D>());
-        Ship ship = new Ship(10, 10, 10, 10, 10, 10, gameInformation);
+        Ship ship = new Ship(new Rectangle2D.Double(10, 10, 10, 10),
+        		10, 10, gameInformation);
         GameScene scene = mock(GameScene.class);
         when(scene.getCollisions(any(Collidable.class))).thenReturn(
                 new ArrayList<Entity>());
@@ -43,7 +44,8 @@ public class ShipTest extends TestCase {
     public void testShipHit() {
         GameInformation gameInformation = new GameInformation(0, 3, 0, 1,
                 new ArrayList<Rectangle2D>());
-        Ship ship = new Ship(10, 10, 10, 10, 10, 10, gameInformation);
+        Ship ship = new Ship(new Rectangle2D.Double(10, 10, 10, 10),
+        		10, 10, gameInformation);
         GameScene scene = mock(GameScene.class);
         when(scene.getCollisions(any(Collidable.class))).thenReturn(
                 new ArrayList<Entity>());
@@ -59,7 +61,8 @@ public class ShipTest extends TestCase {
     public void testPlayerShootBullet() {
         GameInformation gameInformation = new GameInformation(0, 3, 0, 1,
                 new ArrayList<Rectangle2D>());
-        Ship ship = new Ship(10, 10, 10, 10, 10, 10, gameInformation);
+        Ship ship = new Ship(new Rectangle2D.Double(10, 10, 10, 10),
+        		10, 10, gameInformation);
         GameScene scene = mock(GameScene.class);
         ship.initialize(scene);
         ship.playerShootBullet(false);
@@ -70,9 +73,11 @@ public class ShipTest extends TestCase {
      * Tests if the ship can create bombs correctly.
      */
     public void testPlayerShootBomb() {
+
         GameInformation gameInformation = new GameInformation(0, 3, 1, 1,
                 new ArrayList<Rectangle2D>());
-        Ship ship = new Ship(10, 10, 10, 10, 10, 10, gameInformation);
+        Ship ship = new Ship(new Rectangle2D.Double(10, 10, 10, 10),
+        		10, 10, gameInformation);
         GameScene scene = mock(GameScene.class);
         ship.initialize(scene);
         ship.playerShootBomb(false);

@@ -4,6 +4,7 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 import org.joda.time.Interval;
@@ -29,7 +30,7 @@ public class BombTest extends TestCase {
 				new ArrayList<Entity>());
 
 		// Speed is in millisecond
-		Bomb bomb = new Bomb(dimension, dimension, dimension, dimension);
+		Bomb bomb = new Bomb(new Rectangle2D.Double(dimension, dimension, dimension, dimension));
 		bomb.initialize(scene);
 		bomb.update(new Interval(0, 1));
 		Assert.assertEquals(dimension - Bomb.MOVING_SPEED, bomb.getPositionY());

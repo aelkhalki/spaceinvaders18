@@ -1,5 +1,7 @@
 package nl.delftelectronics.spaceinvaders.core.entities;
 
+import java.awt.geom.Rectangle2D;
+
 import org.joda.time.Interval;
 
 import nl.delftelectronics.spaceinvaders.core.Collidable;
@@ -20,18 +22,11 @@ public class Bomb extends Projectile {
 	/**
 	 * Create a Bomb with an initial position, size and direction.
 	 *
-	 * @param positionX
-	 *            initial x-position.
-	 * @param positionY
-	 *            initial y-position.
-	 * @param width
-	 *            width of the Bomb.
-	 * @param height
-	 *            height of the Bomb.
+	 * @param position
+	 * 			  position of the sprite
 	 */
-	public Bomb(double positionX, double positionY, double width,
-			double height) {
-		super(positionX, positionY, width, height, FILENAME, true);
+	public Bomb(Rectangle2D position) {
+		super(position, FILENAME, true);
 	}
 
 	/**
