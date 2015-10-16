@@ -1,5 +1,7 @@
 package nl.delftelectronics.spaceinvaders.core.entities;
 
+import java.awt.geom.Rectangle2D;
+
 import org.joda.time.Interval;
 
 import nl.delftelectronics.spaceinvaders.core.Collidable;
@@ -33,20 +35,16 @@ public abstract class Enemy extends SpriteEntity implements Collidable {
      * Create an Enemy with the initial position, the size, the boundaries of
      * the playing field and the initial direction of the Enemy.
      *
-     * @param positionX     initial x-position of the Enemy.
-     * @param positionY     initial y-position of the Enemy.
-     * @param width         width of the Enemy.
-     * @param height        height of the Enemy.
+     * @param position      position of the sprite
      * @param westBoundary  westernmost boundary of the playing field.
      * @param eastBoundary  easternmost boundary of the playing field.
      * @param southBoundary southernmost boundary of the playing field.
      * @param block         the block of enemies this enemy belongs to.
      * @param spriteName    filename of the sprite.
      */
-    public Enemy(double positionX, double positionY, double width,
-                 double height, int westBoundary, int eastBoundary,
+    public Enemy(Rectangle2D position, int westBoundary, int eastBoundary,
                  int southBoundary, EnemyBlock block, String spriteName) {
-        super(positionX, positionY, width, height, spriteName);
+        super(position, spriteName);
         this.westBoundary = westBoundary;
         this.eastBoundary = eastBoundary;
         this.southBoundary = southBoundary;
@@ -128,8 +126,8 @@ public abstract class Enemy extends SpriteEntity implements Collidable {
      * Shoots a bullet
      */
     public void fire() {
-        Bullet enemyBullet = new Bullet(getPositionX(), getPositionY(),
-                BULLET_WIDTH, BULLET_HEIGHT, false);
+        Bullet enemyBullet = new Bullet(new Rectangle2D.Double(getPositionX(), getPositionY(),
+                BULLET_WIDTH, BULLET_HEIGHT), false);
         scene.addEntity(enemyBullet);
         Logger.info("%s fired a Bullet at (%f, %f) in the direction South",
                 this.getClass().getSimpleName(),

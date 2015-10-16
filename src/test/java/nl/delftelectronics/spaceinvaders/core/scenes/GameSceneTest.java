@@ -13,6 +13,8 @@ import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
+import java.awt.geom.Rectangle2D;
+
 import org.joda.time.Interval;
 
 import javafx.scene.Scene;
@@ -156,7 +158,7 @@ public class GameSceneTest extends TestCase {
 		 */
 		public CollisionEntity(double positionX, double positionY,
 				double width, double height) {
-			super(positionX, positionY, width, height);
+			super(new Rectangle2D.Double(positionX, positionY, width, height));
 		}
 	}
 }

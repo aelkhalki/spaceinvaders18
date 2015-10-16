@@ -1,5 +1,7 @@
 package nl.delftelectronics.spaceinvaders.core.entities;
 
+import java.awt.geom.Rectangle2D;
+
 /**
  * A SmallEnemy is a small Enemy, worth 40 points.
  */
@@ -11,19 +13,16 @@ public class SmallEnemy extends Enemy {
      * Create an SmallEnemy with the initial position, the size, the boundaries of the playing
      * field and the initial direction of the SmallEnemy.
      *
-     * @param positionX       initial x-position of the SmallEnemy.
-     * @param positionY       initial y-position of the SmallEnemy.
-     * @param width           width of the SmallEnemy.
-     * @param height          height of the SmallEnemy.
+     * @param position        position of the sprite
      * @param westBoundary    westernmost boundary of the playing field.
      * @param eastBoundary    easternmost boundary of the playing field.
      * @param southBoundary   southernmost boundary of the playing field.
      * @param block 		  the block of enemies it belongs to.
      */
-    public SmallEnemy(double positionX, double positionY, double width, double height,
+    public SmallEnemy(Rectangle2D position,
                       Integer westBoundary, Integer eastBoundary, Integer southBoundary,
                       EnemyBlock block) {
-        super(positionX, positionY, width, height, westBoundary, eastBoundary, southBoundary,
+        super(position, westBoundary, eastBoundary, southBoundary,
                 block, FILENAME);
     }
 

@@ -4,6 +4,7 @@
 package nl.delftelectronics.spaceinvaders.core.scenes;
 
 import java.util.List;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Random;
@@ -74,30 +75,25 @@ public class PlayScene extends GameScene {
 			fieldWidth = (int) scene.getWidth();
 			fieldHeight = (int) scene.getHeight();
 		}
-
-		EnemyBlock block = new EnemyBlock();
-		addEntity(block);
-
+		
 		int shipPositionX = (int) (fieldWidth * SHIP_MARGIN_FROM_LEFT);
 		int shipPositionY = (int) (fieldHeight * (1 - SHIP_MARGIN_FROM_BOTTOM));
+		
+		addEnemies();
 
-		EnemyFactory f = new EnemyFactory(block, fieldWidth, fieldHeight);
-		List<Enemy> enemies = f.createBlock();
-		enemyCount = enemies.size();
-		for (Enemy e : enemies) {
-			addEntity(e);
-		}
-
-		ship = new Ship(shipPositionX, shipPositionY,
-				ENTITY_DIMENSION, ENTITY_DIMENSION, 0, fieldWidth);
+		ship = new Ship(new Rectangle2D.Double(shipPositionX, shipPositionY,
+				ENTITY_DIMENSION, ENTITY_DIMENSION), 0, fieldWidth);
 		addEntity(ship);
 		ship.setLives(lives);
 		ship.setBombs(bombs);
 
 		//CHECKSTYLE.OFF: MagicNumber - Don't want to layout automatically
-		scoreLabel = new LabelEntity(30, 30, 0, 0, "Score: " + points);
-		livesLabel = new LabelEntity(400, 30, 0, 0, "Lives: " + ship.getLives());
-		levelLabel = new LabelEntity(700, 30, 0, 0, "Level: " + currentLevel);
+		scoreLabel = new LabelEntity(new Rectangle2D.Double(30, 30, 0, 0),
+				"Score: " + points);
+		livesLabel = new LabelEntity(new Rectangle2D.Double(400, 30, 0, 0),
+				"Lives: " + ship.getLives());
+		levelLabel = new LabelEntity(new Rectangle2D.Double(700, 30, 0, 0),
+				"Level: " + currentLevel);
 		//CHECKSTYLE.ON: MagicNumber
 
 		if (barricades == null) {
@@ -108,10 +104,24 @@ public class PlayScene extends GameScene {
 				this.barricades.add(e);
 			}
 		}
-
 		addEntity(scoreLabel);
 		addEntity(livesLabel);
 		addEntity(levelLabel);
+	}
+	
+	/**
+	 * Adds enemy entities to the scene
+	 */
+	private void addEnemies() {
+		EnemyBlock block = new EnemyBlock();
+		addEntity(block);
+
+		EnemyFactory f = new EnemyFactory(block, fieldWidth, fieldHeight);
+		List<Enemy> enemies = f.createBlock();
+		enemyCount = enemies.size();
+		for (Enemy e : enemies) {
+			addEntity(e);
+		}
 	}
 
 	/**
@@ -121,7 +131,7 @@ public class PlayScene extends GameScene {
 		//CHECKSTYLE.OFF: MagicNumber - Don't want to layout automatically
 		for (int x = 100; x <= 300; x += 25) {
 			for (int y = 700; y <= 800; y += 25) {
-				Barricade b = new Barricade(x, y, 25, 25);
+				Barricade b = new Barricade(new Rectangle2D.Double(x, y, 25, 25));
 				addEntity(b);
 				barricades.add(b);
 			}
@@ -129,7 +139,7 @@ public class PlayScene extends GameScene {
 
 		for (int x = 500; x <= 700; x += 25) {
 			for (int y = 700; y <= 800; y += 25) {
-				Barricade b = new Barricade(x, y, 25, 25);
+				Barricade b = new Barricade(new Rectangle2D.Double(x, y, 25, 25));
 				addEntity(b);
 				barricades.add(b);
 			}
@@ -137,7 +147,7 @@ public class PlayScene extends GameScene {
 
 		for (int x = 900; x <= 1100; x += 25) {
 			for (int y = 700; y <= 800; y += 25) {
-				Barricade b = new Barricade(x, y, 25, 25);
+				Barricade b = new Barricade(new Rectangle2D.Double(x, y, 25, 25));
 				addEntity(b);
 				barricades.add(b);
 			}
@@ -145,7 +155,7 @@ public class PlayScene extends GameScene {
 
 		for (int x = 1300; x <= 1500; x += 25) {
 			for (int y = 700; y <= 800; y += 25) {
-				Barricade b = new Barricade(x, y, 25, 25);
+				Barricade b = new Barricade(new Rectangle2D.Double(x, y, 25, 25));
 				addEntity(b);
 				barricades.add(b);
 			}
@@ -221,7 +231,8 @@ public class PlayScene extends GameScene {
 
 		finished = true;
 		//CHECKSTYLE.OFF: MagicNumber - Don't want to layout automatically
-		LabelEntity gameOver = new LabelEntity(200, 200, 0, 0, "GAME OVER!");
+		LabelEntity gameOver = new LabelEntity(
+				new Rectangle2D.Double(200, 200, 0, 0), "GAME OVER!");
 		//CHECKSTYLE.ON: MagicNumber
 		addEntity(gameOver);
 	}

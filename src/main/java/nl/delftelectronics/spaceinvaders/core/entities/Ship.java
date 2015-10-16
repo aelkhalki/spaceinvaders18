@@ -1,6 +1,9 @@
 package nl.delftelectronics.spaceinvaders.core.entities;
 
 import nl.delftelectronics.spaceinvaders.core.Audio;
+
+import java.awt.geom.Rectangle2D;
+
 import org.joda.time.Interval;
 
 import nl.delftelectronics.spaceinvaders.core.Collidable;
@@ -25,16 +28,13 @@ public class Ship extends Actor implements Collidable {
     /**
      * Create a Ship with the initial position and size.
      *
-     * @param positionX    initial x-position of the Ship.
-     * @param positionY    initial y-position of the Ship.
-     * @param width        width of the Ship.
-     * @param height       height of the Ship.
+     * @param position     position of the sprite
      * @param westBoundary westernmost boundary of the playing field.
      * @param eastBoundary easternmost boundary of the playing field.
      */
-    public Ship(int positionX, int positionY, int width, int height,
+    public Ship(Rectangle2D position,
                 int westBoundary, int eastBoundary) {
-        super(positionX, positionY, width, height, FILENAME, westBoundary, eastBoundary);
+        super(position, FILENAME, westBoundary, eastBoundary);
     }
 
     /**
@@ -47,8 +47,8 @@ public class Ship extends Actor implements Collidable {
         Logger.info("%s fired a Bullet at (%f, %f) in the direction North",
                 this.getClass().toString(),
                 x, getPositionY());
-        return new Bullet(x, getPositionY(), Bullet.WIDTH,
-                Bullet.HEIGHT, true);
+        return new Bullet(new Rectangle2D.Double(x, getPositionY(), Bullet.WIDTH,
+                Bullet.HEIGHT), true);
     }
 
     /**
@@ -117,8 +117,8 @@ public class Ship extends Actor implements Collidable {
         Logger.info("%s fired a Bomb at (%f, %f) in the direction North",
                 this.getClass().toString(),
                 x, getPositionY());
-        return new Bomb(x, getPositionY(), Bomb.WIDTH,
-                Bomb.HEIGHT);
+        return new Bomb(new Rectangle2D.Double(x, getPositionY(), Bomb.WIDTH,
+                Bomb.HEIGHT));
     }
 
     /**

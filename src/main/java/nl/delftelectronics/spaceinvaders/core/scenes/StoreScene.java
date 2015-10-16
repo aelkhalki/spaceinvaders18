@@ -6,6 +6,7 @@ import nl.delftelectronics.spaceinvaders.core.entities.Entity;
 import nl.delftelectronics.spaceinvaders.core.entities.LabelClickedListener;
 import nl.delftelectronics.spaceinvaders.core.entities.LabelEntity;
 
+import java.awt.geom.Rectangle2D;
 import java.util.Collection;
 
 /**
@@ -45,20 +46,25 @@ public class StoreScene extends GameScene implements LabelClickedListener {
         this.barricades = barricades;
 
         //CHECKSTYLE.OFF: MagicNumber
-        pointsLabel = new LabelEntity(50, 50, 1000, 100, "Points: " + points);
+        pointsLabel = new LabelEntity(new Rectangle2D.Double(50, 50, 1000, 100),
+        		"Points: " + points);
         addEntity(pointsLabel);
-        lifeLabel = new LabelEntity(50, 150, 1000, 100, "Get a life (1000 points). Current lives: "
+        lifeLabel = new LabelEntity(new Rectangle2D.Double(50, 150, 1000, 100),
+"Get a life (1000 points). Current lives: "
                 + lives);
         lifeLabel.addClickedListener(this);
         addEntity(lifeLabel);
-        bombLabel = new LabelEntity(50, 250, 1000, 100, "Get a bomb (250 points). Current bombs: "
+        bombLabel = new LabelEntity(new Rectangle2D.Double(50, 250, 1000, 100),
+        		"Get a bomb (250 points). Current bombs: "
                 + bombs);
         bombLabel.addClickedListener(this);
         addEntity(bombLabel);
-        barricadeLabel = new LabelEntity(50, 350, 1000, 100, "Restore barricades (500 points).");
+        barricadeLabel = new LabelEntity(new Rectangle2D.Double(50, 350, 1000, 100),
+        		"Restore barricades (500 points).");
         barricadeLabel.addClickedListener(this);
         addEntity(barricadeLabel);
-        continueLabel = new LabelEntity(50, 450, 1000, 100, "Continue");
+        continueLabel = new LabelEntity(new Rectangle2D.Double(50, 450, 1000, 100),
+        		"Continue");
         continueLabel.addClickedListener(this);
         addEntity(continueLabel);
         //CHECKSTYLE.ON: MagicNumber

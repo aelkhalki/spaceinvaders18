@@ -1,6 +1,8 @@
 //CHECKSTYLE.OFF: MagicNumber
 package nl.delftelectronics.spaceinvaders.core.entities;
 
+import java.awt.geom.Rectangle2D;
+
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
@@ -9,7 +11,8 @@ import junit.framework.TestCase;
  */
 public class LargeEnemyTest extends TestCase {
 
-    LargeEnemy enemy = new LargeEnemy(10, 10, 10, 10, 10, 10, 0, null);
+    LargeEnemy enemy = new LargeEnemy(
+    		new Rectangle2D.Double(10, 10, 10, 10), 10, 10, 0, null);
     int speed = enemy.MOVE_DOWN_SPEED;
 
     /**
@@ -17,7 +20,8 @@ public class LargeEnemyTest extends TestCase {
      */
     public void testlargeEnemy() {
 
-        LargeEnemy largeenemy = new LargeEnemy(10, 10, 10, 10, 10, 10, 0, null);
+        LargeEnemy largeenemy = new LargeEnemy(
+        		new Rectangle2D.Double(10, 10, 10, 10), 10, 10, 0, null);
 
         Assert.assertEquals(false, largeenemy.isKilled);
 
@@ -31,7 +35,8 @@ public class LargeEnemyTest extends TestCase {
      */
     public void testlargeEnemyMovement() {
 
-        LargeEnemy largeenemy = new LargeEnemy(10, speed * 2, 10, 10, 10, 10, 0, null);
+        LargeEnemy largeenemy = new LargeEnemy(
+        		new Rectangle2D.Double(10, speed * 2, 10, 10), 10, 10, 0, null);
 
         double x = largeenemy.getPositionY();
 
@@ -46,7 +51,8 @@ public class LargeEnemyTest extends TestCase {
      */
     public void testlargeEnemyKill() {
 
-        LargeEnemy largeenemy = new LargeEnemy(10, 10, 10, 10, 10, 10, 0, null);
+        LargeEnemy largeenemy = new LargeEnemy(
+        		new Rectangle2D.Double(10, 10, 10, 10), 10, 10, 0, null);
         Assert.assertEquals(false, largeenemy.isKilled);
         largeenemy.kill();
         Assert.assertEquals(true, largeenemy.isKilled);
@@ -58,7 +64,8 @@ public class LargeEnemyTest extends TestCase {
      */
     public void testlargeEnemyReachedBottom() {
 
-        LargeEnemy largeenemy = new LargeEnemy(0, 40, 10, 10, 10, 10, 180, null);
+        LargeEnemy largeenemy = new LargeEnemy(
+        		new Rectangle2D.Double(0, 40, 10, 10), 10, 10, 180, null);
 
         largeenemy.moveDown();
         Assert.assertEquals(false, largeenemy.reachedBottom());

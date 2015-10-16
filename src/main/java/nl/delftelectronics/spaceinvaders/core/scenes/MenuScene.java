@@ -3,6 +3,8 @@
  */
 package nl.delftelectronics.spaceinvaders.core.scenes;
 
+import java.awt.geom.Rectangle2D;
+
 import javafx.scene.Scene;
 import nl.delftelectronics.spaceinvaders.core.Engine;
 import nl.delftelectronics.spaceinvaders.core.entities.LabelClickedListener;
@@ -26,10 +28,10 @@ public class MenuScene extends GameScene implements LabelClickedListener {
 		super(scene);
 		
 		//CHECKSTYLE.OFF: MagicNumber - Don't want to import a layout engine
-		startButton = new LabelEntity(100, 100, 500, 100, "START GAME");
+		startButton = new LabelEntity(new Rectangle2D.Double(100, 100, 500, 100), "START GAME");
 		startButton.addClickedListener(this);
 		addEntity(startButton);
-		quitButton = new LabelEntity(100, 500, 500, 100, "QUIT GAME");
+		quitButton = new LabelEntity(new Rectangle2D.Double(100, 500, 500, 100), "QUIT GAME");
 		quitButton.addClickedListener(this);
 		addEntity(quitButton);
 		//CHECKSTYLE.ON: MagicNumber

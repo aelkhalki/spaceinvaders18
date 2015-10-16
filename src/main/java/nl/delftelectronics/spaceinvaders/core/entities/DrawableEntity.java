@@ -1,6 +1,6 @@
 package nl.delftelectronics.spaceinvaders.core.entities;
 
-import java.awt.Rectangle;
+import java.awt.geom.Rectangle2D;
 
 import javafx.scene.canvas.GraphicsContext;
 import org.joda.time.Interval;
@@ -9,30 +9,16 @@ import org.joda.time.Interval;
  * Represents an entity that can draw itself
  */
 public class DrawableEntity extends Entity {
-	private double positionX;
-	private double positionY;
-	private double width;
-	private double height;
-	private Rectangle rectangle;
+	private Rectangle2D rectangle;
 
 	/**
 	 * Create a DrawableEntity, using its position and size.
 	 *
-	 * @param positionX
-	 *            the x-coordinate of the entity.
-	 * @param positionY
-	 *            the y-coordinate of the entity.
-	 * @param width
-	 *            the width of the entity.
-	 * @param height
-	 *            the height of the entity.
+	 * @param position
+	 * 			  position of the sprite
 	 */
-	public DrawableEntity(double positionX, double positionY, double width, double height) {
-		this.positionX = positionX;
-		this.positionY = positionY;
-		this.width = width;
-		this.height = height;
-		this.rectangle = new Rectangle((int) positionX, (int) positionY, (int) width, (int) height);
+	public DrawableEntity(Rectangle2D position) {
+		this.rectangle = position;
 	}
 
 	/**
@@ -63,7 +49,7 @@ public class DrawableEntity extends Entity {
 	 * @return the x-coordinate of the position.
 	 */
 	public double getPositionX() {
-		return positionX;
+		return rectangle.getX();
 	}
 
 	/**
@@ -73,8 +59,11 @@ public class DrawableEntity extends Entity {
 	 *            the new x-coordinate.
 	 */
 	public void setPositionX(double newPosition) {
-		positionX = newPosition;
-		rectangle.setLocation((int) positionX, (int) positionY);
+		rectangle = new Rectangle2D.Double(
+				newPosition,
+				rectangle.getY(),
+				rectangle.getWidth(),
+				rectangle.getHeight());
 	}
 
 	/**
@@ -83,7 +72,7 @@ public class DrawableEntity extends Entity {
 	 * @return the y-coordinate of the position.
 	 */
 	public double getPositionY() {
-		return positionY;
+		return rectangle.getY();
 	}
 
 	/**
@@ -93,8 +82,11 @@ public class DrawableEntity extends Entity {
 	 *            the new y-coordinate.
 	 */
 	public void setPositionY(double newPosition) {
-		positionY = newPosition;
-		rectangle.setLocation((int) positionX, (int) positionY);
+		rectangle = new Rectangle2D.Double(
+				rectangle.getX(),
+				newPosition,
+				rectangle.getWidth(),
+				rectangle.getHeight());
 	}
 
 	/**
@@ -103,7 +95,7 @@ public class DrawableEntity extends Entity {
 	 * @return the width of the entity.
 	 */
 	public double getWidth() {
-		return width;
+		return rectangle.getWidth();
 	}
 
 	/**
@@ -112,7 +104,7 @@ public class DrawableEntity extends Entity {
 	 * @return the height of the entity.
 	 */
 	public double getHeight() {
-		return height;
+		return rectangle.getHeight();
 	}
 
 	/**
@@ -120,7 +112,7 @@ public class DrawableEntity extends Entity {
 	 *
 	 * @return the bounding box of the entity.
 	 */
-	public Rectangle getBoundingBox() {
+	public Rectangle2D getBoundingBox() {
 		return rectangle;
 	}
 
