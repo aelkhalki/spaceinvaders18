@@ -3,38 +3,39 @@
  */
 package nl.delftelectronics.spaceinvaders.core.scenes;
 
-import java.util.List;
 import java.awt.geom.Rectangle2D;
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Random;
 
 import javafx.scene.Scene;
 import nl.delftelectronics.spaceinvaders.core.Engine;
+import nl.delftelectronics.spaceinvaders.core.GameInformation;
 import nl.delftelectronics.spaceinvaders.core.entities.Barricade;
 import nl.delftelectronics.spaceinvaders.core.entities.Enemy;
 import nl.delftelectronics.spaceinvaders.core.entities.EnemyBlock;
 import nl.delftelectronics.spaceinvaders.core.entities.EnemyFactory;
-import nl.delftelectronics.spaceinvaders.core.entities.Entity;
+import nl.delftelectronics.spaceinvaders.core.entities.LabelClickedListener;
 import nl.delftelectronics.spaceinvaders.core.entities.LabelEntity;
 import nl.delftelectronics.spaceinvaders.core.entities.Ship;
 import nl.delftelectronics.spaceinvaders.core.entities.Ufo;
+import org.joda.time.Interval;
 
 /**
  * The scene that contains and builds the game
- * @author Max
  *
+ * @author Max
  */
-public class PlayScene extends GameScene {
+public class PlayScene extends GameScene implements LabelClickedListener {
 	private static final double SHIP_MARGIN_FROM_LEFT = 0.05; // ratio
 	private static final double SHIP_MARGIN_FROM_BOTTOM = 0.1; // ratio
 	private static final int UFO_MARGIN_FROM_TOP = 100; // pixels
 	private static final double UFO_CHANCE = 0.002; // ratio
 	private static final int ENTITY_DIMENSION = 100;
 
-	private int points = 0;
 	public int enemyCount = 0;
-	private int currentLevel = 1;
+	private GameInformation gameInformation;
 	private int fieldWidth;
 	private int fieldHeight;
 	private Random random = new Random();
@@ -43,33 +44,28 @@ public class PlayScene extends GameScene {
 	private LabelEntity scoreLabel;
 	private LabelEntity livesLabel;
 	private LabelEntity levelLabel;
-	private Collection<Entity> barricades = new ArrayList<Entity>();
+	private LabelEntity bombsLabel;
+	private LabelEntity gameOver;
 
 	/**
 	 * Builds a new PlayScene
+	 *
 	 * @param scene The javaFX scene to attach to
 	 */
 	public PlayScene(Scene scene) {
-		this(scene, Ship.INITIAL_LIVES, 0, 0, 1, null);
+		this(scene, new GameInformation(0, Ship.INITIAL_LIVES, 0, 1, createBarricades()));
 	}
 
 	/**
 	 * Create a new PlayScene. The PlayScene is the scene where the player can play Space Invaders.
 	 *
 	 * @param scene the JavaFX scene
-	 * @param lives the number of lives the player initially has.
-	 * @param bombs the number of bombs the player initially has.
-	 * @param points the number of points the player initially has.
-	 * @param level the current level.
-	 * @param barricades remnants of barricade units of previous levels. If the game should
-	 *                      create barricades in their initial state, then this param should be
-	 *                      null.
+	 * @param gameInformation the information and values about the current game
 	 */
-	public PlayScene(Scene scene, int lives, int bombs, int points, int level,
-					 Collection<Entity> barricades) {
+	public PlayScene(Scene scene, GameInformation gameInformation) {
 		super(scene);
-		this.points = points;
-		this.currentLevel = level;
+
+		this.gameInformation = gameInformation;
 
 		if (scene != null) {
 			fieldWidth = (int) scene.getWidth();
@@ -82,31 +78,31 @@ public class PlayScene extends GameScene {
 		addEnemies();
 
 		ship = new Ship(new Rectangle2D.Double(shipPositionX, shipPositionY,
-				ENTITY_DIMENSION, ENTITY_DIMENSION), 0, fieldWidth);
+				ENTITY_DIMENSION, ENTITY_DIMENSION), 0, fieldWidth, gameInformation);
 		addEntity(ship);
-		ship.setLives(lives);
-		ship.setBombs(bombs);
 
 		//CHECKSTYLE.OFF: MagicNumber - Don't want to layout automatically
 		scoreLabel = new LabelEntity(new Rectangle2D.Double(30, 30, 0, 0),
-				"Score: " + points);
+				"Score: " + gameInformation.getPoints());
 		livesLabel = new LabelEntity(new Rectangle2D.Double(400, 30, 0, 0),
-				"Lives: " + ship.getLives());
+				"Lives: " + gameInformation.getLives());
 		levelLabel = new LabelEntity(new Rectangle2D.Double(700, 30, 0, 0),
-				"Level: " + currentLevel);
+				"Level: " + gameInformation.getLevel());
+		bombsLabel = new LabelEntity(new Rectangle2D.Double(1000, 30, 0, 0),
+				"Bombs: " + gameInformation.getBombs());
+		gameOver = new LabelEntity(new Rectangle2D.Double(550, 500, 400, 100),
+				"BACK TO MAIN MENU");
 		//CHECKSTYLE.ON: MagicNumber
 
-		if (barricades == null) {
-			createBarricades();
-		} else {
-			for (Entity e : barricades) {
-				addEntity(e);
-				this.barricades.add(e);
-			}
+		for (Rectangle2D r : gameInformation.getBarricadeRectangles()) {
+			Barricade b = new Barricade(r);
+			b.addDestroyedListener(gameInformation);
+			addEntity(b);
 		}
 		addEntity(scoreLabel);
 		addEntity(livesLabel);
 		addEntity(levelLabel);
+		addEntity(bombsLabel);
 	}
 	
 	/**
@@ -125,42 +121,38 @@ public class PlayScene extends GameScene {
 	}
 
 	/**
-	 * Create four barricades in front of the player and add them to the scene.
+	 * Create four barricades in front of the player.
+	 *
+	 * @return the created barricades
 	 */
-	public void createBarricades() {
+	public static Collection<Rectangle2D> createBarricades() {
+		Collection<Rectangle2D> barricades = new ArrayList<Rectangle2D>();
 		//CHECKSTYLE.OFF: MagicNumber - Don't want to layout automatically
 		for (int x = 100; x <= 300; x += 25) {
 			for (int y = 700; y <= 800; y += 25) {
-				Barricade b = new Barricade(new Rectangle2D.Double(x, y, 25, 25));
-				addEntity(b);
-				barricades.add(b);
+				barricades.add(new Rectangle2D.Double(x, y, 25, 25));
 			}
 		}
 
 		for (int x = 500; x <= 700; x += 25) {
 			for (int y = 700; y <= 800; y += 25) {
-				Barricade b = new Barricade(new Rectangle2D.Double(x, y, 25, 25));
-				addEntity(b);
-				barricades.add(b);
+				barricades.add(new Rectangle2D.Double(x, y, 25, 25));
 			}
 		}
 
 		for (int x = 900; x <= 1100; x += 25) {
 			for (int y = 700; y <= 800; y += 25) {
-				Barricade b = new Barricade(new Rectangle2D.Double(x, y, 25, 25));
-				addEntity(b);
-				barricades.add(b);
+				barricades.add(new Rectangle2D.Double(x, y, 25, 25));
 			}
 		}
 
 		for (int x = 1300; x <= 1500; x += 25) {
 			for (int y = 700; y <= 800; y += 25) {
-				Barricade b = new Barricade(new Rectangle2D.Double(x, y, 25, 25));
-				addEntity(b);
-				barricades.add(b);
+				barricades.add(new Rectangle2D.Double(x, y, 25, 25));
 			}
 		}
 		//CHECKSTYLE.ON: MagicNumber
+		return barricades;
 	}
 
 	/**
@@ -185,23 +177,25 @@ public class PlayScene extends GameScene {
 
 	/**
 	 * Gets the current score for the player
+	 *
 	 * @return The amount of points scored
 	 */
 	public int getPoints() {
-		return points;
+		return gameInformation.getPoints();
 	}
 
 	/**
 	 * Adds a positive amount of points to the player score
-	 * @param points  The amount of points the player scored
+	 *
+	 * @param points The amount of points the player scored
 	 */
 	public void addPoints(int points) {
 		if (points < 0) {
 			return;
 		}
-		this.points += points;
+		gameInformation.addPoints(points);
 
-		scoreLabel.setText("Score: " + this.points);
+		scoreLabel.setText("Score: " + gameInformation.getPoints());
 	}
 
 	@Override
@@ -209,6 +203,8 @@ public class PlayScene extends GameScene {
 		if (finished) {
 			handleAdditions();
 			handleDeletions();
+			// Only the game over button needs to be updated.
+			gameOver.update(new Interval(0, 1));
 			return;
 		}
 
@@ -218,7 +214,8 @@ public class PlayScene extends GameScene {
 			createUfo();
 		}
 
-		livesLabel.setText("Lives: " + ship.getLives());
+		livesLabel.setText("Lives: " + gameInformation.getLives());
+		bombsLabel.setText("Bombs: " + gameInformation.getBombs());
 	}
 
 	/**
@@ -230,10 +227,7 @@ public class PlayScene extends GameScene {
 		}
 
 		finished = true;
-		//CHECKSTYLE.OFF: MagicNumber - Don't want to layout automatically
-		LabelEntity gameOver = new LabelEntity(
-				new Rectangle2D.Double(200, 200, 0, 0), "GAME OVER!");
-		//CHECKSTYLE.ON: MagicNumber
+		gameOver.addClickedListener(this);
 		addEntity(gameOver);
 	}
 
@@ -244,17 +238,29 @@ public class PlayScene extends GameScene {
 		if (finished) {
 			return;
 		} else {
-			GameScene gs = new StoreScene(scene, ship.getLives(), getPoints(), ship.getBombs(),
-					currentLevel, barricades);
+			GameScene gs = new StoreScene(scene, gameInformation);
 			Engine.getInstance().setScene(gs);
 		}
 	}
 
 	/**
 	 * Return the current level.
+	 *
 	 * @return the current level
 	 */
 	public int getCurrentLevel() {
-		return currentLevel;
+		return gameInformation.getLevel();
+	}
+
+	/**
+	 * Called when a label is clicked.
+	 *
+	 * @param label the label that was clicked.
+	 */
+	public void labelClicked(LabelEntity label) {
+		if (label == gameOver) {
+			GameScene newScene = new MenuScene(scene);
+			Engine.getInstance().setScene(newScene);
+		}
 	}
 }
