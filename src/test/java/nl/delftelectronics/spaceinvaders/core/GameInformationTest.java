@@ -42,7 +42,7 @@ public class GameInformationTest extends TestCase {
         when(b.getPositionY()).thenReturn(2.0);
         when(b.getWidth()).thenReturn(3.0);
         when(b.getHeight()).thenReturn(4.0);
-        gi.barricadeDestroyed(b);
+        gi.entityDestroyed(b);
         assertTrue(gi.getBarricadeRectangles().isEmpty());
     }
 

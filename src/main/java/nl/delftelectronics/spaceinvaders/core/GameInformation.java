@@ -1,7 +1,8 @@
 package nl.delftelectronics.spaceinvaders.core;
 
 import nl.delftelectronics.spaceinvaders.core.entities.Barricade;
-import nl.delftelectronics.spaceinvaders.core.entities.BarricadeDestroyedListener;
+import nl.delftelectronics.spaceinvaders.core.entities.Entity;
+import nl.delftelectronics.spaceinvaders.core.entities.EntityDestroyedListener;
 
 import java.awt.geom.Rectangle2D;
 import java.io.File;
@@ -21,7 +22,7 @@ import java.util.Optional;
  * Stores the information about the current game, i.e. the points, leves, bombs, levels and the
  * barricades.
  */
-public class GameInformation implements BarricadeDestroyedListener, Serializable {
+public class GameInformation implements EntityDestroyedListener, Serializable {
     public static final String SAVEGAME_FILENAME = "spaceinvaders.savefile";
     private int points;
     private int lives;
@@ -263,10 +264,13 @@ public class GameInformation implements BarricadeDestroyedListener, Serializable
      *
      * @param barricade barricade that is destroyed.
      */
-    public void barricadeDestroyed(Barricade barricade) {
-        Rectangle2D rectangle = new Rectangle2D.Double(barricade.getPositionX(),
-                barricade.getPositionY(), barricade.getWidth(), barricade.getHeight());
-        barricadeRectangles.remove(rectangle);
+    public void entityDestroyed(Entity entity) {
+        if (entity instanceof Barricade) {
+            Barricade barricade = (Barricade) entity;
+            Rectangle2D rectangle = new Rectangle2D.Double(barricade.getPositionX(),
+                    barricade.getPositionY(), barricade.getWidth(), barricade.getHeight());
+            barricadeRectangles.remove(rectangle);
+        }
     }
 
     @Override
