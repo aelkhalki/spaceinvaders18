@@ -8,8 +8,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Optional;
@@ -61,10 +63,22 @@ public class GameInformation implements BarricadeDestroyedListener, Serializable
             File file = new File("." + File.separator, filename);
             file.createNewFile();
             FileOutputStream fos = new FileOutputStream(file);
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            save(fos);
+        } catch (IOException e) {
+            Logger.error("The save game file could not be written to. Do you have the correct"
+                    + "permissions?");
+        }
+    }
+
+    /**
+     * Save the game information to the filename.
+     *
+     * @param os OutputStream to write to
+     */
+    public void save(OutputStream os) {
+        try {
+            ObjectOutputStream oos = new ObjectOutputStream(os);
             oos.writeObject(this);
-        } catch (FileNotFoundException e) {
-            Logger.error("The save game file could not be found, even after the file is created.");
         } catch (IOException e) {
             Logger.error("The save game file could not be written to. Do you have the correct"
                     + "permissions? Or perhaps you're trying to serialize an unserializable "
@@ -88,22 +102,32 @@ public class GameInformation implements BarricadeDestroyedListener, Serializable
      * @return the loaded game information
      */
     public static Optional<GameInformation> load(String filename) {
-        Optional<GameInformation> gi = Optional.empty();
-        FileInputStream fin = null;
         try {
             File file = new File("." + File.separator, filename);
-            fin = new FileInputStream(file);
+            FileInputStream fin = new FileInputStream(file);
+            return load(fin);
         } catch (FileNotFoundException e) {
             Logger.error("The save game file could not be found.");
+            return Optional.empty();
         }
+    }
+
+    /**
+     * Load the game information from the filename.
+     *
+     * @param is input stream of the game information
+     * @return the loaded game information
+     */
+    public static Optional<GameInformation> load(InputStream is) {
+        Optional<GameInformation> gi = Optional.empty();
         try {
-            ObjectInputStream ois = new ObjectInputStream(fin);
+            ObjectInputStream ois = new ObjectInputStream(is);
             gi = Optional.of((GameInformation) ois.readObject());
         } catch (IOException e) {
             Logger.error("The save game file could not be accessed.");
         } catch (ClassNotFoundException e) {
-            // This case should not even happen.
-            Logger.error("Apparently, a class that is stored in the save file is not available.");
+            Logger.error("Apparently, a class that is stored in the save file is not available. "
+                    + "Perhaps the save file is from an older version of the game.");
         }
         return gi;
     }
@@ -242,5 +266,46 @@ public class GameInformation implements BarricadeDestroyedListener, Serializable
         Rectangle rectangle = new Rectangle(barricade.getPositionX(), barricade.getPositionY(),
                 barricade.getWidth(), barricade.getHeight());
         barricadeRectangles.remove(rectangle);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        GameInformation that = (GameInformation) o;
+
+        if (points != that.points) {
+            return false;
+        }
+        if (lives != that.lives) {
+            return false;
+        }
+        if (bombs != that.bombs) {
+            return false;
+        }
+        if (level != that.level) {
+            return false;
+        }
+        return !(barricadeRectangles != null ?
+                !barricadeRectangles.equals(that.barricadeRectangles) :
+                that.barricadeRectangles != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        // CHECKSTYLE:OFF - MagicNumber
+        int result = points;
+        result = 31 * result + lives;
+        result = 31 * result + bombs;
+        result = 31 * result + level;
+        result = 31 * result + (barricadeRectangles != null ? barricadeRectangles.hashCode() : 0);
+        return result;
+        // CHECKSTYLE:ON
     }
 }
