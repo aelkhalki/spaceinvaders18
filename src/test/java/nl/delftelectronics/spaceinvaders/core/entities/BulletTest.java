@@ -5,6 +5,7 @@ import org.joda.time.Interval;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 import static org.mockito.Matchers.any;
@@ -28,13 +29,15 @@ public class BulletTest extends TestCase {
         when(scene.getCollisions(any(Collidable.class))).thenReturn(new ArrayList<Entity>());
         
         // Moving speed is per milisecond
-        Bullet bullet = new Bullet(dimension, dimension, dimension, dimension, true);
+        Bullet bullet = new Bullet(new Rectangle2D.Double(dimension, dimension,
+        		dimension, dimension), true);
         bullet.initialize(scene);
         Assert.assertEquals(dimension, bullet.getPositionY());
         bullet.update(new Interval(0, 1));
         Assert.assertEquals(dimension - Bullet.MOVING_SPEED, bullet.getPositionY());
 
-        Bullet down = new Bullet(dimension, dimension, dimension, dimension, false);
+        Bullet down = new Bullet(new Rectangle2D.Double(dimension, dimension,
+        		dimension, dimension), false);
         down.initialize(scene);
         Assert.assertEquals(dimension, down.getPositionY());
         down.update(new Interval(0, 1));

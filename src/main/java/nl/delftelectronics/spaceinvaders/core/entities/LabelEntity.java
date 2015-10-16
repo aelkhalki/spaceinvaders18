@@ -3,6 +3,8 @@
  */
 package nl.delftelectronics.spaceinvaders.core.entities;
 
+import java.awt.geom.Rectangle2D;
+
 import javax.swing.event.EventListenerList;
 
 import org.joda.time.Interval;
@@ -33,19 +35,13 @@ public class LabelEntity extends DrawableEntity implements Collidable {
 	/**
 	 * Creates a new LabelEntity
 	 * 
-	 * @param positionX
-	 *            The left offset
-	 * @param positionY
-	 *            The top offset
-	 * @param width
-	 *            The width of the click box
-	 * @param height
-	 *            The height of the click box
+	 * @param position
+	 * 			  position of the sprite
 	 * @param text
 	 *            The text to display
 	 */
-	public LabelEntity(int positionX, int positionY, int width, int height, String text) {
-		super(positionX, positionY, width, height);
+	public LabelEntity(Rectangle2D position, String text) {
+		super(position);
 
 		this.text = text;
 		clickedEvent = new EventListenerList();

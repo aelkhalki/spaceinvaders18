@@ -1,6 +1,8 @@
 //CHECKSTYLE.OFF: MagicNumber
 package nl.delftelectronics.spaceinvaders.core.entities;
 
+import java.awt.geom.Rectangle2D;
+
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
@@ -9,7 +11,8 @@ import junit.framework.TestCase;
  */
 public class MediumEnemyTest extends TestCase {
 
-    MediumEnemy enemy = new MediumEnemy(10, 10, 10, 10, 10, 10, 0, null);
+    MediumEnemy enemy = new MediumEnemy(
+    		new Rectangle2D.Double(10, 10, 10, 10), 10, 10, 0, null);
     int speed = enemy.MOVE_DOWN_SPEED;
 
     /**
@@ -17,7 +20,8 @@ public class MediumEnemyTest extends TestCase {
      */
     public void testmediumEnemy() {
 
-        MediumEnemy mediumenemy = new MediumEnemy(10, 10, 10, 10, 10, 10, 0, null);
+        MediumEnemy mediumenemy = new MediumEnemy(
+        		new Rectangle2D.Double(10, 10, 10, 10), 10, 10, 0, null);
 
         Assert.assertEquals(false, mediumenemy.isKilled);
 
@@ -31,7 +35,8 @@ public class MediumEnemyTest extends TestCase {
      */
     public void testmediumEnemyMovement() {
 
-        MediumEnemy mediumenemy = new MediumEnemy(10, speed * 2, 10, 10, 10, 10, 0, null);
+        MediumEnemy mediumenemy = new MediumEnemy(
+        		new Rectangle2D.Double(10, speed * 2, 10, 10), 10, 10, 0, null);
 
         double x = mediumenemy.getPositionY();
 
@@ -46,7 +51,8 @@ public class MediumEnemyTest extends TestCase {
      */
     public void testmediumEnemyKill() {
 
-        MediumEnemy mediumenemy = new MediumEnemy(10, 10, 10, 10, 10, 10, 0, null);
+        MediumEnemy mediumenemy = new MediumEnemy(
+        		new Rectangle2D.Double(10, 10, 10, 10), 10, 10, 0, null);
         Assert.assertEquals(false, mediumenemy.isKilled);
         mediumenemy.kill();
         Assert.assertEquals(true, mediumenemy.isKilled);
@@ -59,7 +65,8 @@ public class MediumEnemyTest extends TestCase {
      */
     public void testmediumEnemyReachedBottom() {
 
-        MediumEnemy mediumenemy = new MediumEnemy(0, 40, 10, 10, 10, 10, 180, null);
+        MediumEnemy mediumenemy = new MediumEnemy(
+        		new Rectangle2D.Double(0, 40, 10, 10), 10, 10, 180, null);
 
         mediumenemy.moveDown();
         Assert.assertEquals(false, mediumenemy.reachedBottom());

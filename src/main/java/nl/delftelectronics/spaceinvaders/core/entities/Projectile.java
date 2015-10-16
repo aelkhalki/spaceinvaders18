@@ -1,5 +1,6 @@
 package nl.delftelectronics.spaceinvaders.core.entities;
 
+import java.awt.geom.Rectangle2D;
 import java.util.List;
 import org.joda.time.Interval;
 
@@ -17,23 +18,16 @@ public abstract class Projectile extends SpriteEntity implements Collidable {
 	/**
 	 * Creates a new projectile
 	 * 
-	 * @param positionX
-	 *            The left offset of the projectile
-	 * @param positionY
-	 *            The top offset of the projectile
-	 * @param width
-	 *            The width of the collision box of the projectile
-	 * @param height
-	 *            The height of the collision box of the projectile
+	 * @param position
+	 * 			  position of the sprite
 	 * @param spriteName
 	 *            The sprite name
 	 * @param isPlayerOwned
 	 *            Whether the projectile is player owned
 	 */
-	public Projectile(double positionX, double positionY,
-			double width, double height, String spriteName,
+	public Projectile(Rectangle2D position, String spriteName,
 			boolean isPlayerOwned) {
-		super(positionX, positionY, width, height, spriteName);
+		super(position, spriteName);
 
 		this.isPlayerOwned = isPlayerOwned;
 		if (isPlayerOwned) {
