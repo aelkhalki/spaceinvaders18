@@ -30,7 +30,7 @@ public class TestShouldHaves extends TestCase {
 		boolean found = false;
 		for (Entity e : s.getEntities()) {
 			if (e instanceof LabelEntity) {
-				if (((LabelEntity) e).getText().equalsIgnoreCase("Game Over!")) {
+				if (((LabelEntity) e).getText().equalsIgnoreCase("BACK TO MAIN MENU")) {
 					found = true;
 				}
 			}

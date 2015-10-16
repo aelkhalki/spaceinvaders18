@@ -5,8 +5,11 @@ package nl.delftelectronics.spaceinvaders.core.scenes;
 
 import javafx.scene.Scene;
 import nl.delftelectronics.spaceinvaders.core.Engine;
+import nl.delftelectronics.spaceinvaders.core.GameInformation;
 import nl.delftelectronics.spaceinvaders.core.entities.LabelClickedListener;
 import nl.delftelectronics.spaceinvaders.core.entities.LabelEntity;
+
+import java.util.Optional;
 
 /**
  * Used to display the game menu
@@ -15,8 +18,9 @@ import nl.delftelectronics.spaceinvaders.core.entities.LabelEntity;
  */
 public class MenuScene extends GameScene implements LabelClickedListener {
 
-	LabelEntity startButton;
-	LabelEntity quitButton;
+	private LabelEntity startButton;
+	private LabelEntity loadGameButton;
+	private LabelEntity quitButton;
 	
 	/**
 	 * Creates a new MenuScene
@@ -29,6 +33,9 @@ public class MenuScene extends GameScene implements LabelClickedListener {
 		startButton = new LabelEntity(100, 100, 500, 100, "START GAME");
 		startButton.addClickedListener(this);
 		addEntity(startButton);
+		loadGameButton = new LabelEntity(100, 300, 500, 100, "LOAD GAME");
+		loadGameButton.addClickedListener(this);
+		addEntity(loadGameButton);
 		quitButton = new LabelEntity(100, 500, 500, 100, "QUIT GAME");
 		quitButton.addClickedListener(this);
 		addEntity(quitButton);
@@ -42,6 +49,15 @@ public class MenuScene extends GameScene implements LabelClickedListener {
 	public void labelClicked(LabelEntity label) {
 		if (label == quitButton) {
 			System.exit(0);
+		}
+		if (label == loadGameButton) {
+			Optional<GameInformation> gi = GameInformation.load();
+			if (gi.isPresent()) {
+				Engine engine = Engine.getInstance();
+				engine.setScene(new StoreScene(scene, gi.get()));
+			} else {
+				loadGameButton.setText("LOAD GAME (failed)");
+			}
 		}
 		if (label == startButton) {
 			Engine engine = Engine.getInstance();
