@@ -12,20 +12,15 @@ import javafx.scene.Scene;
 import nl.delftelectronics.spaceinvaders.core.Engine;
 import nl.delftelectronics.spaceinvaders.core.GameInformation;
 import nl.delftelectronics.spaceinvaders.core.Rectangle;
-import nl.delftelectronics.spaceinvaders.core.entities.Barricade;
-import nl.delftelectronics.spaceinvaders.core.entities.Enemy;
-import nl.delftelectronics.spaceinvaders.core.entities.EnemyBlock;
-import nl.delftelectronics.spaceinvaders.core.entities.EnemyFactory;
-import nl.delftelectronics.spaceinvaders.core.entities.LabelEntity;
-import nl.delftelectronics.spaceinvaders.core.entities.Ship;
-import nl.delftelectronics.spaceinvaders.core.entities.Ufo;
+import nl.delftelectronics.spaceinvaders.core.entities.*;
+import org.joda.time.Interval;
 
 /**
  * The scene that contains and builds the game
  *
  * @author Max
  */
-public class PlayScene extends GameScene {
+public class PlayScene extends GameScene implements LabelClickedListener {
 	private static final double SHIP_MARGIN_FROM_LEFT = 0.05; // ratio
 	private static final double SHIP_MARGIN_FROM_BOTTOM = 0.1; // ratio
 	private static final int UFO_MARGIN_FROM_TOP = 100; // pixels
@@ -43,6 +38,7 @@ public class PlayScene extends GameScene {
 	private LabelEntity livesLabel;
 	private LabelEntity levelLabel;
 	private LabelEntity bombsLabel;
+	private LabelEntity gameOver;
 
 	/**
 	 * Builds a new PlayScene
@@ -91,6 +87,7 @@ public class PlayScene extends GameScene {
 		livesLabel = new LabelEntity(400, 30, 0, 0, "Lives: " + gameInformation.getLives());
 		levelLabel = new LabelEntity(700, 30, 0, 0, "Level: " + gameInformation.getLevel());
 		bombsLabel = new LabelEntity(1000, 30, 0, 0, "Bombs: " + gameInformation.getBombs());
+		gameOver = new LabelEntity(550, 500, 400, 100, "BACK TO MAIN MENU");
 		//CHECKSTYLE.ON: MagicNumber
 
 		for (Rectangle r : gameInformation.getBarricadeRectangles()) {
@@ -188,6 +185,8 @@ public class PlayScene extends GameScene {
 		if (finished) {
 			handleAdditions();
 			handleDeletions();
+			// Only the game over button needs to be updated.
+			gameOver.update(new Interval(0,1));
 			return;
 		}
 
@@ -210,9 +209,7 @@ public class PlayScene extends GameScene {
 		}
 
 		finished = true;
-		//CHECKSTYLE.OFF: MagicNumber - Don't want to layout automatically
-		LabelEntity gameOver = new LabelEntity(200, 200, 0, 0, "GAME OVER!");
-		//CHECKSTYLE.ON: MagicNumber
+		gameOver.addClickedListener(this);
 		addEntity(gameOver);
 	}
 
@@ -235,5 +232,17 @@ public class PlayScene extends GameScene {
 	 */
 	public int getCurrentLevel() {
 		return gameInformation.getLevel();
+	}
+
+	/**
+	 * Called when a label is clicked.
+	 *
+	 * @param label the label that was clicked.
+	 */
+	public void labelClicked(LabelEntity label) {
+		if (label == gameOver) {
+			GameScene newScene = new MenuScene(scene);
+			Engine.getInstance().setScene(newScene);
+		}
 	}
 }
