@@ -146,7 +146,7 @@ public class GameInformation implements BarricadeDestroyedListener, Serializable
      * @return true iff lives is not zero
      */
     public boolean hasLives() {
-        return lives != 0;
+        return lives > 0;
     }
 
     /**
@@ -169,7 +169,7 @@ public class GameInformation implements BarricadeDestroyedListener, Serializable
      * @return true iff the player has any bombs.
      */
     public boolean hasBombs() {
-        return bombs != 0;
+        return bombs > 0;
     }
 
     /**
