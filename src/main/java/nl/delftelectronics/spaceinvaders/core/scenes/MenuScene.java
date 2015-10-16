@@ -55,6 +55,8 @@ public class MenuScene extends GameScene implements LabelClickedListener {
 			if (gi.isPresent()) {
 				Engine engine = Engine.getInstance();
 				engine.setScene(new StoreScene(scene, gi.get()));
+			} else {
+				loadGameButton.setText("LOAD GAME (failed)");
 			}
 		}
 		if (label == startButton) {
