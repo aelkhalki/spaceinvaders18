@@ -12,7 +12,14 @@ import javafx.scene.Scene;
 import nl.delftelectronics.spaceinvaders.core.Engine;
 import nl.delftelectronics.spaceinvaders.core.GameInformation;
 import nl.delftelectronics.spaceinvaders.core.Rectangle;
-import nl.delftelectronics.spaceinvaders.core.entities.*;
+import nl.delftelectronics.spaceinvaders.core.entities.Barricade;
+import nl.delftelectronics.spaceinvaders.core.entities.Enemy;
+import nl.delftelectronics.spaceinvaders.core.entities.EnemyBlock;
+import nl.delftelectronics.spaceinvaders.core.entities.EnemyFactory;
+import nl.delftelectronics.spaceinvaders.core.entities.LabelClickedListener;
+import nl.delftelectronics.spaceinvaders.core.entities.LabelEntity;
+import nl.delftelectronics.spaceinvaders.core.entities.Ship;
+import nl.delftelectronics.spaceinvaders.core.entities.Ufo;
 import org.joda.time.Interval;
 
 /**
@@ -186,7 +193,7 @@ public class PlayScene extends GameScene implements LabelClickedListener {
 			handleAdditions();
 			handleDeletions();
 			// Only the game over button needs to be updated.
-			gameOver.update(new Interval(0,1));
+			gameOver.update(new Interval(0, 1));
 			return;
 		}
 

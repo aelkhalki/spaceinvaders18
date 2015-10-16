@@ -25,7 +25,8 @@ public class ShipTest extends TestCase {
      */
     public void testShipExist() {
         final double dimension = 10;
-        GameInformation gameInformation = new GameInformation(0, 3, 0, 1, new ArrayList<Rectangle>());
+        GameInformation gameInformation = new GameInformation(0, 3, 0, 1,
+                new ArrayList<Rectangle>());
         Ship ship = new Ship(10, 10, 10, 10, 10, 10, gameInformation);
         GameScene scene = mock(GameScene.class);
         when(scene.getCollisions(any(Collidable.class))).thenReturn(
@@ -40,7 +41,8 @@ public class ShipTest extends TestCase {
      * Test if the ship registers hitting bullets.
      */
     public void testShipHit() {
-        GameInformation gameInformation = new GameInformation(0, 3, 0, 1, new ArrayList<Rectangle>());
+        GameInformation gameInformation = new GameInformation(0, 3, 0, 1,
+                new ArrayList<Rectangle>());
         Ship ship = new Ship(10, 10, 10, 10, 10, 10, gameInformation);
         GameScene scene = mock(GameScene.class);
         when(scene.getCollisions(any(Collidable.class))).thenReturn(
@@ -55,7 +57,8 @@ public class ShipTest extends TestCase {
      * Tests if the ship can create bullets correctly.
      */
     public void testPlayerShootBullet() {
-        GameInformation gameInformation = new GameInformation(0, 3, 0, 1, new ArrayList<Rectangle>());
+        GameInformation gameInformation = new GameInformation(0, 3, 0, 1,
+                new ArrayList<Rectangle>());
         Ship ship = new Ship(10, 10, 10, 10, 10, 10, gameInformation);
         GameScene scene = mock(GameScene.class);
         ship.initialize(scene);
@@ -67,7 +70,8 @@ public class ShipTest extends TestCase {
      * Tests if the ship can create bombs correctly.
      */
     public void testPlayerShootBomb() {
-        GameInformation gameInformation = new GameInformation(0, 3, 1, 1, new ArrayList<Rectangle>());
+        GameInformation gameInformation = new GameInformation(0, 3, 1, 1,
+                new ArrayList<Rectangle>());
         Ship ship = new Ship(10, 10, 10, 10, 10, 10, gameInformation);
         GameScene scene = mock(GameScene.class);
         ship.initialize(scene);

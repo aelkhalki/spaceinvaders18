@@ -6,12 +6,9 @@ package nl.delftelectronics.spaceinvaders.core.scenes;
 import javafx.scene.Scene;
 import nl.delftelectronics.spaceinvaders.core.Engine;
 import nl.delftelectronics.spaceinvaders.core.GameInformation;
-import nl.delftelectronics.spaceinvaders.core.Rectangle;
 import nl.delftelectronics.spaceinvaders.core.entities.LabelClickedListener;
 import nl.delftelectronics.spaceinvaders.core.entities.LabelEntity;
 
-import java.io.*;
-import java.util.ArrayList;
 import java.util.Optional;
 
 /**

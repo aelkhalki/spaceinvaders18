@@ -84,6 +84,10 @@ public class Entity {
 		}
 	}
 
+	/**
+	 * Returns true if the entity is destroyed, else false.
+	 * @return true if the entity is destroyed, else false.
+	 */
 	public boolean isDestroyed() {
 		return destroyed;
 	}

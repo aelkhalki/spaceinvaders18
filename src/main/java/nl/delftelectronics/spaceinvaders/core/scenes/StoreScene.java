@@ -23,6 +23,8 @@ public class StoreScene extends GameScene implements LabelClickedListener {
 
     /**
      * Create the store scene, and the accompanying labels.
+     *
+     * @param scene           the JavaFX scene to bind to
      * @param gameInformation the information and values about the current game
      */
     public StoreScene(Scene scene, GameInformation gameInformation) {
@@ -65,8 +67,8 @@ public class StoreScene extends GameScene implements LabelClickedListener {
             gameInformation.subtractPoints(LIFE_COST);
         } else if (bombLabel.equals(label) && gameInformation.getPoints() >= BOMB_COST) {
             gameInformation.incrementBombs();
-            bombLabel.setText("Get a bomb (250 points). Current bombs: " +
-                    gameInformation.getBombs());
+            bombLabel.setText("Get a bomb (250 points). Current bombs: "
+                    + gameInformation.getBombs());
             gameInformation.subtractPoints(BOMB_COST);
         } else if (barricadeLabel.equals(label) && gameInformation.getPoints() >= BARRICADE_COST) {
             gameInformation.setBarricadeRectangles(PlayScene.createBarricades());

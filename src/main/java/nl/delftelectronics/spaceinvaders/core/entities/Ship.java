@@ -1,6 +1,10 @@
 package nl.delftelectronics.spaceinvaders.core.entities;
 
-import nl.delftelectronics.spaceinvaders.core.*;
+import nl.delftelectronics.spaceinvaders.core.Audio;
+import nl.delftelectronics.spaceinvaders.core.Collidable;
+import nl.delftelectronics.spaceinvaders.core.Engine;
+import nl.delftelectronics.spaceinvaders.core.GameInformation;
+import nl.delftelectronics.spaceinvaders.core.Logger;
 import org.joda.time.Interval;
 
 import nl.delftelectronics.spaceinvaders.core.scenes.PlayScene;
@@ -19,12 +23,13 @@ public class Ship extends Actor implements Collidable {
     /**
      * Create a Ship with the initial position and size.
      *
-     * @param positionX    initial x-position of the Ship.
-     * @param positionY    initial y-position of the Ship.
-     * @param width        width of the Ship.
-     * @param height       height of the Ship.
-     * @param westBoundary westernmost boundary of the playing field.
-     * @param eastBoundary easternmost boundary of the playing field.
+     * @param positionX       initial x-position of the Ship.
+     * @param positionY       initial y-position of the Ship.
+     * @param width           width of the Ship.
+     * @param height          height of the Ship.
+     * @param westBoundary    westernmost boundary of the playing field.
+     * @param eastBoundary    easternmost boundary of the playing field.
+     * @param gameInformation information about the current game.
      */
     public Ship(int positionX, int positionY, int width, int height,
                 int westBoundary, int eastBoundary, GameInformation gameInformation) {
