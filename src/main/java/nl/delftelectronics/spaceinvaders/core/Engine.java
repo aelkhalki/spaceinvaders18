@@ -65,6 +65,7 @@ public class Engine {
 				inputs.add(key);
 			}
 		}
+		System.out.println(inputs);
 	}
 
 	/**
