@@ -1,6 +1,7 @@
 package nl.delftelectronics.spaceinvaders.core.scenes;
 
 import javafx.scene.Scene;
+import nl.delftelectronics.spaceinvaders.core.GameInformation;
 import nl.delftelectronics.spaceinvaders.core.PlayingKeysFactory;
 import nl.delftelectronics.spaceinvaders.core.entities.Ship;
 
@@ -20,6 +21,17 @@ public class MultiplayerPlayScene extends PlayScene {
      */
     public MultiplayerPlayScene(Scene scene) {
         super(scene);
+        gameInformation.setMultiplayer(true);
+    }
+
+    /**
+     * Construct a multiplayer PlayScene with an existing GameInformation
+     *
+     * @param scene           the JavaFX scene to bind to.
+     * @param gameInformation the existing GameInformation
+     */
+    public MultiplayerPlayScene(Scene scene, GameInformation gameInformation) {
+        super(scene, gameInformation);
     }
 
     @Override
