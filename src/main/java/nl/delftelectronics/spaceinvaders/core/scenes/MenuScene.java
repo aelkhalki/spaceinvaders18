@@ -3,14 +3,13 @@
  */
 package nl.delftelectronics.spaceinvaders.core.scenes;
 
-import java.awt.geom.Rectangle2D;
-
 import javafx.scene.Scene;
 import nl.delftelectronics.spaceinvaders.core.Engine;
 import nl.delftelectronics.spaceinvaders.core.GameInformation;
 import nl.delftelectronics.spaceinvaders.core.entities.LabelClickedListener;
 import nl.delftelectronics.spaceinvaders.core.entities.LabelEntity;
 
+import java.awt.geom.Rectangle2D;
 import java.util.Optional;
 
 /**
@@ -23,6 +22,7 @@ public class MenuScene extends GameScene implements LabelClickedListener {
 	private LabelEntity startButton;
 	private LabelEntity loadGameButton;
 	private LabelEntity quitButton;
+	private LabelEntity startMultiplayerButton;
 	
 	/**
 	 * Creates a new MenuScene
@@ -39,9 +39,12 @@ public class MenuScene extends GameScene implements LabelClickedListener {
 		loadGameButton.addClickedListener(this);
 		addEntity(loadGameButton);
 		quitButton = new LabelEntity(new Rectangle2D.Double(100, 500, 500, 100), "QUIT GAME");
-
 		quitButton.addClickedListener(this);
 		addEntity(quitButton);
+		startMultiplayerButton = new LabelEntity(new Rectangle2D.Double(100, 700, 500, 100),
+				"START MULTIPLAYER");
+		startMultiplayerButton.addClickedListener(this);
+		addEntity(startMultiplayerButton);
 		//CHECKSTYLE.ON: MagicNumber
 	}
 
@@ -65,6 +68,10 @@ public class MenuScene extends GameScene implements LabelClickedListener {
 		if (label == startButton) {
 			Engine engine = Engine.getInstance();
 			engine.setScene(new PlayScene(engine.getScene().scene));
+		}
+		if (label == startMultiplayerButton) {
+			Engine engine = Engine.getInstance();
+			engine.setScene(new MultiplayerPlayScene(engine.getScene().scene));
 		}
 	}
 
