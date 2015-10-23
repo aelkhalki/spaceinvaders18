@@ -12,7 +12,7 @@ import nl.delftelectronics.spaceinvaders.core.scenes.GameScene;
  * The Engine is the main class of this game. The most of the game logic is
  * performed in this class.
  */
-public class Engine {
+public final class Engine {
 
 	private static Engine instance;
 	private List<String> inputs = new ArrayList<String>();
@@ -26,9 +26,15 @@ public class Engine {
 	 * @param startScene
 	 *            the scene.
 	 */
-	public Engine(GameScene startScene) {
-		this.currentScene = startScene;
-		Engine.instance = this;
+	private Engine() {
+	}
+	
+	/**
+	 * Resets internal input state to initial values.
+	 */
+	private void resetInput() {
+		inputs = new ArrayList<String>();
+		clicks = new ArrayList<Point>();
 	}
 
 	/**
@@ -37,6 +43,9 @@ public class Engine {
 	 * @return the last instance of the Engine
 	 */
 	public static Engine getInstance() {
+		if (instance == null) {
+			instance = new Engine();
+		}
 		return instance;
 	}
 
@@ -99,6 +108,7 @@ public class Engine {
 	 */
 	public void setScene(GameScene scene) {
 		currentScene = scene;
+		resetInput();
 	}
 
 	/**

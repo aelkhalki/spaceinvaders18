@@ -26,7 +26,7 @@ public class PlaySceneTest extends TestCase {
      */
     public void testLevelIncrease() {
         PlayScene playScene = new PlayScene(mock(Scene.class));
-        new Engine(playScene);
+        Engine.getInstance().setScene(playScene);
         playScene.win();
         StoreScene ss = (StoreScene) Engine.getInstance().getScene();
         ss.continueGame();
