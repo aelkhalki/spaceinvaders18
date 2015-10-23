@@ -61,7 +61,8 @@ public class GUI extends Application {
 
 		Audio.playBackgroundSound();
 
-		engine = new Engine(new GameScene(scene));
+		engine = Engine.getInstance();
+		engine.setScene(new GameScene(scene));
 
 		scene.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent e) {
