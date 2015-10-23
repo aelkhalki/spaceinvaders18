@@ -55,7 +55,7 @@ public class PlayScene extends GameScene implements LabelClickedListener {
 	 * @param scene The javaFX scene to attach to
 	 */
 	public PlayScene(Scene scene) {
-		this(scene, new GameInformation(0, Ship.INITIAL_LIVES + 1000, 0, 1, createBarricades()),
+		this(scene, new GameInformation(0, Ship.INITIAL_LIVES, 0, 1, createBarricades()),
 				NUMBER_OF_PLAYERS);
 	}
 
@@ -66,7 +66,7 @@ public class PlayScene extends GameScene implements LabelClickedListener {
      * @param numOfPlayers number of players participating in this game
 	 */
 	public PlayScene(Scene scene, int numOfPlayers) {
-		this(scene, new GameInformation(0, Ship.INITIAL_LIVES + 1000, 0, 1, createBarricades()),
+		this(scene, new GameInformation(0, Ship.INITIAL_LIVES, 0, 1, createBarricades()),
 				numOfPlayers);
 	}
 
