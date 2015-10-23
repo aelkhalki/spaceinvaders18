@@ -28,6 +28,7 @@ public class GameInformation implements EntityDestroyedListener, Serializable {
     private int lives;
     private int bombs;
     private int level;
+    private boolean multiplayer;
     private Collection<Rectangle2D> barricadeRectangles;
 
     /**
@@ -45,7 +46,24 @@ public class GameInformation implements EntityDestroyedListener, Serializable {
         this.lives = lives;
         this.bombs = bombs;
         this.level = level;
+        this.multiplayer = false;
         this.barricadeRectangles = barricadeRectangles;
+    }
+
+    /**
+     * Create a GameInformation object.
+     *
+     * @param points              the number of points
+     * @param lives               the number of lives
+     * @param bombs               the number of bombs
+     * @param level               the current level
+     * @param multiplayer         true if the game is a multiplayer game
+     * @param barricadeRectangles a collection of rectangles of the barricades
+     */
+    public GameInformation(int points, int lives, int bombs, int level, boolean multiplayer,
+                           Collection<Rectangle2D> barricadeRectangles) {
+        this(points, lives, bombs, level, barricadeRectangles);
+        this.multiplayer = multiplayer;
     }
 
     /**
@@ -239,6 +257,22 @@ public class GameInformation implements EntityDestroyedListener, Serializable {
      */
     public int getLevel() {
         return level;
+    }
+
+    /**
+     * Return true if the game is a multiplayer game, otherwise false.
+     * @return true if the game is a multiplayer game, otherwise false
+     */
+    public boolean isMultiplayer() {
+        return multiplayer;
+    }
+
+    /**
+     * Set if the game is a multiplayer game.
+     * @param multiplayer true if the game is a multiplayer game, otherwise false
+     */
+    public void setMultiplayer(boolean multiplayer) {
+        this.multiplayer = multiplayer;
     }
 
     /**

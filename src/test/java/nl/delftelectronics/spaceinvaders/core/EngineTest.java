@@ -19,7 +19,8 @@ public class EngineTest extends TestCase {
 	 */
 	public void testClick() {
 		GameScene gameScene = mock(GameScene.class);
-		Engine engine = new Engine(gameScene);
+		Engine engine = Engine.getInstance();
+		engine.setScene(gameScene);
 
 		Collidable all = new DummyCollidable(0, 0, 1000, 1000);
 		Collidable none = new DummyCollidable(0, 0, 0, 0);
@@ -44,7 +45,8 @@ public class EngineTest extends TestCase {
 		GameScene gameScene1 = mock(GameScene.class);
 		GameScene gameScene2 = mock(GameScene.class);
 
-		Engine engine = new Engine(gameScene1);
+		Engine engine = Engine.getInstance();
+		engine.setScene(gameScene1);
 		Assert.assertEquals(gameScene1, engine.getScene());
 		engine.update();
 		verify(gameScene1).update();
@@ -59,7 +61,8 @@ public class EngineTest extends TestCase {
 	 */
 	public void testKeys() {
 		GameScene gameScene = mock(GameScene.class);
-		Engine engine = new Engine(gameScene);
+		Engine engine = Engine.getInstance();
+		engine.setScene(gameScene);
 		
 		String key1 = "SPACE";
 		String key2 = "X";

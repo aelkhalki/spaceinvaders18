@@ -13,7 +13,7 @@ import javafx.scene.image.Image;
 /**
  * @author Max
  */
-public abstract class SpriteEntity extends DrawableEntity {
+public class SpriteEntity extends DrawableEntity {
 	protected Image image;
 	protected String spriteName;
 	
@@ -33,8 +33,24 @@ public abstract class SpriteEntity extends DrawableEntity {
 		image = new Image(spriteName);
 	}
 
+	/**
+	 * Load the image from the file (specified by the filename) to this object.
+	 */
+	public void loadImage() {
+		image = new Image(spriteName);
+	}
+
 	@Override
 	public void draw(Interval timeStep, GraphicsContext gc) {
 		gc.drawImage(image, getPositionX(), getPositionY(), getWidth(), getHeight());
+	}
+
+	/**
+	 * Return the filename from where the image (sprite) is loaded from.
+	 *
+	 * @return the filename from where the image (sprite) is loaded from.
+	 */
+	public String getSpriteFilename() {
+		return spriteName;
 	}
 }

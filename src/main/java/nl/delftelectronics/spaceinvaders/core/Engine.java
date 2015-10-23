@@ -3,6 +3,7 @@ package nl.delftelectronics.spaceinvaders.core;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javafx.scene.canvas.GraphicsContext;
@@ -12,7 +13,7 @@ import nl.delftelectronics.spaceinvaders.core.scenes.GameScene;
  * The Engine is the main class of this game. The most of the game logic is
  * performed in this class.
  */
-public class Engine {
+public final class Engine {
 
 	private static Engine instance;
 	private List<String> inputs = new ArrayList<String>();
@@ -26,9 +27,15 @@ public class Engine {
 	 * @param startScene
 	 *            the scene.
 	 */
-	public Engine(GameScene startScene) {
-		this.currentScene = startScene;
-		Engine.instance = this;
+	private Engine() {
+	}
+	
+	/**
+	 * Resets internal input state to initial values.
+	 */
+	private void resetInput() {
+		inputs = new ArrayList<String>();
+		clicks = new ArrayList<Point>();
 	}
 
 	/**
@@ -37,6 +44,9 @@ public class Engine {
 	 * @return the last instance of the Engine
 	 */
 	public static Engine getInstance() {
+		if (instance == null) {
+			instance = new Engine();
+		}
 		return instance;
 	}
 
@@ -80,6 +90,15 @@ public class Engine {
 	}
 
 	/**
+	 * Return the current keyDows (i.e. the currently pressed keys on the keyboard).
+	 *
+	 * @return the currently pressed keys on the keyboard
+	 */
+	public Collection<String> getInputs() {
+		return inputs;
+	}
+
+	/**
 	 * Registers a click until the next update
 	 * 
 	 * @param position
@@ -99,6 +118,7 @@ public class Engine {
 	 */
 	public void setScene(GameScene scene) {
 		currentScene = scene;
+		resetInput();
 	}
 
 	/**

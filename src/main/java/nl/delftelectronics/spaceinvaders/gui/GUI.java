@@ -10,10 +10,10 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import nl.delftelectronics.spaceinvaders.core.Audio;
 import nl.delftelectronics.spaceinvaders.core.Engine;
+import nl.delftelectronics.spaceinvaders.core.animationtimers.UpdateSceneAnimationTimer;
 import nl.delftelectronics.spaceinvaders.core.scenes.GameScene;
 import nl.delftelectronics.spaceinvaders.core.scenes.MenuScene;
 
@@ -22,15 +22,18 @@ import nl.delftelectronics.spaceinvaders.core.scenes.MenuScene;
  * graphics.
  */
 public class GUI extends Application {
-	private static final Integer FPS = 24;
-	private static final Integer WINDOW_WIDTH = 1680;
-	private static final Integer WINDOW_HEIGHT = 1050;
+	public static final int FPS = 24;
+	private static final int WINDOW_WIDTH = 1680;
+	private static final int WINDOW_HEIGHT = 1050;
 	private static final String WINDOW_TITLE = "Space Invaders";
-	private static final double SECOND = 1000000000.0;
+	private static final String DEFAULT_SERVER_IP = "127.0.0.1";
+	private static final int DEFAULT_SERVER_PORT = 1255;
+
+	public static String serverIp;
+	public static int serverPort;
 
 	private Scene scene;
 
-	private GraphicsContext gc;
 	private Engine engine;
 
 	/**
@@ -40,17 +43,26 @@ public class GUI extends Application {
 	 *            command line arguments (not used).
 	 */
 	public static void main(String[] args) {
+		// If the arguments (ip and port of the server are provided, use them.
+		if (args.length == 2) {
+			serverIp = args[0];
+			serverPort = Integer.parseInt(args[1]);
+		} else {
+			serverIp = DEFAULT_SERVER_IP;
+			serverPort = DEFAULT_SERVER_PORT;
+		}
 		launch(args);
 	}
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		setWindowTitle(primaryStage, WINDOW_TITLE);
-		gc = initializeScene(primaryStage, WINDOW_WIDTH, WINDOW_HEIGHT);
+		GraphicsContext gc = initializeScene(primaryStage, WINDOW_WIDTH, WINDOW_HEIGHT);
 
 		Audio.playBackgroundSound();
 
-		engine = new Engine(new GameScene(scene));
+		engine = Engine.getInstance();
+		engine.setScene(new GameScene(scene));
 
 		scene.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent e) {
@@ -62,7 +74,8 @@ public class GUI extends Application {
 
 		engine.setScene(new MenuScene(scene));
 
-		AnimationTimer at = createAnimationTimer(engine, gc);
+		AnimationTimer at = new UpdateSceneAnimationTimer(engine, gc, FPS, WINDOW_WIDTH,
+				WINDOW_HEIGHT);
 		at.start();
 
 		primaryStage.show();
@@ -120,38 +133,5 @@ public class GUI extends Application {
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 
 		return gc;
-	}
-
-	/**
-	 * Create the animation timer that shows the game to the window.
-	 *
-	 * @param engine
-	 *            the engine containing game logic.
-	 * @param gc
-	 *            the graphics context.
-	 * @return the animation timer that shows the game to the window.
-	 */
-	public AnimationTimer createAnimationTimer(final Engine engine, final GraphicsContext gc) {
-		return new AnimationTimer() {
-			private Long previousNanoTime = System.nanoTime();
-			final int[] livesStatusPosition = { 60, 50 };
-			final int[] pointsStatusPosition = { 900, 50 };
-			final int[] gameOverPosition = { 600, 500 };
-
-			public void handle(long currentNanoTime) {
-				double elapsedTime = (currentNanoTime - previousNanoTime) / SECOND;
-				if (elapsedTime < 1 / (double) FPS) {
-					previousNanoTime = currentNanoTime;
-					return;
-				}
-				engine.update();
-
-				gc.setFill(Color.BLACK);
-				gc.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
-				gc.setFill(Color.RED);
-
-				engine.draw(gc);
-			}
-		};
 	}
 }

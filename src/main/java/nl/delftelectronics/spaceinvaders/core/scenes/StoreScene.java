@@ -97,7 +97,12 @@ public class StoreScene extends GameScene implements LabelClickedListener {
      */
     public void continueGame() {
         gameInformation.incrementLevel();
-        GameScene gs = new PlayScene(scene, gameInformation);
+        GameScene gs;
+        if (gameInformation.isMultiplayer()) {
+            gs = new MultiplayerPlayScene(scene, gameInformation);
+        } else {
+            gs = new PlayScene(scene, gameInformation);
+        }
         Engine.getInstance().setScene(gs);
     }
 

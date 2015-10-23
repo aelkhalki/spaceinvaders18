@@ -22,7 +22,7 @@ public class TestShouldHaves extends TestCase {
 	 */
 	public void testEnding() {
 		PlayScene s = new PlayScene(null);
-		new Engine(s);
+		Engine.getInstance().setScene(s);
 		s.update();
 		s.lose();
 		s.update();
@@ -43,7 +43,7 @@ public class TestShouldHaves extends TestCase {
 	 */
 	public void testScore() {
 		PlayScene s = new PlayScene(null);
-		new Engine(s);
+		Engine.getInstance().setScene(s);
 		s.update();
 		
 		boolean found = false;
@@ -62,7 +62,7 @@ public class TestShouldHaves extends TestCase {
 	 */
 	public void testEnemyTypes() {
 		PlayScene s = new PlayScene(null);
-		new Engine(s);
+		Engine.getInstance().setScene(s);
 		s.update();
 		
 		boolean foundSmall = false;
@@ -89,7 +89,7 @@ public class TestShouldHaves extends TestCase {
 	 */
 	public void testEnemyScore() {
 		PlayScene s = new PlayScene(null);
-		new Engine(s);
+		Engine.getInstance().setScene(s);
 		s.update();
 		
 		for (Entity e : s.getEntities()) {
