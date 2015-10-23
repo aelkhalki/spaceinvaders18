@@ -17,7 +17,7 @@ import java.awt.geom.Rectangle2D;
  */
 public class Ship extends Actor implements Collidable {
     public static final int INITIAL_LIVES = 3;
-    private static final String FILENAME = "/ship.png";
+    private static final String FILENAME = "/shipGreen.png";
     private GameInformation gameInformation;
     private long lastBulletFire = 0;
     private static final double BULLET_FIRE_TIME_DELAY = 1000000000.0; // nanoseconds
@@ -35,6 +35,21 @@ public class Ship extends Actor implements Collidable {
     public Ship(Rectangle2D position, int westBoundary,
                 int eastBoundary, GameInformation gameInformation) {
         super(position, FILENAME, westBoundary, eastBoundary);
+        this.gameInformation = gameInformation;
+    }
+
+    /**
+     * Create a Ship with the initial position and size.
+     *
+     * @param position        position of the sprite
+     * @param filename        filename of the sprite image
+     * @param westBoundary    westernmost boundary of the playing field.
+     * @param eastBoundary    easternmost boundary of the playing field.
+     * @param gameInformation information about the current game.
+     */
+    public Ship(Rectangle2D position, String filename, int westBoundary,
+                int eastBoundary, GameInformation gameInformation) {
+        super(position, filename, westBoundary, eastBoundary);
         this.gameInformation = gameInformation;
     }
 
