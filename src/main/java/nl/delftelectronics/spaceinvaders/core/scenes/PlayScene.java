@@ -3,15 +3,10 @@
  */
 package nl.delftelectronics.spaceinvaders.core.scenes;
 
-import java.awt.geom.Rectangle2D;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Random;
-
 import javafx.scene.Scene;
 import nl.delftelectronics.spaceinvaders.core.Engine;
 import nl.delftelectronics.spaceinvaders.core.GameInformation;
+import nl.delftelectronics.spaceinvaders.core.PlayingKeysFactory;
 import nl.delftelectronics.spaceinvaders.core.entities.Barricade;
 import nl.delftelectronics.spaceinvaders.core.entities.Enemy;
 import nl.delftelectronics.spaceinvaders.core.entities.EnemyBlock;
@@ -22,24 +17,31 @@ import nl.delftelectronics.spaceinvaders.core.entities.Ship;
 import nl.delftelectronics.spaceinvaders.core.entities.Ufo;
 import org.joda.time.Interval;
 
+import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Random;
+
 /**
  * The scene that contains and builds the game
  *
  * @author Max
  */
 public class PlayScene extends GameScene implements LabelClickedListener {
-	private static final double SHIP_MARGIN_FROM_LEFT = 0.05; // ratio
-	private static final double SHIP_MARGIN_FROM_BOTTOM = 0.1; // ratio
+	private static final int NUMBER_OF_PLAYERS = 1;
+	private static final double DISTANCE_BETWEEN_PLAYERS = 200;
+	protected static final double SHIP_MARGIN_FROM_LEFT = 0.05; // ratio
+	protected static final double SHIP_MARGIN_FROM_BOTTOM = 0.1; // ratio
 	private static final int UFO_MARGIN_FROM_TOP = 100; // pixels
 	private static final double UFO_CHANCE = 0.002; // ratio
-	private static final int ENTITY_DIMENSION = 100;
+	protected static final int ENTITY_DIMENSION = 100;
 
 	public int enemyCount = 0;
-	private GameInformation gameInformation;
-	private int fieldWidth;
-	private int fieldHeight;
+	protected GameInformation gameInformation;
+	protected int fieldWidth;
+	protected int fieldHeight;
 	private Random random = new Random();
-	public Ship ship;
 	private boolean finished = false;
 	private LabelEntity scoreLabel;
 	private LabelEntity livesLabel;
@@ -53,7 +55,29 @@ public class PlayScene extends GameScene implements LabelClickedListener {
 	 * @param scene The javaFX scene to attach to
 	 */
 	public PlayScene(Scene scene) {
-		this(scene, new GameInformation(0, Ship.INITIAL_LIVES, 0, 1, createBarricades()));
+		this(scene, new GameInformation(0, Ship.INITIAL_LIVES, 0, 1, createBarricades()),
+				NUMBER_OF_PLAYERS);
+	}
+
+	/**
+	 * Builds a new PlayScene with a number of players.
+	 *
+	 * @param scene The javaFX scene to attach to
+     * @param numOfPlayers number of players participating in this game
+	 */
+	public PlayScene(Scene scene, int numOfPlayers) {
+		this(scene, new GameInformation(0, Ship.INITIAL_LIVES, 0, 1, createBarricades()),
+				numOfPlayers);
+	}
+
+    /**
+     * Builds a new PlayScene with a single player.
+     *
+     * @param scene The javaFX scene to attach to
+     * @param gameInformation the information and values about the current game
+     */
+	public PlayScene(Scene scene, GameInformation gameInformation) {
+		this(scene, gameInformation, NUMBER_OF_PLAYERS);
 	}
 
 	/**
@@ -61,8 +85,9 @@ public class PlayScene extends GameScene implements LabelClickedListener {
 	 *
 	 * @param scene the JavaFX scene
 	 * @param gameInformation the information and values about the current game
+	 * @param numOfPlayers number of players participating in this game
 	 */
-	public PlayScene(Scene scene, GameInformation gameInformation) {
+	public PlayScene(Scene scene, GameInformation gameInformation, int numOfPlayers) {
 		super(scene);
 
 		this.gameInformation = gameInformation;
@@ -71,15 +96,10 @@ public class PlayScene extends GameScene implements LabelClickedListener {
 			fieldWidth = (int) scene.getWidth();
 			fieldHeight = (int) scene.getHeight();
 		}
-		
-		int shipPositionX = (int) (fieldWidth * SHIP_MARGIN_FROM_LEFT);
-		int shipPositionY = (int) (fieldHeight * (1 - SHIP_MARGIN_FROM_BOTTOM));
-		
+
 		addEnemies();
 
-		ship = new Ship(new Rectangle2D.Double(shipPositionX, shipPositionY,
-				ENTITY_DIMENSION, ENTITY_DIMENSION), 0, fieldWidth, gameInformation);
-		addEntity(ship);
+		addShips(numOfPlayers);
 
 		//CHECKSTYLE.OFF: MagicNumber - Don't want to layout automatically
 		scoreLabel = new LabelEntity(new Rectangle2D.Double(30, 30, 0, 0),
@@ -104,7 +124,7 @@ public class PlayScene extends GameScene implements LabelClickedListener {
 		addEntity(levelLabel);
 		addEntity(bombsLabel);
 	}
-	
+
 	/**
 	 * Adds enemy entities to the scene
 	 */
@@ -118,6 +138,37 @@ public class PlayScene extends GameScene implements LabelClickedListener {
 		for (Enemy e : enemies) {
 			addEntity(e);
 		}
+	}
+
+	/**
+	 * Create a ship (or multiple ships) that are added to the scene.
+	 */
+	private void addShips(int numOfPlayers) {
+		PlayingKeysFactory keyFactory = new PlayingKeysFactory();
+		for (int i = 0; i < numOfPlayers; i++) {
+			int shipPositionX = (int) (fieldWidth * SHIP_MARGIN_FROM_LEFT
+					+ DISTANCE_BETWEEN_PLAYERS * i);
+			int shipPositionY = (int) (fieldHeight * (1 - SHIP_MARGIN_FROM_BOTTOM));
+			Ship ship = makeShip(new Rectangle2D.Double(shipPositionX, shipPositionY,
+					ENTITY_DIMENSION, ENTITY_DIMENSION), 0, fieldWidth, gameInformation);
+			ship.setPlayingKeys(keyFactory.next());
+			addEntity(ship);
+			System.out.println(ship.getPositionX());
+		}
+	}
+
+    /**
+     * Create a playable ship
+     *
+     * @param position position of the ship
+     * @param westBoundary westernmost boundary of the ship
+     * @param eastBoundary easternmost boundary of the ship
+     * @param gameInformation information about the current game
+     * @return a newly created ship
+     */
+	protected Ship makeShip(Rectangle2D position, int westBoundary, int eastBoundary,
+							GameInformation gameInformation) {
+		return new Ship(position, westBoundary, eastBoundary, gameInformation);
 	}
 
 	/**

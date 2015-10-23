@@ -165,6 +165,16 @@ public class GameScene implements EntityDestroyedListener {
 	}
 
 	/**
+	 * Sets a list of all current entities
+	 *
+	 * @param entities
+     *             entities to set
+	 */
+	public void setEntities(List<Entity> entities) {
+		this.entities = entities;
+	}
+
+	/**
 	 * Adds an entity to the scene
 	 * 
 	 * @param entity

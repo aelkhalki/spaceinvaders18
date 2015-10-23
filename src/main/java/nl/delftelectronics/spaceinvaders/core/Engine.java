@@ -3,6 +3,7 @@ package nl.delftelectronics.spaceinvaders.core;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javafx.scene.canvas.GraphicsContext;
@@ -77,6 +78,15 @@ public class Engine {
 		synchronized (inputs) {
 			inputs.remove(key);
 		}
+	}
+
+	/**
+	 * Return the current keyDows (i.e. the currently pressed keys on the keyboard).
+	 *
+	 * @return the currently pressed keys on the keyboard
+	 */
+	public Collection<String> getInputs() {
+		return inputs;
 	}
 
 	/**

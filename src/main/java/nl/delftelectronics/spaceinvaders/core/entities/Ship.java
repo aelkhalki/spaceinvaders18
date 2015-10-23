@@ -1,17 +1,15 @@
 package nl.delftelectronics.spaceinvaders.core.entities;
 
 import nl.delftelectronics.spaceinvaders.core.Audio;
-
 import nl.delftelectronics.spaceinvaders.core.Collidable;
 import nl.delftelectronics.spaceinvaders.core.Engine;
 import nl.delftelectronics.spaceinvaders.core.GameInformation;
 import nl.delftelectronics.spaceinvaders.core.Logger;
-
-import java.awt.geom.Rectangle2D;
-
+import nl.delftelectronics.spaceinvaders.core.PlayingKeys;
+import nl.delftelectronics.spaceinvaders.core.scenes.PlayScene;
 import org.joda.time.Interval;
 
-import nl.delftelectronics.spaceinvaders.core.scenes.PlayScene;
+import java.awt.geom.Rectangle2D;
 
 /**
  * The ship is the playable character in the game. It can only move horizontally and shoot
@@ -19,22 +17,39 @@ import nl.delftelectronics.spaceinvaders.core.scenes.PlayScene;
  */
 public class Ship extends Actor implements Collidable {
     public static final int INITIAL_LIVES = 3;
-    private static final String FILENAME = "/ship.png";
+    private static final String FILENAME = "/shipGreen.png";
     private GameInformation gameInformation;
     private long lastBulletFire = 0;
     private static final double BULLET_FIRE_TIME_DELAY = 1000000000.0; // nanoseconds
 
+    private PlayingKeys playingKeys;
+
     /**
      * Create a Ship with the initial position and size.
      *
-     * @param position     position of the sprite
-     * @param westBoundary westernmost boundary of the playing field.
-     * @param eastBoundary easternmost boundary of the playing field.
+     * @param position        position of the sprite
+     * @param westBoundary    westernmost boundary of the playing field.
+     * @param eastBoundary    easternmost boundary of the playing field.
      * @param gameInformation information about the current game.
      */
     public Ship(Rectangle2D position, int westBoundary,
-    		int eastBoundary, GameInformation gameInformation) {
+                int eastBoundary, GameInformation gameInformation) {
         super(position, FILENAME, westBoundary, eastBoundary);
+        this.gameInformation = gameInformation;
+    }
+
+    /**
+     * Create a Ship with the initial position and size.
+     *
+     * @param position        position of the sprite
+     * @param filename        filename of the sprite image
+     * @param westBoundary    westernmost boundary of the playing field.
+     * @param eastBoundary    easternmost boundary of the playing field.
+     * @param gameInformation information about the current game.
+     */
+    public Ship(Rectangle2D position, String filename, int westBoundary,
+                int eastBoundary, GameInformation gameInformation) {
+        super(position, filename, westBoundary, eastBoundary);
         this.gameInformation = gameInformation;
     }
 
@@ -137,19 +152,28 @@ public class Ship extends Actor implements Collidable {
         super.update(delta);
 
         Engine engine = Engine.getInstance();
-        if (engine.isKeyPressed("SPACE")) {
+        if (engine.isKeyPressed(playingKeys.getFireBulletKey())) {
             playerShootBullet();
         }
-        if (engine.isKeyPressed("X")) {
+        if (engine.isKeyPressed(playingKeys.getFireBombKey())) {
             playerShootBomb();
         }
 
-        if (engine.isKeyPressed("RIGHT")) {
+        if (engine.isKeyPressed(playingKeys.getMoveRightKey())) {
             moveRight(delta);
         }
-        if (engine.isKeyPressed("LEFT")) {
+        if (engine.isKeyPressed(playingKeys.getMoveLeftKey())) {
             moveLeft(delta);
         }
+    }
+
+    /**
+     * Set the playing keys for this player/ship.
+     *
+     * @param playingKeys the playing keys for this player/ship.
+     */
+    public void setPlayingKeys(PlayingKeys playingKeys) {
+        this.playingKeys = playingKeys;
     }
 
     /**
