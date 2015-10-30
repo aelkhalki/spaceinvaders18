@@ -25,7 +25,7 @@ public class ColoredShip extends Ship {
      */
     public ColoredShip(Rectangle2D position, int westBoundary, int eastBoundary,
                        GameInformation gameInformation) {
-        super(position, SHIP_IMAGE_FILENAMES[filenameCounter++], westBoundary, eastBoundary,
-                gameInformation);
+        super(position, SHIP_IMAGE_FILENAMES[filenameCounter++ % SHIP_IMAGE_FILENAMES.length],
+                westBoundary, eastBoundary, gameInformation);
     }
 }

@@ -4,8 +4,12 @@ package nl.delftelectronics.spaceinvaders.core.entities;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 import nl.delftelectronics.spaceinvaders.core.Collidable;
+import nl.delftelectronics.spaceinvaders.core.Engine;
 import nl.delftelectronics.spaceinvaders.core.GameInformation;
+import nl.delftelectronics.spaceinvaders.core.PlayingKeys;
 import nl.delftelectronics.spaceinvaders.core.scenes.GameScene;
+import org.joda.time.Interval;
+import org.junit.Test;
 
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
@@ -82,5 +86,45 @@ public class ShipTest extends TestCase {
         ship.initialize(scene);
         ship.playerShootBomb(false);
         verify(scene).addEntity(any(Bomb.class));
+    }
+
+    public void testFireBulletByKey() {
+        Ship ship = new Ship(new Rectangle2D.Double(10, 10, 10, 10),
+                10, 10, mock(GameInformation.class));
+        GameScene gameScene = mock(GameScene.class);
+        Engine.getInstance().keyDown("W");
+        PlayingKeys playingKeys = mock(PlayingKeys.class);
+        when(playingKeys.getFireBulletKey()).thenReturn("W");
+        when(playingKeys.getFireBombKey()).thenReturn("SHIFT");
+        when(playingKeys.getMoveLeftKey()).thenReturn("A");
+        when(playingKeys.getMoveRightKey()).thenReturn("D");
+        ship.initialize(gameScene);
+        ship.setPlayingKeys(playingKeys);
+
+        try {
+            ship.update(new Interval(0, 1));
+        } catch (IllegalStateException e) {}
+        verify(gameScene).addEntity(any(Bullet.class));
+    }
+
+    public void testFireBombByKey() {
+        GameInformation gameInformation = mock(GameInformation.class);
+        when(gameInformation.getBombs()).thenReturn(10);
+        Ship ship = new Ship(new Rectangle2D.Double(10, 10, 10, 10),
+                10, 10, gameInformation);
+        GameScene gameScene = mock(GameScene.class);
+        Engine.getInstance().keyDown("SHIFT");
+        PlayingKeys playingKeys = mock(PlayingKeys.class);
+        when(playingKeys.getFireBulletKey()).thenReturn("W");
+        when(playingKeys.getFireBombKey()).thenReturn("SHIFT");
+        when(playingKeys.getMoveLeftKey()).thenReturn("A");
+        when(playingKeys.getMoveRightKey()).thenReturn("D");
+        ship.initialize(gameScene);
+        ship.setPlayingKeys(playingKeys);
+
+        try {
+            ship.update(new Interval(0, 1));
+        } catch (IllegalStateException e) {}
+        verify(gameScene).addEntity(any(Bomb.class));
     }
 }

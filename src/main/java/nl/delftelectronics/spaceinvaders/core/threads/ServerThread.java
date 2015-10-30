@@ -68,25 +68,37 @@ public class ServerThread extends Thread {
             OutputStream s1out = socket.getOutputStream();
             ObjectOutputStream dos = new ObjectOutputStream(s1out);
 
-            List<Entity> entityCopy = new ArrayList<Entity>(entities);
-            Collection<Sprite> sprites = new ArrayList<Sprite>();
-            for (Entity e : entityCopy) {
-                if (e instanceof SpriteEntity) {
-                    SpriteEntity se = (SpriteEntity) e;
-                    Sprite s = new Sprite(
-                            se.getSpriteFilename(),
-                            se.getBoundingBox().getX(),
-                            se.getBoundingBox().getY(),
-                            se.getBoundingBox().getWidth(),
-                            se.getBoundingBox().getHeight()
-                    );
-                    sprites.add(s);
-                }
-            }
+            Collection<Sprite> sprites = createSprites(entities);
+
             dos.writeObject(sprites);
         } catch (IOException e) {
             Logger.error("Cannot write to the client.");
         }
+    }
+
+    /**
+     * Create sprites from entities.
+     *
+     * @param entities entities to send.
+     * @return created sprites.
+     */
+    public Collection<Sprite> createSprites(Collection<Entity> entities) {
+        List<Entity> entityCopy = new ArrayList<Entity>(entities);
+        Collection<Sprite> sprites = new ArrayList<Sprite>();
+        for (Entity e : entityCopy) {
+            if (e instanceof SpriteEntity) {
+                SpriteEntity se = (SpriteEntity) e;
+                Sprite s = new Sprite(
+                        se.getSpriteFilename(),
+                        se.getBoundingBox().getX(),
+                        se.getBoundingBox().getY(),
+                        se.getBoundingBox().getWidth(),
+                        se.getBoundingBox().getHeight()
+                );
+                sprites.add(s);
+            }
+        }
+        return sprites;
     }
 
     /**
