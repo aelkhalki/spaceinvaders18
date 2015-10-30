@@ -17,6 +17,7 @@ import nl.delftelectronics.spaceinvaders.core.collisions.SortedCollisionAlgorith
 import nl.delftelectronics.spaceinvaders.core.entities.DrawableEntity;
 import nl.delftelectronics.spaceinvaders.core.entities.Entity;
 import nl.delftelectronics.spaceinvaders.core.entities.EntityDestroyedListener;
+import nl.delftelectronics.spaceinvaders.core.entities.PostUpdatable;
 import nl.delftelectronics.spaceinvaders.core.entities.PreUpdatable;
 
 /**
@@ -81,6 +82,13 @@ public class GameScene implements EntityDestroyedListener {
 		// Updates
 		for (Entity e : entities) {
 			e.update(delta);
+		}
+		
+		// Post updates
+		for (Entity e : entities) {
+			if (e instanceof PostUpdatable) {
+				((PostUpdatable) e).postUpdate(delta);
+			}
 		}
 
 		handleDeletions();

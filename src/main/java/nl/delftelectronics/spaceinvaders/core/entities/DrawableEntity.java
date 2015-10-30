@@ -88,6 +88,14 @@ public class DrawableEntity extends Entity {
 				rectangle.getWidth(),
 				rectangle.getHeight());
 	}
+	
+	/**
+	 * Returns the drawing rectangle
+	 * @return the drwaing rectangle
+	 */
+	public Rectangle2D getRectangle() {
+		return rectangle;
+	}
 
 	/**
 	 * Return the width of the entity.
