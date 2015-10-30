@@ -111,4 +111,11 @@ public class LabelEntity extends DrawableEntity implements Collidable {
 	public String getText() {
 		return text;
 	}
+
+	public boolean equals(Object other) {
+		if (other instanceof LabelEntity) {
+			return ((LabelEntity) other).getText().equals(text);
+		}
+		return false;
+	}
 }

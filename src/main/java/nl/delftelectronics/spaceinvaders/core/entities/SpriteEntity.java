@@ -5,6 +5,7 @@ package nl.delftelectronics.spaceinvaders.core.entities;
 
 import java.awt.geom.Rectangle2D;
 
+import nl.delftelectronics.spaceinvaders.core.Logger;
 import org.joda.time.Interval;
 
 import javafx.scene.canvas.GraphicsContext;
@@ -37,7 +38,12 @@ public class SpriteEntity extends DrawableEntity {
 	 * Load the image from the file (specified by the filename) to this object.
 	 */
 	public void loadImage() {
-		image = new Image(spriteName);
+		try {
+			image = new Image(spriteName);
+		} catch (RuntimeException e) {
+			Logger.error("Images cannot be loaded, the JavaFX graphics have not been initialized "
+					+ "yet.");
+		}
 	}
 
 	@Override
